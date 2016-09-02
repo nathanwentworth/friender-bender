@@ -29,3 +29,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+# other files (aka nathan's things n_n)
+*.sublime-workspace
+*.sublime-project
+*.DS_Store
