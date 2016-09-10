@@ -38,16 +38,23 @@ public class playerSwitching : MonoBehaviour {
 	}
 
 	void SwitchPlayer() {
-		// increment the next player so that it's one above the current player
+		// increment the index up one
 		nextIndex = currentIndex + 1;
 		print ("Next index: " + nextIndex);
+		// if the next index is past the array length, loop it back to zero
 		if (nextIndex >= totalPlayers) {
+			// maybe put the shuffle in here so that it randomizes constantly?
+			// only real downside is that it could have people go more than once in a row
+			// but hey that might actually be fun!
 			nextIndex = 0;
 		}
 
+		// set the current index from the next index var
 		currentIndex = nextIndex;
+		// delete later, debug prints
 		print("current player: " + playerArr[currentIndex]);
 		print("next player: " + playerArr[nextIndex]);
+		// once the indexer runs through, start the timer again
 		StartCoroutine(SwitchTimer());
 	}
 
