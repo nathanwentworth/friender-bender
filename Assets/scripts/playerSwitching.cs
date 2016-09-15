@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class playerSwitching : MonoBehaviour {
+public class PlayerSwitching : MonoBehaviour {
 
 	private int 
 		currentIndex,
@@ -13,6 +13,7 @@ public class playerSwitching : MonoBehaviour {
 		playerArr;
 	private bool
 		randomPlayerOrder;
+	public DataManager data;
 
 	void Start() {
 		// on start, set the current player to player 1
