@@ -9,7 +9,7 @@ public class DataManager : ScriptableObject {
 		totalPlayers;
 
 	private float
-		waitTime;
+		turnTime;
 
 	private int[]
 		playerArr;
@@ -26,9 +26,9 @@ public class DataManager : ScriptableObject {
 		set {totalPlayers = value;}
 	}
 
-	public float WaitTime {
-		get {return waitTime;}
-		set {waitTime = value;}
+	public float TurnTime {
+		get {return turnTime;}
+		set {turnTime = value;}
 	}
 
 	public int[] PlayerArr {

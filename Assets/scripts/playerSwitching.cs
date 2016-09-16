@@ -8,7 +8,7 @@ public class PlayerSwitching : MonoBehaviour {
 		nextIndex,
 		totalPlayers;
 	private float
-		waitTime;
+		turnTime;
 	public int[]
 		playerArr;
 	private bool
@@ -18,14 +18,15 @@ public class PlayerSwitching : MonoBehaviour {
 	void Start() {
 		// on start, set the current player to player 1
 		currentIndex = 0;
-		// grab total number of players from the game manager when that's made
-		playerArr = new int[4];
-		// delete these later! just for testing
-		// these should mostly be publically editable in the ui, all stored in the gamemanager
-		randomPlayerOrder = true;
-		totalPlayers = playerArr.Length;
-		waitTime = 5.0f;
+	}
 
+	public void RunScript() {
+		// get vars from datamanager
+		turnTime = data.TurnTime;
+		totalPlayers = data.TotalPlayers;
+		randomPlayerOrder = data.RandomPlayerOrder;
+		// creates a player array that's the length of the number of players
+		playerArr = new int[totalPlayers];
 		// create player array
 		for (int i = 0; i < totalPlayers; i++) {
 			playerArr[i] = i;
@@ -36,6 +37,9 @@ public class PlayerSwitching : MonoBehaviour {
 		}
 		// run the switcher coroutine
 		StartCoroutine(SwitchTimer());
+		print ("Turn Time: " + turnTime);
+		print ("Total players: " + totalPlayers);
+		print ("random players: " + randomPlayerOrder);
 	}
 
 	void SwitchPlayer() {
@@ -62,7 +66,7 @@ public class PlayerSwitching : MonoBehaviour {
 	// this timer counts down during every player's turn
 	IEnumerator SwitchTimer() {
 		print ("Switch timer started");
-		yield return new WaitForSeconds(waitTime);
+		yield return new WaitForSeconds(turnTime);
 		SwitchPlayer();
 	}
 
