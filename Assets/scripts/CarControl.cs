@@ -12,19 +12,24 @@ public class CarControl : MonoBehaviour
     private float x_Input;
     private float accelerationForce = 0;
     private float brakingForce = 0;
+    private Rigidbody rigid;
+
+    private void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+    }
 
     private void Update()
     {
-        if (Input.GetButton("Brake")) brakingForce = 1;
-        else brakingForce = 0;
-        if (Input.GetButton("Accelerate")) accelerationForce = 1;
-        else accelerationForce = 0;
+        brakingForce = -Input.GetAxis("Brake");
+        accelerationForce = Input.GetAxis("Accelerate");
 
         x_Input = Input.GetAxis("Horizontal");
     }
 
     public void FixedUpdate()
     {
+        //rigid.velocity = Mathf.Clamp(rigid.velocity, 5, 100);
         float motor = maxMotorTorque * accelerationForce;
         float steering = maxSteeringAngle * x_Input;
 
