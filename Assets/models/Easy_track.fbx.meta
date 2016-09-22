@@ -1,66 +1,42 @@
 fileFormatVersion: 2
-guid: 1b5aff0d797b6be48bf15bd35831bd45
-timeCreated: 1474321149
-licenseType: Pro
+guid: 454320467aba8ea4ca984d1c29684b60
+timeCreated: 1474508213
+licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
-    100002: imagePlane1
-    100004: imagePlane2
-    100006: imagePlane3
-    100008: pCube2
-    100010: pCube3
-    100012: pCube4
-    100014: pCylinder2
-    100016: pCylinder3
-    100018: pCylinder4
-    100020: pCylinder5
-    100022: pCylinder6
-    100024: polySurface1
-    100026: polySurface2
-    100028: polySurface4
-    100030: transform1
-    100032: transform2
-    100034: transform3
-    100036: transform4
-    100038: transform5
-    100040: transform6
-    100042: transform7
+    100002: group1
+    100004: pCube1
+    100006: pCube2
+    100008: pCube3
+    100010: pPlane11
+    100012: pPlane12
+    100014: pPlane13
+    100016: transform1
+    100018: transform2
+    100020: transform3
+    100022: transform4
     400000: //RootNode
-    400002: imagePlane1
-    400004: imagePlane2
-    400006: imagePlane3
-    400008: pCube2
-    400010: pCube3
-    400012: pCube4
-    400014: pCylinder2
-    400016: pCylinder3
-    400018: pCylinder4
-    400020: pCylinder5
-    400022: pCylinder6
-    400024: polySurface1
-    400026: polySurface2
-    400028: polySurface4
-    400030: transform1
-    400032: transform2
-    400034: transform3
-    400036: transform4
-    400038: transform5
-    400040: transform6
-    400042: transform7
-    2300000: pCube2
-    2300002: pCube3
-    2300004: pCube4
-    2300006: polySurface1
-    3300000: pCube2
-    3300002: pCube3
-    3300004: pCube4
-    3300006: polySurface1
-    4300000: pCube2
+    400002: group1
+    400004: pCube1
+    400006: pCube2
+    400008: pCube3
+    400010: pPlane11
+    400012: pPlane12
+    400014: pPlane13
+    400016: transform1
+    400018: transform2
+    400020: transform3
+    400022: transform4
+    2300000: pCube3
+    2300002: pPlane13
+    3300000: pCube3
+    3300002: pPlane13
+    4300000: pPlane13
     4300002: pCube3
-    4300004: polySurface1
-    4300006: pCube4
+    6400000: pCube3
+    6400002: pPlane13
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -86,9 +62,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
