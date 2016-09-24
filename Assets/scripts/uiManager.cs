@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class uiManager : MonoBehaviour {
 
@@ -9,6 +11,9 @@ public class uiManager : MonoBehaviour {
 	private int gameMode;
 	private int selectedTrack;
 
+	void Update() {
+		print(GetComponent<EventSystem>().currentSelectedGameObject);
+	}
 
 
 	public void LoadScene(string levelName) {
@@ -58,6 +63,9 @@ public class uiManager : MonoBehaviour {
 			  print ("Dunno what happened there, but something went wrong.");
 			  break;
 			}
+	}
+
+	void RotateCarModel() {
 
 	}
 
