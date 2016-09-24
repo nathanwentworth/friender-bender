@@ -24,8 +24,24 @@ public class CarControl : MonoBehaviour
     {
         brakingForce = -Input.GetAxis("Brake");
         accelerationForce = Input.GetAxis("Accelerate");
-
         x_Input = Input.GetAxis("Horizontal");
+    }
+
+    public void ApplyLocalPositionToVisuals(WheelCollider collider)
+    {
+        if (collider.transform.childCount == 0)
+        {
+            return;
+        }
+
+        Transform visualWheel = collider.transform.GetChild(0);
+
+        Vector3 position;
+        Quaternion rotation;
+        collider.GetWorldPose(out position, out rotation);
+
+        visualWheel.transform.position = position;
+        visualWheel.transform.rotation = rotation;
     }
 
     public void FixedUpdate()
@@ -48,6 +64,8 @@ public class CarControl : MonoBehaviour
             }
             axleInfo.leftWheel.brakeTorque = brakingForce * maxBrakingTorque;
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
+            ApplyLocalPositionToVisuals(axleInfo.leftWheel);
+            ApplyLocalPositionToVisuals(axleInfo.rightWheel);
 
             //WheelHit hit = new WheelHit();
             //float travelL = 1f;
