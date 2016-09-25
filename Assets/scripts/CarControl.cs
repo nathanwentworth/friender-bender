@@ -14,6 +14,9 @@ public class CarControl : MonoBehaviour
     private float accelerationForce = 0;
     private float brakingForce = 0;
     private Rigidbody rigid;
+    private int mph;
+
+    public DataManager data;
 
     private void Start()
     {
@@ -46,7 +49,9 @@ public class CarControl : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
+        mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
+        data.CurrentMPH = mph;
+        // Debug.Log("MPH:" + mph);
         float motor = maxMotorTorque * accelerationForce;
         float steering = maxSteeringAngle * x_Input;
 
