@@ -22,9 +22,9 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        brakingForce = -Input.GetAxis("Brake");
-        accelerationForce = Input.GetAxis("Accelerate");
-        x_Input = Input.GetAxis("Horizontal");
+        brakingForce = -Input.GetAxis("Brake0");
+        accelerationForce = Input.GetAxis("Accelerate0");
+        x_Input = Input.GetAxis("Horizontal0");
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
