@@ -6,7 +6,8 @@ public class DataManager : ScriptableObject {
 
 	private int
 		currentIndex,
-		totalPlayers;
+		totalPlayers,
+		currentMPH;
 
 	private float
 		turnTime;
@@ -24,6 +25,10 @@ public class DataManager : ScriptableObject {
 	public int TotalPlayers {
 		get {return totalPlayers;}
 		set {totalPlayers = value;}
+	}
+	public int CurrentMPH {
+		get {return currentMPH;}
+		set {currentMPH = value;}
 	}
 
 	public float TurnTime {

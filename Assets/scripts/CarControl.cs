@@ -14,6 +14,9 @@ public class CarControl : MonoBehaviour
     private float accelerationForce = 0;
     private float brakingForce = 0;
     private Rigidbody rigid;
+    private int mph;
+
+    public DataManager data;
 
     private void Start()
     {
@@ -22,9 +25,9 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        brakingForce = -Input.GetAxis("Brake");
-        accelerationForce = Input.GetAxis("Accelerate");
-        x_Input = Input.GetAxis("Horizontal");
+        brakingForce = -Input.GetAxis("Brake0");
+        accelerationForce = Input.GetAxis("Accelerate0");
+        x_Input = Input.GetAxis("Horizontal0");
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
@@ -46,7 +49,9 @@ public class CarControl : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
+        mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
+        data.CurrentMPH = mph;
+        // Debug.Log("MPH:" + mph);
         float motor = maxMotorTorque * accelerationForce;
         float steering = maxSteeringAngle * x_Input;
 

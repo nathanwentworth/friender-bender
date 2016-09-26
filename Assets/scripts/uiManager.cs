@@ -11,9 +11,9 @@ public class uiManager : MonoBehaviour {
 	private int gameMode;
 	private int selectedTrack;
 
-	void Update() {
-		print(GetComponent<EventSystem>().currentSelectedGameObject);
-	}
+	// void Update() {
+	// 	print(GetComponent<EventSystem>().currentSelectedGameObject);
+	// }
 
 
 	public void LoadScene(string levelName) {
