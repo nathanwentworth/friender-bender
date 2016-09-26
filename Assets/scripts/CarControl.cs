@@ -9,8 +9,10 @@ public class CarControl : MonoBehaviour
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float maxBrakingTorque; //how fast should you brake
     public int antiRollValue; //prevents car from flipping
+    public int currentPlayer = 0;
+    public float controllerDeadzone = 0.15f;
 
-    private float x_Input;
+    private Vector2 x_Input;
     private float accelerationForce = 0;
     private float brakingForce = 0;
     private Rigidbody rigid;
@@ -25,9 +27,14 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        brakingForce = -Input.GetAxis("Brake0");
-        accelerationForce = Input.GetAxis("Accelerate0");
-        x_Input = Input.GetAxis("Horizontal0");
+        brakingForce = -Input.GetAxis("Brake" + currentPlayer);
+        accelerationForce = Input.GetAxis("Accelerate" + currentPlayer);
+        x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical" + currentPlayer));
+        if (x_Input.magnitude < controllerDeadzone)
+            x_Input = Vector2.zero;
+        else
+            x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
@@ -53,7 +60,7 @@ public class CarControl : MonoBehaviour
         data.CurrentMPH = mph;
         // Debug.Log("MPH:" + mph);
         float motor = maxMotorTorque * accelerationForce;
-        float steering = maxSteeringAngle * x_Input;
+        float steering = maxSteeringAngle * x_Input.x;
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
