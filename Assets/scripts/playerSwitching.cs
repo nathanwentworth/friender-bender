@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSwitching : MonoBehaviour {
 
@@ -13,13 +14,12 @@ public class PlayerSwitching : MonoBehaviour {
         timer;
 	private float
 		turnTime = 7;
-	public int[]
-		playerArr;
 	private bool
 		randomPlayerOrder;
 	public DataManager data;
+    List<PlayerList> players = new List<PlayerList>();
 
-	private void Start() {
+    private void Start() {
 		// on start, set the current player to player 1
 		currentIndex = 0;
         timer = turnTime;
@@ -31,17 +31,23 @@ public class PlayerSwitching : MonoBehaviour {
 		// turnTime = data.TurnTime;
         turnTime = 7f;
         totalPlayers = Input.GetJoystickNames().Length;
+        foreach (string x in Input.GetJoystickNames())
+        {
+            print(x);
+        }
+        print("Total players: " + totalPlayers);
         // randomPlayerOrder = data.RandomPlayerOrder;
         randomPlayerOrder = false;
 		// creates a player array that's the length of the number of players
-		playerArr = new int[totalPlayers];
-		// create player array
-		for (int i = 0; i < totalPlayers; i++) {
-			playerArr[i] = i;
+        
+        // create player array
+        for (int i = 0; i < totalPlayers; i++) {
+            players.Add(new PlayerList(i, "Player " + (i + 1)));
+            print(players[i].playerNum);
 		}
 		// only randomize players if that option is on
 		if (randomPlayerOrder) {
-			ShuffleArray(playerArr);
+			// ShuffleArray(players);
 		}
 		// run the switcher coroutine
 		StartCoroutine(SwitchTimer());
@@ -51,9 +57,10 @@ public class PlayerSwitching : MonoBehaviour {
 	}
 
 	private void SwitchPlayer() {
-		// increment the index up one
-		nextIndex = currentIndex + 1;
-		print ("Next index: " + nextIndex);
+        totalPlayers = Input.GetJoystickNames().Length;
+
+        // increment the index up one
+        nextIndex = currentIndex + 1;
 		// if the next index is past the array length, loop it back to zero
 		if (nextIndex >= totalPlayers) {
 			// maybe put the shuffle in here so that it randomizes constantly?
@@ -62,14 +69,15 @@ public class PlayerSwitching : MonoBehaviour {
 			nextIndex = 0;
 		}
 
-		// set the current index from the next index var
-		currentIndex = nextIndex;
+        // set the current index from the next index var
+        currentIndex = nextIndex;
         // delete later, debug prints
-        currentPlayer = playerArr[currentIndex];
-		print("current player: " + playerArr[currentIndex]);
-		print("next player: " + playerArr[nextIndex]);
-		// once the indexer runs through, start the timer again
-		StartCoroutine(SwitchTimer());
+        currentPlayer = players[currentIndex].playerNum;
+		print("current player: " + currentPlayer);
+		
+        // once the indexer runs through, start the timer again
+        
+        StartCoroutine(SwitchTimer());
 	}
 
 	// this timer counts down during every player's turn
@@ -92,5 +100,18 @@ public class PlayerSwitching : MonoBehaviour {
     	arr[r] = tmp;
     }
   }
+
+    public void RemovePlayer(int p)
+    {
+        for (int i = 0; i < players.Count; i++)
+        {
+            if (players[i].playerNum == p)
+            {
+                players.RemoveAt(i);
+                print("removed " + i);
+            }
+        }
+
+    }
 
 }

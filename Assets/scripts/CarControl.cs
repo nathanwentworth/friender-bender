@@ -36,7 +36,8 @@ public class CarControl : MonoBehaviour
         if(carHealth <= 0)
         {
             Debug.Log("KABOOM. Your car blew up! GG. Player " + currentPlayer + " lost!");
-            gameObject.SetActive(false);
+            pSwitch.RemovePlayer(currentPlayer);
+            carHealth = 100;
         }
         brakingForce = -Input.GetAxis("Brake" + currentPlayer);
         accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
