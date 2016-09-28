@@ -7,24 +7,32 @@ public class PlayerSwitching : MonoBehaviour {
 		currentIndex,
 		nextIndex,
 		totalPlayers;
+    public int
+        currentPlayer;
+    public float
+        timer;
 	private float
-		turnTime;
+		turnTime = 7;
 	public int[]
 		playerArr;
 	private bool
 		randomPlayerOrder;
 	public DataManager data;
 
-	void Start() {
+	private void Start() {
 		// on start, set the current player to player 1
 		currentIndex = 0;
-	}
+        timer = turnTime;
+        RunScript();
+    }
 
 	public void RunScript() {
 		// get vars from datamanager
-		turnTime = data.TurnTime;
-		totalPlayers = data.TotalPlayers;
-		randomPlayerOrder = data.RandomPlayerOrder;
+		// turnTime = data.TurnTime;
+        turnTime = 7f;
+        totalPlayers = Input.GetJoystickNames().Length;
+        // randomPlayerOrder = data.RandomPlayerOrder;
+        randomPlayerOrder = false;
 		// creates a player array that's the length of the number of players
 		playerArr = new int[totalPlayers];
 		// create player array
@@ -42,7 +50,7 @@ public class PlayerSwitching : MonoBehaviour {
 		print ("random players: " + randomPlayerOrder);
 	}
 
-	void SwitchPlayer() {
+	private void SwitchPlayer() {
 		// increment the index up one
 		nextIndex = currentIndex + 1;
 		print ("Next index: " + nextIndex);
@@ -56,7 +64,8 @@ public class PlayerSwitching : MonoBehaviour {
 
 		// set the current index from the next index var
 		currentIndex = nextIndex;
-		// delete later, debug prints
+        // delete later, debug prints
+        currentPlayer = playerArr[currentIndex];
 		print("current player: " + playerArr[currentIndex]);
 		print("next player: " + playerArr[nextIndex]);
 		// once the indexer runs through, start the timer again
@@ -66,7 +75,12 @@ public class PlayerSwitching : MonoBehaviour {
 	// this timer counts down during every player's turn
 	IEnumerator SwitchTimer() {
 		print ("Switch timer started");
-		yield return new WaitForSeconds(turnTime);
+        while (timer >= 0)
+        {
+            timer -= Time.deltaTime;
+            yield return null;
+        }
+        timer = turnTime;
 		SwitchPlayer();
 	}
 

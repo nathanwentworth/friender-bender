@@ -22,6 +22,7 @@ public class CarControl : MonoBehaviour
     private Vector3 originCom;
 
     public DataManager data;
+    public PlayerSwitching pSwitch;
 
     private void Start()
     {
@@ -31,14 +32,15 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
+        currentPlayer = pSwitch.currentPlayer;
         if(carHealth <= 0)
         {
-            Debug.Log("KABOOM. Your car blew up! GG.");
-            rigid.AddExplosionForce(50000, transform.position, 500);
+            Debug.Log("KABOOM. Your car blew up! GG. Player " + currentPlayer + " lost!");
+            gameObject.SetActive(false);
         }
         brakingForce = -Input.GetAxis("Brake" + currentPlayer);
-        accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.2f, 1.0f);
-        x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical" + currentPlayer));
+        accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
+        x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
         if (x_Input.magnitude < controllerDeadzone)
             x_Input = Vector2.zero;
         else

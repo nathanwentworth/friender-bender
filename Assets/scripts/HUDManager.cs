@@ -8,6 +8,7 @@ public class HUDManager : MonoBehaviour {
 	public Image speedometerBar;
 	
 	public GameObject[] turnDisplayText;
+    public Text timer;
 
 	private float speedometerBarFillAmount;
 	private float maxSpeed = 150;
@@ -15,6 +16,7 @@ public class HUDManager : MonoBehaviour {
 	private int numberOfPlayers;
 
 	public DataManager data;
+    public PlayerSwitching pSwitch;
 
 	void Start() {
 		numberOfPlayers = data.TotalPlayers;
@@ -30,6 +32,8 @@ public class HUDManager : MonoBehaviour {
 		MPHDisplay.text = MPH + "";
 		speedometerBarFillAmount = (MPH / maxSpeed) * 0.75f;
 		speedometerBar.fillAmount = speedometerBarFillAmount;
+
+        timer.text = string.Format("{0:F1}", pSwitch.timer);
 
 		// for	(int i = 0; i < numberOfPlayers; i++) {
 		// 	turnDisplayText[i].GetComponent<Text>().text = data.PlayerArr[i] + "";
