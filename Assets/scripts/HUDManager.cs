@@ -35,7 +35,7 @@ public class HUDManager : MonoBehaviour {
 		speedometerBar.fillAmount = speedometerBarFillAmount;
 
         timer.text = string.Format("{0:F1}", pSwitch.timer);
-        currentPlayerText.text = pSwitch.currentPlayer + "";
+        currentPlayerText.text = (pSwitch.currentPlayer + 1).ToString();
 
 		// for	(int i = 0; i < numberOfPlayers; i++) {
 		// 	turnDisplayText[i].GetComponent<Text>().text = data.PlayerArr[i] + "";
