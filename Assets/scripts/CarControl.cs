@@ -40,7 +40,7 @@ public class CarControl : MonoBehaviour
             if (carHealth <= 0)
             {
                 Debug.Log("KABOOM. Your car blew up! Player " + currentPlayer + " was eliminated!");
-                pSwitch.RemovePlayer(currentPlayer);
+                pSwitch.RemovePlayer();
                 carHealth = 100;
             }
         }

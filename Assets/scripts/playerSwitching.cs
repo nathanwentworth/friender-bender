@@ -73,23 +73,26 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        // increment the index up one
-        nextIndex = currentIndex + 1;
-        // if the next index is past the array length, loop it back to zero
-        if (nextIndex >= totalPlayers)
+        if (!playerWin)
         {
-            // maybe put the shuffle in here so that it randomizes constantly?
-            // only real downside is that it could have people go more than once in a row
-            // but hey that might actually be fun!
-            nextIndex = 0;
+            // increment the index up one
+            nextIndex = currentIndex + 1;
+            // if the next index is past the array length, loop it back to zero
+            if (nextIndex >= totalPlayers)
+            {
+                // maybe put the shuffle in here so that it randomizes constantly?
+                // only real downside is that it could have people go more than once in a row
+                // but hey that might actually be fun!
+                nextIndex = 0;
+            }
+            // set the current index from the next index var
+            currentIndex = nextIndex;
+            currentPlayer = playerList[currentIndex].playerNum;
+            // delete later, debug prints
+            Debug.Log("Switching controls to " + playerList[currentPlayer].readableName);
+            // once the indexer runs through, start the timer again
+            timer = turnTime;
         }
-        // set the current index from the next index var
-        currentIndex = nextIndex;
-        currentPlayer = playerList[currentIndex].playerNum;
-        // delete later, debug prints
-        Debug.Log("Switching controls to " + playerList[currentPlayer].readableName);
-        // once the indexer runs through, start the timer again
-        timer = turnTime;
     }
 
     public static void ShuffleArray<T>(T[] arr)
@@ -103,13 +106,13 @@ public class PlayerSwitching : MonoBehaviour
         }
     }
 
-    public void RemovePlayer(int p)
+    public void RemovePlayer()
     {
         if (totalPlayers > 1)
         {
             for (int i = 0; i < playerList.Count; i++)
             {
-                if (playerList[i].playerNum == p)
+                if (playerList[i].playerNum == currentPlayer)
                 {
                     playerList.RemoveAt(i);
                     totalPlayers = playerList.Count;
@@ -118,7 +121,7 @@ public class PlayerSwitching : MonoBehaviour
                 }
             }
         }
-        else if(totalPlayers == 1)
+        if (totalPlayers == 1)
         {
             playerWin = true;
         }
