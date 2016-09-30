@@ -22,9 +22,9 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        brakingForce = -Input.GetAxis("Brake");
-        accelerationForce = Input.GetAxis("Accelerate");
-        x_Input = Input.GetAxis("Horizontal");
+        brakingForce = -Input.GetAxis("Brake0");
+        accelerationForce = Input.GetAxis("Accelerate0");
+        x_Input = Input.GetAxis("Horizontal0");
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
@@ -46,9 +46,13 @@ public class CarControl : MonoBehaviour
 
     public void FixedUpdate()
     {
-        Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
+        //Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
         float motor = maxMotorTorque * accelerationForce;
         float steering = maxSteeringAngle * x_Input;
+
+		//set RTPC of Wwise to match the car's speed
+		AkSoundEngine.SetRTPCValue("engine_pitch", (rigid.velocity.magnitude * 5));
+		Debug.Log (rigid.velocity.magnitude);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
