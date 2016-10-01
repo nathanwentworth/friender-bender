@@ -33,14 +33,6 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        brakingForce = -Input.GetAxis("Brake0");
-        accelerationForce = Input.GetAxis("Accelerate0");
-        x_Input = Input.GetAxis("Horizontal0");
-    }
-
-    public void ApplyLocalPositionToVisuals(WheelCollider collider)
-    {
-        if (collider.transform.childCount == 0)
         //Gamestate stuff
         currentPlayer = pSwitch.currentPlayer;
         if (!pSwitch.DEBUG_MODE)
@@ -72,20 +64,15 @@ public class CarControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-<<<<<<< HEAD
-        //Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
-        float motor = maxMotorTorque * accelerationForce;
-        float steering = maxSteeringAngle * x_Input;
-=======
         mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
         data.CurrentMPH = mph;
         float motor = maxMotorTorque * (accelerationForce * 3f);
-        float steering = maxSteeringAngle * x_Input.x;
->>>>>>> refs/remotes/origin/Road
+        float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
+        // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
+        //print(steering);
 
-		//set RTPC of Wwise to match the car's speed
-		AkSoundEngine.SetRTPCValue("engine_pitch", (rigid.velocity.magnitude * 5));
-		Debug.Log (rigid.velocity.magnitude);
+		//Wwise engine sound! Sets RTPC "engine_pitch"
+		AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
