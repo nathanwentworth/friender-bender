@@ -50,6 +50,7 @@ public class CarControl : MonoBehaviour
         {
             brakingForce = -Input.GetAxis("Brake" + currentPlayer);
             accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
+            print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
             x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
             //Hardcoded deadzone
             if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
@@ -66,10 +67,10 @@ public class CarControl : MonoBehaviour
     {
         mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
         data.CurrentMPH = mph;
+        print(mph);
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x * ((150f - (mph * 0.5f)) / 150f);
         // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
-        print(steering);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -108,7 +109,7 @@ public class CarControl : MonoBehaviour
             //if (groundedR) rigid.AddForceAtPosition(axleInfo.rightWheel.transform.up * -antiRollForce, axleInfo.rightWheel.transform.position);
         }
         //Clamp that speed
-        rigid.velocity = new Vector3(Mathf.Clamp(rigid.velocity.x, -30, 30), Mathf.Clamp(rigid.velocity.y, -30, 30), Mathf.Clamp(rigid.velocity.z, -30, 30));
+        // rigid.velocity = new Vector3(Mathf.Clamp(rigid.velocity.x, -30, 30), Mathf.Clamp(rigid.velocity.y, -30, 30), Mathf.Clamp(rigid.velocity.z, -30, 30));
     }
 
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
