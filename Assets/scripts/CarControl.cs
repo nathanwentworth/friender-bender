@@ -9,15 +9,26 @@ public class CarControl : MonoBehaviour
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float maxBrakingTorque; //how fast should you brake
     public int antiRollValue; //prevents car from flipping
+    public int carHealth = 100;
+    public float controllerDeadzone = 0.15f;
+    public Vector3 newCom;
 
-    private float x_Input;
+    [Header("Data References")]
+    public DataManager data;
+    public PlayerSwitching pSwitch;
+
+    private Vector2 x_Input;
     private float accelerationForce = 0;
     private float brakingForce = 0;
     private Rigidbody rigid;
+    private int mph;
+    private int currentPlayer = 0;
+    private Vector3 originCom;
 
     private void Start()
     {
         rigid = GetComponent<Rigidbody>();
+        originCom = rigid.centerOfMass;
     }
 
     private void Update()
@@ -30,25 +41,47 @@ public class CarControl : MonoBehaviour
     public void ApplyLocalPositionToVisuals(WheelCollider collider)
     {
         if (collider.transform.childCount == 0)
+        //Gamestate stuff
+        currentPlayer = pSwitch.currentPlayer;
+        if (!pSwitch.DEBUG_MODE)
         {
-            return;
+            if (carHealth <= 0)
+            {
+                Debug.Log("KABOOM. Your car blew up! Player " + currentPlayer + " was eliminated!");
+                pSwitch.RemovePlayer();
+                carHealth = 100;
+            }
         }
 
-        Transform visualWheel = collider.transform.GetChild(0);
+        //CONTROLS
+        if (!pSwitch.playerWin)
+        {
+            brakingForce = -Input.GetAxis("Brake" + currentPlayer);
+            accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
+            x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
+            //Hardcoded deadzone
+            if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
+            else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+        }
+        else
+        {
+            rigid.constraints = RigidbodyConstraints.FreezeAll;
+        }
 
-        Vector3 position;
-        Quaternion rotation;
-        collider.GetWorldPose(out position, out rotation);
-
-        visualWheel.transform.position = position;
-        visualWheel.transform.rotation = rotation;
     }
 
-    public void FixedUpdate()
+    private void FixedUpdate()
     {
+<<<<<<< HEAD
         //Debug.Log("MPH:" + (int)((rigid.velocity.magnitude * 10) / 2.5));
         float motor = maxMotorTorque * accelerationForce;
         float steering = maxSteeringAngle * x_Input;
+=======
+        mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
+        data.CurrentMPH = mph;
+        float motor = maxMotorTorque * (accelerationForce * 3f);
+        float steering = maxSteeringAngle * x_Input.x;
+>>>>>>> refs/remotes/origin/Road
 
 		//set RTPC of Wwise to match the car's speed
 		AkSoundEngine.SetRTPCValue("engine_pitch", (rigid.velocity.magnitude * 5));
@@ -70,7 +103,15 @@ public class CarControl : MonoBehaviour
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
-
+            if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
+            {
+                rigid.centerOfMass = newCom;
+            }
+            else
+            {
+                rigid.centerOfMass = originCom;
+            }
+            //Anti Roll Bar Code: DOESNT WORK
             //WheelHit hit = new WheelHit();
             //float travelL = 1f;
             //float travelR = 1f;
@@ -81,6 +122,52 @@ public class CarControl : MonoBehaviour
             //float antiRollForce = (travelL - travelR) * antiRollValue;
             //if (groundedL) rigid.AddForceAtPosition(axleInfo.leftWheel.transform.up * -antiRollForce, axleInfo.leftWheel.transform.position);
             //if (groundedR) rigid.AddForceAtPosition(axleInfo.rightWheel.transform.up * -antiRollForce, axleInfo.rightWheel.transform.position);
+        }
+        //Clamp that speed
+        rigid.velocity = new Vector3(Mathf.Clamp(rigid.velocity.x, -30, 30), Mathf.Clamp(rigid.velocity.y, -30, 30), Mathf.Clamp(rigid.velocity.z, -30, 30));
+    }
+
+    public void ApplyLocalPositionToVisuals(WheelCollider collider)
+    {
+        if (collider.transform.childCount == 0)
+        {
+            return;
+        }
+
+        Transform visualWheel = collider.transform.GetChild(0);
+
+        Vector3 position;
+        Quaternion rotation;
+        collider.GetWorldPose(out position, out rotation);
+
+        visualWheel.transform.position = position;
+        visualWheel.transform.rotation = rotation;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (mph > 0 && mph < 50)
+        {
+            Debug.Log("Boop. No Damage.");
+        }
+        else if (mph > 51 && mph < 80)
+        {
+            Debug.Log("Bonk. Minor Damage");
+            carHealth -= 20;
+        }
+        else if (mph > 81 && mph < 110)
+        {
+            Debug.Log("CRRCH. Medium Damage");
+            carHealth -= 40;
+        }
+        else if (mph > 111 && mph < 130)
+        {
+            Debug.Log("REEEEEEEEEEEEGFEGWFHE. High Damage");
+            carHealth -= 60;
+        }
+        else
+        {
+            carHealth -= 100;
         }
     }
 }
