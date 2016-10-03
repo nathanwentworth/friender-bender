@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour {
 
-	public Text MPHDisplay;
 	public Image speedometerBar;
-	
-	public GameObject[] turnDisplayText;
+	public GameObject pauseCanvas;
+	public Text MPHDisplay;
   public Text timer;
   public Text currentPlayerText;
+	public GameObject[] turnDisplayText;
 
 	private float speedometerBarFillAmount;
 	private float maxSpeed = 150;
@@ -30,13 +30,25 @@ public class HUDManager : MonoBehaviour {
 	
 	void Update () {
     #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-	    if (Input.GetButton("Pause_mac")) {
-		    SceneManager.LoadScene(0);
+	    if (Input.GetButtonUp("Pause_mac")) {
+    		if (pauseCanvas.activeSelf) {
+    			Time.timeScale = 1f;
+    			pauseCanvas.SetActive(false);
+    		} else {
+    			Time.timeScale = 0f;
+		    	pauseCanvas.SetActive(true);
+    		}
 			}
   	#endif
     #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-			if (Input.GetButton("Pause_mac")) {
-		    SceneManager.LoadScene(0);
+			if (Input.GetButtonUp("Pause_mac")) {
+				if (pauseCanvas.activeSelf) {
+					Time.timeScale(0f);
+					pauseCanvas.SetActive(false);
+				} else {
+					Time.timeScale(1f);
+		    	pauseCanvas.SetActive(true);
+				}
 			}
   	#endif
 
