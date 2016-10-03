@@ -31,6 +31,7 @@ public class HUDManager : MonoBehaviour {
 	
 	void Update () {
 		float MPH = data.CurrentMPH;
+		print(MPH);
 		MPHDisplay.text = MPH + "";
 		speedometerBarFillAmount = (MPH / maxSpeed) * 0.75f;
 		speedometerBar.fillAmount = speedometerBarFillAmount;

@@ -67,7 +67,6 @@ public class CarControl : MonoBehaviour
     {
         mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
         data.CurrentMPH = mph;
-        print(mph);
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x * ((150f - (mph * 0.5f)) / 150f);
         // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
