@@ -14,28 +14,16 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID PLAY_AMC_GREMLIN_ENGINE = 1293739381U;
+        static const AkUniqueID PLAY_LOWSPEED_IMPACT = 3958960798U;
+        static const AkUniqueID PLAY_TEMP_BIG_CRASH = 4243341779U;
         static const AkUniqueID PLAY_UI_AFFIRM = 3382926502U;
         static const AkUniqueID PLAY_UI_CLICK = 1749424733U;
         static const AkUniqueID PLAY_UI_DENY = 3896675301U;
     } // namespace EVENTS
 
-    namespace STATES
-    {
-        namespace ENGINE_STATE
-        {
-            static const AkUniqueID GROUP = 2762303701U;
-
-            namespace STATE
-            {
-                static const AkUniqueID CAR_GROUNDED = 3325337974U;
-                static const AkUniqueID CAR_NOT_GROUNDED = 939753740U;
-            } // namespace STATE
-        } // namespace ENGINE_STATE
-
-    } // namespace STATES
-
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID CAR_GROUNDED = 3325337974U;
         static const AkUniqueID ENGINE_PITCH = 4058786776U;
     } // namespace GAME_PARAMETERS
 

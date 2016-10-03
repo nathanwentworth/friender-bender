@@ -27,6 +27,7 @@ public class CarControl : MonoBehaviour
 
     private void Start()
     {
+		AkSoundEngine.PostEvent (4272623338, this.gameObject);
         rigid = GetComponent<Rigidbody>();
         originCom = rigid.centerOfMass;
     }
@@ -93,10 +94,12 @@ public class CarControl : MonoBehaviour
             if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
             {
                 rigid.centerOfMass = newCom;
+				AkSoundEngine.SetRTPCValue ("car_grounded", 70);
             }
             else
             {
                 rigid.centerOfMass = originCom;
+				AkSoundEngine.SetRTPCValue ("car_grounded", 60);
             }
             //Anti Roll Bar Code: DOESNT WORK
             //WheelHit hit = new WheelHit();
@@ -135,20 +138,24 @@ public class CarControl : MonoBehaviour
     {
         if (mph > 0 && mph < 50)
         {
+			AkSoundEngine.PostEvent ("Play_LowSpeed_Impact", this.gameObject);
             Debug.Log("Boop. No Damage.");
         }
         else if (mph > 51 && mph < 80)
         {
+			AkSoundEngine.PostEvent ("Play_temp_big_crash", this.gameObject);
             Debug.Log("Bonk. Minor Damage");
             carHealth -= 20;
         }
         else if (mph > 81 && mph < 110)
         {
+			AkSoundEngine.PostEvent ("Play_temp_big_crash", this.gameObject);
             Debug.Log("CRRCH. Medium Damage");
             carHealth -= 40;
         }
         else if (mph > 111 && mph < 130)
         {
+			AkSoundEngine.PostEvent ("Play_temp_big_crash", this.gameObject);
             Debug.Log("REEEEEEEEEEEEGFEGWFHE. High Damage");
             carHealth -= 60;
         }
