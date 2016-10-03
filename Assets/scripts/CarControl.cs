@@ -11,7 +11,7 @@ public class CarControl : MonoBehaviour
     public int antiRollValue; //prevents car from flipping
     public int carHealth = 100;
     public float controllerDeadzone = 0.15f;
-    public Vector3 newCom;
+    //public Vector3 newCom;
 
     [Header("Data References")]
     public DataManager data;
@@ -87,14 +87,14 @@ public class CarControl : MonoBehaviour
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
-            if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
-            {
-                rigid.centerOfMass = newCom;
-            }
-            else
-            {
-                rigid.centerOfMass = originCom;
-            }
+            //if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
+            //{
+            //    rigid.centerOfMass = newCom;
+            //}
+            //else
+            //{
+            //    rigid.centerOfMass = originCom;
+            //}
             //Anti Roll Bar Code: DOESNT WORK
             //WheelHit hit = new WheelHit();
             //float travelL = 1f;
