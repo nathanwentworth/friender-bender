@@ -53,10 +53,6 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Pause"))
-        {
-            SceneManager.LoadScene(0);
-        }
         if (!DEBUG_MODE)
         {
             if (!playerWin)

@@ -48,10 +48,19 @@ public class CarControl : MonoBehaviour
         //CONTROLS
         if (!pSwitch.playerWin)
         {
-            brakingForce = -Input.GetAxis("Brake" + currentPlayer);
-            accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
-            print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
-            x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
+            #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_mac");
+                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_mac"), 0.4f, 1.0f);
+                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_mac"), Input.GetAxis("Vertical0_mac"));
+            #endif
+            #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_win");
+                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_win"), 0.4f, 1.0f);
+                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_win"), Input.GetAxis("Vertical0_win"));
+            #endif
+            // brakingForce = -Input.GetAxis("Brake" + currentPlayer);
+            // print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
+            // x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
             //Hardcoded deadzone
             if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
             else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
