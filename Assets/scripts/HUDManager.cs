@@ -20,7 +20,7 @@ public class HUDManager : MonoBehaviour {
     public PlayerSwitching pSwitch;
 
 	void Start() {
-		numberOfPlayers = data.TotalPlayers;
+		numberOfPlayers = DataManager.Instance.TotalPlayers;
 		print("Number of players: " + numberOfPlayers);
 		for	(int i = 0; i < numberOfPlayers; i++) {
 			turnDisplayText[i].SetActive(true);
@@ -30,8 +30,7 @@ public class HUDManager : MonoBehaviour {
 	}
 	
 	void Update () {
-		float MPH = data.CurrentMPH;
-		print(MPH);
+		float MPH = DataManager.Instance.CurrentMPH;
 		MPHDisplay.text = MPH + "";
 		speedometerBarFillAmount = (MPH / maxSpeed) * 0.75f;
 		speedometerBar.fillAmount = speedometerBarFillAmount;
@@ -40,7 +39,7 @@ public class HUDManager : MonoBehaviour {
         currentPlayerText.text = (pSwitch.currentPlayer + 1).ToString();
 
 		// for	(int i = 0; i < numberOfPlayers; i++) {
-		// 	turnDisplayText[i].GetComponent<Text>().text = data.PlayerArr[i] + "";
+		// 	turnDisplayText[i].GetComponent<Text>().text = DataManager.Instance.PlayerArr[i] + "";
 		// }
 	}
 }

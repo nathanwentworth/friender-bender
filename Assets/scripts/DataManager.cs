@@ -8,21 +8,16 @@ public class DataManager : MonoBehaviour {
 
 	private static DataManager m;
 
-  public static DataManager Instance { get { return m; } }
+  public static DataManager Instance { get; private set; }
 
   private void Awake() {
-    if (m != null && m != this) {
+    if (Instance != null && Instance != this) {
       Destroy(this.gameObject);
     } else {
-      m = this;
+      Instance = this;
     }
     DontDestroyOnLoad(transform.gameObject);
   }
-
-	void Start() {
-		save = SaveData.CreateFromJSON(json);
-		print(save);
-	}
 
 	private int
 		currentIndex,
@@ -75,6 +70,10 @@ public class DataManager : MonoBehaviour {
 		save = new SaveData();
 		save.turnTime = turnTime;
 		print(save.turnTime);
+	}
+
+	private void Update() {
+		print(CurrentMPH);
 	}
 
 }

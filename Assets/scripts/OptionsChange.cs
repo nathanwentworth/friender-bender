@@ -13,9 +13,9 @@ public class OptionsChange : MonoBehaviour {
 
 	void OnEnable() {
 
-		turnTimeSlider.value = data.TurnTime;
-		playerNumberSlider.value = data.TotalPlayers;
-		randomPlayerToggle.isOn = data.RandomPlayerOrder;
+		turnTimeSlider.value = DataManager.Instance.TurnTime;
+		playerNumberSlider.value = DataManager.Instance.TotalPlayers;
+		randomPlayerToggle.isOn = DataManager.Instance.RandomPlayerOrder;
 
 
 		turnTimeSlider.onValueChanged.AddListener(TurnTimeSet);
@@ -27,27 +27,27 @@ public class OptionsChange : MonoBehaviour {
 	}
 
 	public void SaveButton() {
-		data.Save();
+		DataManager.Instance.Save();
 	}
 
 	public void SetRandomPlayerOrder(bool toggle) {
 		if (toggle) {
-			data.RandomPlayerOrder = true;
+			DataManager.Instance.RandomPlayerOrder = true;
 		} else {
-			data.RandomPlayerOrder = false;
+			DataManager.Instance.RandomPlayerOrder = false;
 		}
 	}
 
 	public void PlayerNumberSet(float val) {
 		float playerSliderVal = val;
 		int roundedVal = (int)Mathf.Round(playerSliderVal);
-		data.TotalPlayers = roundedVal;
+		DataManager.Instance.TotalPlayers = roundedVal;
 		playerNumberText.text = roundedVal + "";
 	}
 
 	public void TurnTimeSet(float val) {
 		val = Mathf.Round(val * 10f) / 10f;
-		data.TurnTime = val;
+		DataManager.Instance.TurnTime = val;
 		turnTimeText.text = val + "";
 	}
 
