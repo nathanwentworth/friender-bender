@@ -1,17 +1,17 @@
 fileFormatVersion: 2
-guid: 1ae5d86e00fea18459a984d035ddf053
-timeCreated: 1475616338
+guid: 562fd142620a70741a0fae0465accf8d
+timeCreated: 1475616982
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: hat
-    100002: //RootNode
-    400000: hat
-    400002: //RootNode
-    2300000: hat
-    3300000: hat
-    4300000: hat
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: pCylinder1
+    6400000: //RootNode
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -38,7 +38,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -70,7 +70,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

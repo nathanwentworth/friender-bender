@@ -23,25 +23,36 @@ public class CarControl : MonoBehaviour
     private Rigidbody rigid;
     private int mph;
     private int currentPlayer = 0;
-    private Vector3 originCom;
+    private bool invincible;
+    private int newCarHealth;
+
+    private Vector3 carOriginTrans;
 
     private void Start()
     {
+        newCarHealth = carHealth;
         rigid = GetComponent<Rigidbody>();
-        originCom = rigid.centerOfMass;
+        carOriginTrans = transform.position;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !pSwitch.playerWin)
+        {
+            transform.rotation = Quaternion.identity;
+            rigid.velocity = Vector3.zero;
+            transform.position = carOriginTrans;
+
+        }
         //Gamestate stuff
         currentPlayer = pSwitch.currentPlayer;
         if (!pSwitch.DEBUG_MODE)
         {
-            if (carHealth <= 0)
+            if (newCarHealth <= 0)
             {
                 Debug.Log("KABOOM. Your car blew up! Player " + currentPlayer + " was eliminated!");
                 pSwitch.RemovePlayer();
-                carHealth = 100;
+                newCarHealth = 100;
             }
         }
 
@@ -130,28 +141,75 @@ public class CarControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (mph > 0 && mph < 50)
+        if (!invincible)
         {
-            Debug.Log("Boop. No Damage.");
+            //if (mph > 0 && mph < 40)
+            //{
+            //    Debug.Log("No Damage. Health: " + newCarHealth + "/" + carHealth);
+            //}
+            if (mph > 41 && mph < 64)
+            {
+                Debug.Log("Minor Damage. Health: " + (newCarHealth - 20) + "/" + carHealth);
+                newCarHealth -= 20;
+                if (newCarHealth > 0)
+                {
+                    StartCoroutine("DamageCooldown");
+                }
+            }
+            else if (mph > 65 && mph < 94)
+            {
+                Debug.Log("Moderate Damage. Health: " + (newCarHealth - 40) + "/" + carHealth);
+                newCarHealth -= 40;
+                if (newCarHealth > 0)
+                {
+                    StartCoroutine("DamageCooldown");
+                }
+            }
+            else if (mph > 95)
+            {
+                Debug.Log("High Damage. Health: " + (newCarHealth - 60) + "/" + carHealth);
+                newCarHealth -= 60;
+                if (newCarHealth > 0)
+                {
+                    StartCoroutine("DamageCooldown");
+                }
+            }
         }
-        else if (mph > 51 && mph < 80)
+    }
+
+    IEnumerator DamageCooldown()
+    {
+        Debug.Log("Currently Invincible.");
+        invincible = true;
+        StartCoroutine("BlinkEffect");
+        yield return new WaitForSeconds(1.5f);
+        invincible = false;
+        Debug.Log("No Longer Invincible.");
+        StopCoroutine("BlinkEffect");
+    }
+
+    IEnumerator BlinkEffect()
+    {
+        bool isDisabled = false;
+        Component[] renderers;
+        renderers = GetComponentsInChildren<Renderer>();
+        while (true)
         {
-            Debug.Log("Bonk. Minor Damage");
-            carHealth -= 20;
-        }
-        else if (mph > 81 && mph < 110)
-        {
-            Debug.Log("CRRCH. Medium Damage");
-            carHealth -= 40;
-        }
-        else if (mph > 111 && mph < 130)
-        {
-            Debug.Log("REEEEEEEEEEEEGFEGWFHE. High Damage");
-            carHealth -= 60;
-        }
-        else
-        {
-            carHealth -= 100;
+            if (!isDisabled)
+            {
+                foreach (Renderer child in renderers) {
+                    child.enabled = false;
+                    isDisabled = true;
+                }
+            }
+            else {
+                foreach (Renderer child in renderers)
+                {
+                    child.enabled = true;
+                    isDisabled = false;
+                }
+            }
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }

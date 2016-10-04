@@ -1,17 +1,43 @@
 fileFormatVersion: 2
-guid: 1ae5d86e00fea18459a984d035ddf053
+guid: fa958e2617930424483af4d47da5c849
 timeCreated: 1475616338
 licenseType: Pro
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: hat
-    100002: //RootNode
+    100002: newCoat
+    100004: punkin
+    100006: //RootNode
+    100008: sign
+    100010: wood
     400000: hat
-    400002: //RootNode
+    400002: newCoat
+    400004: punkin
+    400006: //RootNode
+    400008: sign
+    400010: wood
     2300000: hat
+    2300002: newCoat
+    2300004: punkin
+    2300006: sign
+    2300008: wood
     3300000: hat
-    4300000: hat
+    3300002: newCoat
+    3300004: punkin
+    3300006: sign
+    3300008: wood
+    4300000: punkin
+    4300002: hat
+    4300004: newCoat
+    4300006: sign
+    4300008: wood
+    6400000: hat
+    6400002: newCoat
+    6400004: punkin
+    6400006: sign
+    6400008: wood
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -36,9 +62,9 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 4
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -70,7 +96,7 @@ ModelImporter:
     rootMotionBoneName: 
     hasTranslationDoF: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
