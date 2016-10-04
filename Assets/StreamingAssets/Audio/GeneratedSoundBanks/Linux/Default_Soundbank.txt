@@ -1,10 +1,11 @@
 Event	ID	Name			Wwise Object Path	Notes
+	21889692	Play_UI_Click_Switch			\UI-events\UI-Buttons\Play_UI_Click_Switch	
 	1293739381	Play_AMC_Gremlin_Engine			\Car-events\Car-engine-events\Play_AMC_Gremlin_Engine	
-	1749424733	Play_UI_Click			\UI-events\UI-Buttons\Play_UI_Click	
-	3382926502	Play_UI_Affirm			\UI-events\UI-Buttons\Play_UI_Affirm	
-	3896675301	Play_UI_Deny			\UI-events\UI-Buttons\Play_UI_Deny	
+	3623501310	Play_UI_Click_Deny			\UI-events\UI-Buttons\Play_UI_Click_Deny	
+	3670474456	Play_UI_Click_Confirm			\UI-events\UI-Buttons\Play_UI_Click_Confirm	
 	3958960798	Play_LowSpeed_Impact			\DiegeticSFX-Events\Impact-Events\Play_LowSpeed_Impact	
 	4243341779	Play_temp_big_crash			\DiegeticSFX-Events\Impact-Events\Play_temp_big_crash	
+	4272623338	Play_alpha_music			\Default Work Unit\Play_alpha_music	
 
 Game Parameter	ID	Name			Wwise Object Path	Notes
 	3325337974	car_grounded			\Default Work Unit\car_grounded	
@@ -27,13 +28,14 @@ Effect plug-ins	ID	Name	Type				Notes
 	48620415	Have_U_Ever_Been_Outside	Wwise RoomVerb			
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
-	62884026	AMC-Gremlin_Engine	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\engine-loop-1-normalized_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Cars\Car-Engines\AMC-Gremlin_Engine		705664
-	72038996	retro_deny	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\retro_deny_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\retro_deny		28732
-	124839428	FrienderBender_Impact1	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact1_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact1		352864
-	216959360	screaming-goat	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\Screaming Goat - Gaming Sound Effect_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Diegetic SFX\screaming-goat		581696
-	289069167	FrienderBender_Impact2	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact2_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact2		352864
-	293179964	temp-big-crash	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\explode_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\temp-big-crash		168444
-	566774918	retro_affirm	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\retro_affirm_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\retro_affirm		30164
-	744431061	retro_click	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\retro_click_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\retro_click		4392
-	994213034	FrienderBender_Impact3	E:\WICKEDLY\Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact3_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact3		352864
+	62884026	AMC-Gremlin_Engine	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\engine-loop-1-normalized_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Cars\Car-Engines\AMC-Gremlin_Engine		705664
+	124839428	FrienderBender_Impact1	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact1_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact1		352864
+	216959360	screaming-goat	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\Screaming Goat - Gaming Sound Effect_4B8CC0C5.wem		\Actor-Mixer Hierarchy\Diegetic SFX\screaming-goat		581696
+	243525175	FrienderBender_Click_1	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Click_1_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\FrienderBender_Click_1	Used for Switch	88264
+	289069167	FrienderBender_Impact2	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact2_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact2		352864
+	293179964	temp-big-crash	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\explode_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\temp-big-crash		168444
+	477712998	FrienderBender_Click_2	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Click_2_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\FrienderBender_Click_2	Used for Deny	88264
+	602869169	bensound-dance	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\bensound-dance_9E69E797.wem		\Actor-Mixer Hierarchy\Music\Radio\bensound-dance		31267836
+	994213034	FrienderBender_Impact3	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Impact3_9E69E797.wem		\Actor-Mixer Hierarchy\Diegetic SFX\Impact\Low-Speed-Impacts\FrienderBender_Impact3		352864
+	1067979861	FrienderBender_Click_3	C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\SFX\FrienderBender_Click_3_9E69E797.wem		\Actor-Mixer Hierarchy\UI\Buttons\FrienderBender_Click_3	Used for Confirm 	88264
 
