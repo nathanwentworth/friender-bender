@@ -50,7 +50,7 @@ public class CarControl : MonoBehaviour
         {
             brakingForce = -Input.GetAxis("Brake" + currentPlayer);
             accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
-            print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
+            //print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
             x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
             //Hardcoded deadzone
             if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
