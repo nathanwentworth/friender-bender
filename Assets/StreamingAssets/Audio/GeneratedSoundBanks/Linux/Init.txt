@@ -1,0 +1,16 @@
+Audio Bus	ID	Name			Wwise Object Path	Notes
+	805203703	Master Secondary Bus			\Default Work Unit\Master Secondary Bus	
+	1316532907	Diegetic			\Default Work Unit\Master Audio Bus\Diegetic	
+	1316910230	Impacts			\Default Work Unit\Master Audio Bus\Diegetic\Impacts	
+	1551306167	UI			\Default Work Unit\Master Audio Bus\Non-Diegetic\UI	
+	2420281969	Non-Diegetic			\Default Work Unit\Master Audio Bus\Non-Diegetic	
+	3803692087	Master Audio Bus			\Default Work Unit\Master Audio Bus	
+	3991942870	Music			\Default Work Unit\Master Audio Bus\Non-Diegetic\Music	
+	4189504244	CARS			\Default Work Unit\Master Audio Bus\Diegetic\CARS	
+
+Auxiliary Bus	ID	Name			Wwise Object Path	Notes
+	488853820	Pickups			\Default Work Unit\Master Audio Bus\Non-Diegetic\Pickups	
+
+Effect plug-ins	ID	Name	Type				Notes
+	48620415	Have_U_Ever_Been_Outside	Wwise RoomVerb			
+

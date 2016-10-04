@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SoundBanksInfo Platform="Linux" BasePlatform="Linux" SchemaVersion="11" SoundbankVersion="118">
+	<RootPaths>
+		<ProjectRoot>C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\</ProjectRoot>
+		<SourceFilesRoot>C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\.cache\Linux\</SourceFilesRoot>
+		<SoundBanksRoot>C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\GeneratedSoundBanks\Linux\</SoundBanksRoot>
+		<ExternalSourcesInputFile></ExternalSourcesInputFile>
+		<ExternalSourcesOutputRoot>C:\Users\Ethan Thibault\Documents\GitHub\FrienderBender_Wwise\FrienderBender [Wwise]\GeneratedSoundBanks\Linux\</ExternalSourcesOutputRoot>
+	</RootPaths>
+	<DialogueEvents/>
+	<StreamedFiles/>
+	<MediaFilesNotInAnyBank/>
+	<SoundBanks>
+		<SoundBank Id="1355168291" Language="SFX">
+			<ObjectPath>Init</ObjectPath>
+			<ShortName>Init</ShortName>
+			<Path>Init.bnk</Path>
+		</SoundBank>
+		<SoundBank Id="2218482606" Language="SFX">
+			<ObjectPath>\SoundBanks\Default Work Unit\Default_Soundbank</ObjectPath>
+			<ShortName>Default_Soundbank</ShortName>
+			<Path>Default_Soundbank.bnk</Path>
+			<IncludedEvents>
+				<Event Id="4272623338" Name="Play_alpha_music" ObjectPath="\Events\Default Work Unit\Play_alpha_music"/>
+				<Event Id="1293739381" Name="Play_AMC_Gremlin_Engine" ObjectPath="\Events\Car-events\Car-engine-events\Play_AMC_Gremlin_Engine"/>
+				<Event Id="3958960798" Name="Play_LowSpeed_Impact" ObjectPath="\Events\DiegeticSFX-Events\Impact-Events\Play_LowSpeed_Impact"/>
+				<Event Id="4243341779" Name="Play_temp_big_crash" ObjectPath="\Events\DiegeticSFX-Events\Impact-Events\Play_temp_big_crash"/>
+				<Event Id="3670474456" Name="Play_UI_Click_Confirm" ObjectPath="\Events\UI-events\UI-Buttons\Play_UI_Click_Confirm"/>
+				<Event Id="3623501310" Name="Play_UI_Click_Deny" ObjectPath="\Events\UI-events\UI-Buttons\Play_UI_Click_Deny"/>
+				<Event Id="21889692" Name="Play_UI_Click_Switch" ObjectPath="\Events\UI-events\UI-Buttons\Play_UI_Click_Switch"/>
+			</IncludedEvents>
+			<IncludedMemoryFiles>
+				<File Id="62884026" Language="SFX">
+					<ShortName>engine-loop-1-normalized.wav</ShortName>
+					<Path>SFX\engine-loop-1-normalized_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="124839428" Language="SFX">
+					<ShortName>FrienderBender_Impact1.wav</ShortName>
+					<Path>SFX\FrienderBender_Impact1_9E69E797.wem</Path>
+				</File>
+				<File Id="216959360" Language="SFX">
+					<ShortName>Screaming Goat - Gaming Sound Effect.wav</ShortName>
+					<Path>SFX\Screaming Goat - Gaming Sound Effect_4B8CC0C5.wem</Path>
+				</File>
+				<File Id="243525175" Language="SFX">
+					<ShortName>FrienderBender_Click_1.wav</ShortName>
+					<Path>SFX\FrienderBender_Click_1_9E69E797.wem</Path>
+				</File>
+				<File Id="289069167" Language="SFX">
+					<ShortName>FrienderBender_Impact2.wav</ShortName>
+					<Path>SFX\FrienderBender_Impact2_9E69E797.wem</Path>
+				</File>
+				<File Id="293179964" Language="SFX">
+					<ShortName>explode.wav</ShortName>
+					<Path>SFX\explode_9E69E797.wem</Path>
+				</File>
+				<File Id="477712998" Language="SFX">
+					<ShortName>FrienderBender_Click_2.wav</ShortName>
+					<Path>SFX\FrienderBender_Click_2_9E69E797.wem</Path>
+				</File>
+				<File Id="602869169" Language="SFX">
+					<ShortName>bensound-dance.wav</ShortName>
+					<Path>SFX\bensound-dance_9E69E797.wem</Path>
+				</File>
+				<File Id="994213034" Language="SFX">
+					<ShortName>FrienderBender_Impact3.wav</ShortName>
+					<Path>SFX\FrienderBender_Impact3_9E69E797.wem</Path>
+				</File>
+				<File Id="1067979861" Language="SFX">
+					<ShortName>FrienderBender_Click_3.wav</ShortName>
+					<Path>SFX\FrienderBender_Click_3_9E69E797.wem</Path>
+				</File>
+			</IncludedMemoryFiles>
+		</SoundBank>
+	</SoundBanks>
+</SoundBanksInfo>
