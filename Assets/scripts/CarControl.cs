@@ -49,10 +49,19 @@ public class CarControl : MonoBehaviour
         //CONTROLS
         if (!pSwitch.playerWin)
         {
-            brakingForce = -Input.GetAxis("Brake" + currentPlayer);
-            accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer), 0.4f, 1.0f);
-            print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
-            x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
+            #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
+                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_mac");
+                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_mac"), 0.4f, 1.0f);
+                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_mac"), Input.GetAxis("Vertical0_mac"));
+            #endif
+            #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
+                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_win");
+                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_win"), 0.4f, 1.0f);
+                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_win"), Input.GetAxis("Vertical0_win"));
+            #endif
+            // brakingForce = -Input.GetAxis("Brake" + currentPlayer);
+            // print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
+            // x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
             //Hardcoded deadzone
             if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
             else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
@@ -67,8 +76,7 @@ public class CarControl : MonoBehaviour
     private void FixedUpdate()
     {
         mph = (int)((rigid.velocity.magnitude * 10) / 2.5);
-        data.CurrentMPH = mph;
-        print(mph);
+        DataManager.Instance.CurrentMPH = mph;
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
         // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
@@ -93,14 +101,15 @@ public class CarControl : MonoBehaviour
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+
             if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
             {
-                rigid.centerOfMass = newCom;
+                // rigid.centerOfMass = newCom;
 				AkSoundEngine.SetRTPCValue ("car_grounded", 70);
             }
             else
             {
-                rigid.centerOfMass = originCom;
+                // rigid.centerOfMass = originCom;
 				AkSoundEngine.SetRTPCValue ("car_grounded", 60);
             }
             //Anti Roll Bar Code: DOESNT WORK

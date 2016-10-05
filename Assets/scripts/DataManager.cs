@@ -3,26 +3,17 @@ using System.Collections;
 
 public class DataManager : MonoBehaviour {
 
-	private SaveData save;
-	private string json;
-
-	private static DataManager m;
-
-  public static DataManager Instance { get { return m; } }
+	private static DataManager instance;
+  public static DataManager Instance { get; private set; }
 
   private void Awake() {
-    if (m != null && m != this) {
+    if (Instance != null && Instance != this) {
       Destroy(this.gameObject);
     } else {
-      m = this;
+      Instance = this;
     }
     DontDestroyOnLoad(transform.gameObject);
   }
-
-	void Start() {
-		save = SaveData.CreateFromJSON(json);
-		print(save);
-	}
 
 	private int
 		currentIndex,
@@ -66,27 +57,4 @@ public class DataManager : MonoBehaviour {
 		set {randomPlayerOrder = value;}
 	}
 
-	public void Save() {
-		save = new SaveData();
-		save.turnTime = turnTime;
-		print(save.turnTime);
-	}
-	public void Load() {
-		save = new SaveData();
-		save.turnTime = turnTime;
-		print(save.turnTime);
-	}
-
-}
-
-
-[System.Serializable]
-public class SaveData {
-  public float turnTime;
-  public float timeElapsed;
-
-  public static SaveData CreateFromJSON(string json)
-	{
-		return JsonUtility.FromJson<SaveData>(json);
-	}
 }

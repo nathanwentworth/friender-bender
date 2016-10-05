@@ -26,7 +26,7 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Start()
     {
-        // randomPlayerOrder = data.RandomPlayerOrder;
+        // randomPlayerOrder = DataManager.Instance.RandomPlayerOrder;
         randomPlayerOrder = false;
         // creates a player array that's the length of the number of players
         for (int i = 0; i < Input.GetJoystickNames().Length; i++)
@@ -53,9 +53,6 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetButton("Pause")) {
-            SceneManager.LoadScene(0);
-        }
         if (!DEBUG_MODE)
         {
             if (!playerWin)
