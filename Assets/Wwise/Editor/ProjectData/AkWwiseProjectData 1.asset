@@ -1,0 +1,142 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 719f3c00475e7a446b7fb3cb8e9151d6, type: 3}
+  m_Name: AkWwiseProjectData 1
+  m_EditorClassIdentifier: 
+  CurrentPluginConfig: 
+  EventWwu:
+  - PhysicalPath: Events\Car-events.wwu
+    ParentPhysicalPath: 
+    Guid: '{F4E8B95F-5F1D-4143-9134-97F2E2E23C07}'
+    m_lastTimePsrt1: 1617805696
+    m_lastTimePart2: -1999379049
+    List:
+    - Name: Play_AMC_Gremlin_Engine
+      Path: Car-events\Car-engine-events\Play_AMC_Gremlin_Engine
+      PathAndIcons:
+      - ElementName: Car-events
+        ObjectType: 12
+      - ElementName: Car-engine-events
+        ObjectType: 4
+      - ElementName: Play_AMC_Gremlin_Engine
+        ObjectType: 3
+      ID: 1293739381
+      Guid: 1362e78b4c562a4983cf469dd578d604
+      maxAttenuation: 0
+  - PhysicalPath: Events\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    Guid: '{04FC43B5-C8E2-4EFE-B8A8-4BB81A28AF69}'
+    m_lastTimePsrt1: 89386744
+    m_lastTimePart2: -1999378087
+    List: []
+  - PhysicalPath: Events\UI-events.wwu
+    ParentPhysicalPath: 
+    Guid: '{918AE4A0-95E7-4808-8FF3-BDD43E51E1FC}'
+    m_lastTimePsrt1: 89421777
+    m_lastTimePart2: -1999378087
+    List:
+    - Name: Play_UI_Affirm
+      Path: UI-events\UI-Buttons\Play_UI_Affirm
+      PathAndIcons:
+      - ElementName: UI-events
+        ObjectType: 12
+      - ElementName: UI-Buttons
+        ObjectType: 4
+      - ElementName: Play_UI_Affirm
+        ObjectType: 3
+      ID: -912040794
+      Guid: e5ddd961faf4ff49ae1a745d2372da8d
+      maxAttenuation: 0
+    - Name: Play_UI_Click
+      Path: UI-events\UI-Buttons\Play_UI_Click
+      PathAndIcons:
+      - ElementName: UI-events
+        ObjectType: 12
+      - ElementName: UI-Buttons
+        ObjectType: 4
+      - ElementName: Play_UI_Click
+        ObjectType: 3
+      ID: 1749424733
+      Guid: 6090fafd379afd45a84b3a8c579ef581
+      maxAttenuation: 0
+    - Name: Play_UI_Deny
+      Path: UI-events\UI-Buttons\Play_UI_Deny
+      PathAndIcons:
+      - ElementName: UI-events
+        ObjectType: 12
+      - ElementName: UI-Buttons
+        ObjectType: 4
+      - ElementName: Play_UI_Deny
+        ObjectType: 3
+      ID: -398291995
+      Guid: befef2b8c573734a8358f4e4b4dec256
+      maxAttenuation: 0
+  AuxBusWwu:
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    Guid: '{CA92C2BA-7E99-438F-8FA4-9A4A123AF095}'
+    m_lastTimePsrt1: 757609472
+    m_lastTimePart2: -1999379055
+    List:
+    - Name: Pickups
+      Path: Default Work Unit\Master Audio Bus\Non-Diegetic\Pickups
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+      - ElementName: Non-Diegetic
+        ObjectType: 2
+      - ElementName: Pickups
+        ObjectType: 1
+      ID: 488853820
+      Guid: 931799e1e18d0549a0480f35edee1503
+  StateWwu:
+  - PhysicalPath: States\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    Guid: '{788F6AB5-47B8-4A91-B5B6-643F63A0DCFB}'
+    m_lastTimePsrt1: 136871424
+    m_lastTimePart2: -1999379842
+    List: []
+  SwitchWwu:
+  - PhysicalPath: Switches\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    Guid: '{A41F6935-BDA9-4370-8B45-A9CED6ABC007}'
+    m_lastTimePsrt1: 136871424
+    m_lastTimePart2: -1999379842
+    List: []
+  BankWwu:
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
+    ParentPhysicalPath: 
+    Guid: '{4548A2CF-0880-4C90-AB2F-5282EA75C6A0}'
+    m_lastTimePsrt1: -1662325120
+    m_lastTimePart2: -1999379054
+    List:
+    - Name: Default_Soundbank
+      Path: Default Work Unit\Default_Soundbank
+      PathAndIcons:
+      - ElementName: Default Work Unit
+        ObjectType: 12
+      - ElementName: Default_Soundbank
+        ObjectType: 7
+      ID: -2076484690
+      Guid: 1072221e2f72214e9b744be42205850b
+  ExpandedItems: []
+  m_lastPopulateTimePsrt1: 0
+  m_lastPopulateTimePart2: 0
+  autoPopulateEnabled: 1
+  basePath: Audio\GeneratedSoundBanks
+  language: English(US)
+  defaultPoolSize: 4096
+  lowerPoolSize: 2048
+  streamingPoolSize: 1024
+  preparePoolSize: 0
+  memoryCutoffThreshold: 0.95
