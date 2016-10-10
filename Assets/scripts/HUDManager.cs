@@ -7,6 +7,7 @@ public class HUDManager : MonoBehaviour {
 
 	public Text MPHDisplay;
 	public Image speedometerBar;
+	public GameObject pauseCanvas;
 	
 	public GameObject[] turnDisplayText;
   public Text timer;
@@ -31,12 +32,20 @@ public class HUDManager : MonoBehaviour {
 	void Update () {
     #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
 	    if (Input.GetButton("Pause_mac")) {
-		    SceneManager.LoadScene(0);
+		    if (pauseCanvas.activeSelf) {
+  		    pauseCanvas.SetActive(false);
+  		  } else {
+  		  	pauseCanvas.SetActive(true);
+  		  }
 			}
   	#endif
     #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
 			if (Input.GetButton("Pause_mac")) {
-		    SceneManager.LoadScene(0);
+		    if (pauseCanvas.activeSelf) {
+  		    pauseCanvas.SetActive(false);
+  		  } else {
+  		  	pauseCanvas.SetActive(true);
+  		  }
 			}
   	#endif
 
