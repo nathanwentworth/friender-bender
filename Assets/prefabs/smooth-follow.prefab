@@ -238,10 +238,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011144367330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7852277ef6e0d4933811ee79e9216d39, type: 3}
+  m_Script: {fileID: 11500000, guid: 5dfa29461c1ae5b4eafc745a20868d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 4000010030554920}
+  cam: {fileID: 0}
   noiseStrength: 5
 --- !u!124 &124000014039687828
 Behaviour:

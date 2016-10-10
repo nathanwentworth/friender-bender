@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using InControl;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ public class CarControl : MonoBehaviour
     private void Start()
     {
         newCarHealth = carHealth;
-		AkSoundEngine.PostEvent (4272623338, this.gameObject);
+		// AkSoundEngine.PostEvent (4272623338, this.gameObject);
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
     }
@@ -94,7 +95,7 @@ public class CarControl : MonoBehaviour
         //print(steering);
 
 		//Wwise engine sound! Sets RTPC "engine_pitch"
-		AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
+		// AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -116,12 +117,12 @@ public class CarControl : MonoBehaviour
             if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
             {
                 // rigid.centerOfMass = newCom;
-				AkSoundEngine.SetRTPCValue ("car_grounded", 70);
+				// AkSoundEngine.SetRTPCValue ("car_grounded", 70);
             }
             else
             {
                 // rigid.centerOfMass = originCom;
-				AkSoundEngine.SetRTPCValue ("car_grounded", 60);
+				// AkSoundEngine.SetRTPCValue ("car_grounded", 60);
             }
             //Anti Roll Bar Code: DOESNT WORK
             //WheelHit hit = new WheelHit();
