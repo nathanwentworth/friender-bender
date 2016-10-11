@@ -1395,7 +1395,7 @@ MonoBehaviour:
   - {fileID: 1143181686}
   timer: {fileID: 48831351}
   currentPlayerText: {fileID: 1134987033}
-  data: {fileID: 807847982}
+  data: {fileID: 0}
   pSwitch: {fileID: 740151042}
 --- !u!1001 &157345951
 Prefab:
@@ -7186,15 +7186,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000011270431148, guid: dda611157f98c4200b2ee20f1651a405, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: dda611157f98c4200b2ee20f1651a405, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &807847982 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114000011270431148, guid: dda611157f98c4200b2ee20f1651a405,
-    type: 2}
-  m_PrefabInternal: {fileID: 807847981}
-  m_Script: {fileID: 11500000, guid: 8ff75592a6a824247a8ba00e47c17aa7, type: 3}
 --- !u!1001 &808204517
 Prefab:
   m_ObjectHideFlags: 0
@@ -11666,7 +11661,7 @@ MonoBehaviour:
   antiRollValue: 0
   carHealth: 100
   controllerDeadzone: 0.15
-  data: {fileID: 114000011270431148, guid: dda611157f98c4200b2ee20f1651a405, type: 2}
+  data: {fileID: 0}
   pSwitch: {fileID: 740151042}
 --- !u!54 &1363622828
 Rigidbody:

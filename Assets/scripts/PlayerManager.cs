@@ -3,86 +3,50 @@ using System.Collections;
 using InControl;
 using System.Collections.Generic;
 
-public class PlayerManager : MonoBehaviour {
+public class PlayerManager : MonoBehaviour
+{
 
-	const int maxPlayers = 4;
-	List<PlayerList> playerList = new List<PlayerList>(maxPlayers);
-	// List<Player> players = new List<Player>( maxPlayers );
+    const int maxPlayers = 4;
+    List<InputDevice> PlayerList = new List<InputDevice>(maxPlayers);
 
-	void Start()
-	{
-		InputManager.OnDeviceDetached += OnDeviceDetached;
-	}
+    void Update()
+    {
+        InputDevice inputDevice = InputManager.ActiveDevice;
 
-	void Update()
-	{
-		var inputDevice = InputManager.ActiveDevice;
+        if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice))
+        {
+            PlayerList.Add(inputDevice);
+        }
 
-		if (JoinButtonWasPressedOnDevice( inputDevice ))
-		{
-			if (ThereIsNoPlayerUsingDevice( inputDevice ))
-			{
-				CreatePlayer( inputDevice );
-			}
-		}
-	}
+        if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice))
+        {
+            PlayerList.Remove(inputDevice);
+        }
 
+        DataManager.Instance.PlayerList = PlayerList;
+    }
 
+    bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
+    {
+        return inputDevice.Action1.WasPressed || inputDevice.Command.WasPressed;
+    }
 
-	bool JoinButtonWasPressedOnDevice( InputDevice inputDevice )
-	{
-		return inputDevice.Action1.WasPressed || inputDevice.Action2.WasPressed || inputDevice.Action3.WasPressed || inputDevice.Action4.WasPressed;
-	}
+    bool LeaveButtonWasPressedOnDevice(InputDevice inputDevice)
+    {
+        return inputDevice.Action2.WasPressed;
+    }
 
-	PlayerList FindPlayerUsingDevice( InputDevice inputDevice )
-	{
-		var playerCount = playerList.Count;
-		for (var i = 0; i < playerCount; i++)
-		{
-			var player = playerList[i];
-			if (player.Device == inputDevice)
-			{
-				return player;
-			}
-		}
-
-		return null;
-	}
-
-	PlayerList CreatePlayer( InputDevice inputDevice ) {
-		if (playerList.Count < maxPlayers)
-		{
-
-			var player = gameObject.GetComponent<Player>();
-			player.Device = inputDevice;
-			playerList.Add( player );
-
-			return player;
-		}
-
-		return null;
-	}
-
-	void RemovePlayer( PlayerList player ) {
-		playerList.Remove( player );
-		player.Device = null;
-		Destroy( player.gameObject );
-	}
-
-
-
-	bool ThereIsNoPlayerUsingDevice( InputDevice inputDevice ) {
-		return FindPlayerUsingDevice( inputDevice ) == null;
-	}
-
-	void OnDeviceDetached( InputDevice inputDevice ) {
-		var player = FindPlayerUsingDevice( inputDevice );
-		if (player != null)
-		{
-			RemovePlayer( player );
-		}
-	}
-
+    bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
+    {
+        foreach (InputDevice player in PlayerList)
+        {
+            if (player == inputDevice)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 }

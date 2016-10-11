@@ -21,27 +21,18 @@ public class PlayerSwitching : MonoBehaviour
     public bool
         playerWin,
         DEBUG_MODE;
+    private bool[]
+        isOut;
     public DataManager data;
-    List<PlayerList> playerList = new List<PlayerList>();
 
     private void Start()
     {
         // randomPlayerOrder = DataManager.Instance.RandomPlayerOrder;
         randomPlayerOrder = false;
         // creates a player array that's the length of the number of players
-        for (int i = 0; i < Input.GetJoystickNames().Length; i++)
-        {
-            if (Input.GetJoystickNames()[i] != "")
-            {
-                playerList.Add(new PlayerList(i, "Player " + (i + 1)));
-                Debug.Log("Added " + playerList[i].readableName + " to player list");
-            }
-            else
-            {
-                Debug.LogWarning("WARNING: Empty controller found.");
-            }
-        }
-        totalPlayers = playerList.Count;
+  
+        totalPlayers = DataManager.Instance.PlayerList.Count;
+        isOut = new bool[totalPlayers];
         // only randomize players if that option is on
         if (randomPlayerOrder)
         {
@@ -66,10 +57,6 @@ public class PlayerSwitching : MonoBehaviour
                     SwitchPlayer();
                 }
             }
-            else
-            {
-                Debug.Log(playerList[0].readableName + " wins!");
-            }
         }
     }
 
@@ -89,9 +76,6 @@ public class PlayerSwitching : MonoBehaviour
             }
             // set the current index from the next index var
             currentIndex = nextIndex;
-            currentPlayer = playerList[currentIndex].playerNum;
-            // delete later, debug prints
-            Debug.Log("Switching controls to " + playerList[currentPlayer].readableName);
             // once the indexer runs through, start the timer again
             timer = turnTime;
         }
@@ -112,12 +96,12 @@ public class PlayerSwitching : MonoBehaviour
     {
         if (totalPlayers > 1)
         {
-            for (int i = 0; i < playerList.Count; i++)
+            for (int i = 0; i < DataManager.Instance.PlayerList.Count; i++)
             {
-                if (playerList[i].playerNum == currentPlayer)
+                if (i == currentIndex)
                 {
-                    playerList.RemoveAt(i);
-                    totalPlayers = playerList.Count;
+                    isOut[i] = true;
+                    totalPlayers--;
                     Debug.Log("Removed player " + i + 1);
                     Debug.Log("Total players remaining: " + totalPlayers);
                 }

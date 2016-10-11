@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using InControl;
 using System.Collections;
 using System.Collections.Generic;
+using InControl;
 
 public class CarControl : MonoBehaviour
 {
@@ -39,6 +39,8 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
+        
+
         if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !pSwitch.playerWin)
         {
             transform.rotation = Quaternion.identity;
