@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using InControl;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -11,6 +12,9 @@ public class uiManager : MonoBehaviour
     private int selectedCar;
     private int gameMode;
     private int selectedTrack;
+    private int menuIndex;
+
+    public GameObject[] containers;
 
     // void Update() {
     // 	print(GetComponent<EventSystem>().currentSelectedGameObject);
@@ -18,9 +22,38 @@ public class uiManager : MonoBehaviour
 
     void Start()
     {
+        menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
         int hey = selectedCar + gameMode + selectedTrack;
         hey += 1;
+    }
+
+    private void Update() {
+        InputDevice inputDevice = InputManager.ActiveDevice;
+
+        if (inputDevice.Action2.WasPressed && menuIndex > 0) {
+            int backIndex = menuIndex - 1;
+            if (backIndex == 2 && gameMode == 1) {backIndex--;}
+            else if (backIndex == 4) {backIndex = 0;}
+            if (menuIndex == 2) {
+                if (DataManager.Instance.PlayerList.Count <= 1) {
+                    CanvasDisplay(backIndex);
+                }
+            } else {
+                CanvasDisplay(backIndex);                
+            }
+        }
+    }
+
+    private int GetCurrentMenuIndex() {
+        for (int i = 0; i < containers.Length; i++) {
+            if (containers[i].activeSelf == true) {
+                print("Current menu index: " + i);
+                return i;
+            }
+        }
+        containers[0].SetActive(true);
+        return 0;
     }
 
     public void LoadScene(string levelName)
@@ -33,21 +66,12 @@ public class uiManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void CanvasDisplay(GameObject canvas)
+    public void CanvasDisplay(int selectedMenu)
     {
-        if (canvas.GetComponent<CanvasGroup>().alpha == 1)
-        {
-            canvas.GetComponent<CanvasGroup>().alpha = 0;
-            canvas.GetComponent<CanvasGroup>().interactable = false;
-            canvas.GetComponent<CanvasGroup>().blocksRaycasts = false;
-            canvas.SetActive(false);
-        }
-        else {
-            canvas.GetComponent<CanvasGroup>().alpha = 1;
-            canvas.GetComponent<CanvasGroup>().interactable = true;
-            canvas.GetComponent<CanvasGroup>().blocksRaycasts = true;
-            canvas.SetActive(true);
-        }
+        containers[menuIndex].SetActive(false);
+        containers[selectedMenu].SetActive(true);
+        menuIndex = selectedMenu;
+        print("Current menu index: " + menuIndex);
     }
 
     public void SetGameMode(int mode)
