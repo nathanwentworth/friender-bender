@@ -32,24 +32,21 @@ public class CarControl : MonoBehaviour
     private void Start()
     {
         newCarHealth = carHealth;
-		// AkSoundEngine.PostEvent (4272623338, this.gameObject);
+        // AkSoundEngine.PostEvent (4272623338, this.gameObject);
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
     }
 
     private void Update()
     {
-        
-
         if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !pSwitch.playerWin)
         {
             transform.rotation = Quaternion.identity;
             rigid.velocity = Vector3.zero;
             transform.position = carOriginTrans;
-
         }
         //Gamestate stuff
-        currentPlayer = pSwitch.currentPlayer;
+        currentPlayer = pSwitch.currentIndex;
         if (!pSwitch.DEBUG_MODE)
         {
             if (newCarHealth <= 0)
@@ -63,19 +60,9 @@ public class CarControl : MonoBehaviour
         //CONTROLS
         if (!pSwitch.playerWin)
         {
-            #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
-                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_mac");
-                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_mac"), 0.4f, 1.0f);
-                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_mac"), Input.GetAxis("Vertical0_mac"));
-            #endif
-            #if UNITY_STANDALONE_WIN || UNITY_EDITOR_WIN
-                brakingForce = -Input.GetAxis("Brake" + currentPlayer + "_win");
-                accelerationForce = Mathf.Clamp(Input.GetAxis("Accelerate" + currentPlayer + "_win"), 0.4f, 1.0f);
-                x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer + "_win"), Input.GetAxis("Vertical0_win"));
-            #endif
-            // brakingForce = -Input.GetAxis("Brake" + currentPlayer);
-            // print("currentPlayer: " + currentPlayer + ", accelerationForce: " + accelerationForce);
-            // x_Input = new Vector2(Input.GetAxis("Horizontal" + currentPlayer), Input.GetAxis("Vertical0"));
+            brakingForce = -DataManager.Instance.PlayerList[currentPlayer].LeftTrigger.Value;
+            accelerationForce = Mathf.Clamp(DataManager.Instance.PlayerList[currentPlayer].RightTrigger.Value, 0.4f, 1.0f);
+            x_Input = new Vector2(DataManager.Instance.PlayerList[currentPlayer].LeftStickX.Value, DataManager.Instance.PlayerList[currentPlayer].LeftStickY.Value);
             //Hardcoded deadzone
             if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
             else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
@@ -96,8 +83,8 @@ public class CarControl : MonoBehaviour
         // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
         //print(steering);
 
-		//Wwise engine sound! Sets RTPC "engine_pitch"
-		// AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
+        //Wwise engine sound! Sets RTPC "engine_pitch"
+        // AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -119,12 +106,12 @@ public class CarControl : MonoBehaviour
             if (!axleInfo.leftWheel.isGrounded && !axleInfo.rightWheel.isGrounded)
             {
                 // rigid.centerOfMass = newCom;
-				// AkSoundEngine.SetRTPCValue ("car_grounded", 70);
+                // AkSoundEngine.SetRTPCValue ("car_grounded", 70);
             }
             else
             {
                 // rigid.centerOfMass = originCom;
-				// AkSoundEngine.SetRTPCValue ("car_grounded", 60);
+                // AkSoundEngine.SetRTPCValue ("car_grounded", 60);
             }
             //Anti Roll Bar Code: DOESNT WORK
             //WheelHit hit = new WheelHit();
@@ -217,12 +204,14 @@ public class CarControl : MonoBehaviour
         {
             if (!isDisabled)
             {
-                foreach (Renderer child in renderers) {
+                foreach (Renderer child in renderers)
+                {
                     child.enabled = false;
                     isDisabled = true;
                 }
             }
-            else {
+            else
+            {
                 foreach (Renderer child in renderers)
                 {
                     child.enabled = true;

@@ -8,11 +8,10 @@ public class PlayerSwitching : MonoBehaviour
 {
 
     private int
-        currentIndex = 0,
         nextIndex,
         totalPlayers;
     public int
-        currentPlayer;
+        currentIndex = 0;
     public float
         timer,
         turnTime = 7;
@@ -27,17 +26,8 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Start()
     {
-        // randomPlayerOrder = DataManager.Instance.RandomPlayerOrder;
-        randomPlayerOrder = false;
-        // creates a player array that's the length of the number of players
-  
         totalPlayers = DataManager.Instance.PlayerList.Count;
         isOut = new bool[totalPlayers];
-        // only randomize players if that option is on
-        if (randomPlayerOrder)
-        {
-            // ShuffleArray(players);
-        }
         // Start the timer
         timer = turnTime;
     }
