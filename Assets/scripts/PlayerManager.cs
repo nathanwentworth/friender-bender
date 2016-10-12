@@ -2,12 +2,14 @@
 using System.Collections;
 using InControl;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
 
     const int maxPlayers = 4;
     List<InputDevice> PlayerList = new List<InputDevice>(maxPlayers);
+    public Text playersText;
 
     void Update()
     {
@@ -16,11 +18,13 @@ public class PlayerManager : MonoBehaviour
         if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice))
         {
             PlayerList.Add(inputDevice);
+            DisplayNumberOfPlayers();
         }
 
         if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice))
         {
             PlayerList.Remove(inputDevice);
+            DisplayNumberOfPlayers();
         }
 
         DataManager.Instance.PlayerList = PlayerList;
@@ -28,12 +32,16 @@ public class PlayerManager : MonoBehaviour
 
     bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
     {
-        return inputDevice.Action1.WasPressed || inputDevice.Command.WasPressed;
+        return inputDevice.Action1.WasPressed;
     }
 
     bool LeaveButtonWasPressedOnDevice(InputDevice inputDevice)
     {
         return inputDevice.Action2.WasPressed;
+    }
+
+    private void DisplayNumberOfPlayers() {
+        playersText.text = DataManager.Instance.PlayerList.Count + "";
     }
 
     bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
@@ -42,10 +50,10 @@ public class PlayerManager : MonoBehaviour
         {
             if (player == inputDevice)
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
 
