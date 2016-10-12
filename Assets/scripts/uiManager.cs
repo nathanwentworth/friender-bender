@@ -43,6 +43,11 @@ public class uiManager : MonoBehaviour
                 CanvasDisplay(backIndex);                
             }
         }
+        else if (inputDevice.Command.WasPressed && menuIndex == 2) {
+            // If the start button is pressed in the player select screen
+            // go to the next menu!
+            CanvasDisplay(3);
+        }
     }
 
     private int GetCurrentMenuIndex() {
