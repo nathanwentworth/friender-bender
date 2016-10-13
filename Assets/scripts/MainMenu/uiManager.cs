@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 using InControl;
 using UnityEngine.SceneManagement;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
+
 
 public class uiManager : MonoBehaviour
 {
@@ -16,10 +13,6 @@ public class uiManager : MonoBehaviour
 
     public GameObject[] containers;
 
-    // void Update() {
-    // 	print(GetComponent<EventSystem>().currentSelectedGameObject);
-    // }
-
     void Start()
     {
         menuIndex = GetCurrentMenuIndex();
@@ -28,31 +21,40 @@ public class uiManager : MonoBehaviour
         hey += 1;
     }
 
-    private void Update() {
+    private void Update()
+    {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        if (inputDevice.Action2.WasPressed && menuIndex > 0) {
+        if (inputDevice.Action2.WasPressed && menuIndex > 0)
+        {
             int backIndex = menuIndex - 1;
-            if (backIndex == 2 && gameMode == 1) {backIndex--;}
-            else if (backIndex == 4) {backIndex = 0;}
-            if (menuIndex == 2) {
-                if (DataManager.Instance.PlayerList.Count <= 1) {
+            if (backIndex == 2 && gameMode == 1) { backIndex--; }
+            else if (backIndex == 4) { backIndex = 0; }
+            else if (menuIndex == 2)
+            {
+                if (DataManager.PlayerList.Count <= 1)
+                {
                     CanvasDisplay(backIndex);
                 }
-            } else {
-                CanvasDisplay(backIndex);                
+            }
+            else {
+                CanvasDisplay(backIndex);
             }
         }
-        else if (inputDevice.Command.WasPressed && menuIndex == 2) {
+        else if (inputDevice.Command.WasPressed && menuIndex == 2)
+        {
             // If the start button is pressed in the player select screen
             // go to the next menu!
             CanvasDisplay(3);
         }
     }
 
-    private int GetCurrentMenuIndex() {
-        for (int i = 0; i < containers.Length; i++) {
-            if (containers[i].activeSelf == true) {
+    private int GetCurrentMenuIndex()
+    {
+        for (int i = 0; i < containers.Length; i++)
+        {
+            if (containers[i].activeSelf == true)
+            {
                 print("Current menu index: " + i);
                 return i;
             }

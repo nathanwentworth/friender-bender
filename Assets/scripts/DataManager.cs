@@ -2,68 +2,54 @@
 using System.Collections.Generic;
 using InControl;
 
-public class DataManager : MonoBehaviour
+public static class DataManager
 {
 
-    public static DataManager Instance { get; private set; }
-    public List<InputDevice> PlayerList = new List<InputDevice>();
+    public static List<InputDevice> PlayerList = new List<InputDevice>();
 
-private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(this.gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-        DontDestroyOnLoad(transform.gameObject);
-    }
-
-    private int
+    private static int
         currentIndex,
         totalPlayers,
         currentMPH;
 
-    private float
+    private static float
         turnTime;
 
-    private int[]
+    private static int[]
         playerArr;
 
-    private bool
+    private static bool
         randomPlayerOrder;
 
-    public int CurrentIndex
+    public static int CurrentIndex
     {
         get { return currentIndex; }
         set { currentIndex = value; }
     }
-    public int TotalPlayers
+    public static int TotalPlayers
     {
         get { return totalPlayers; }
         set { totalPlayers = value; }
     }
-    public int CurrentMPH
+    public static int CurrentMPH
     {
         get { return currentMPH; }
         set { currentMPH = value; }
     }
 
-    public float TurnTime
+    public static float TurnTime
     {
         get { return turnTime; }
         set { turnTime = value; }
     }
 
-    public int[] PlayerArr
+    public static int[] PlayerArr
     {
         get { return playerArr; }
         set { playerArr = value; }
     }
 
-    public bool RandomPlayerOrder
+    public static bool RandomPlayerOrder
     {
         get { return randomPlayerOrder; }
         set { randomPlayerOrder = value; }

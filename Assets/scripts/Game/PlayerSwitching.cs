@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-// remove scenemanagement later!
-using UnityEngine.SceneManagement;
 
 public class PlayerSwitching : MonoBehaviour
 {
 
     private int
-        nextIndex,
-        totalPlayers;
+        totalPlayers,
+        remainingPlayers;
     public int
         currentIndex = 0;
     public float
@@ -22,12 +18,12 @@ public class PlayerSwitching : MonoBehaviour
         DEBUG_MODE;
     private bool[]
         isOut;
-    public DataManager data;
 
     private void Start()
     {
-        totalPlayers = DataManager.Instance.PlayerList.Count;
-        isOut = new bool[totalPlayers];
+        totalPlayers = DataManager.TotalPlayers;
+        remainingPlayers = totalPlayers;
+        isOut = new bool[remainingPlayers];
         // Start the timer
         timer = turnTime;
     }
@@ -54,15 +50,20 @@ public class PlayerSwitching : MonoBehaviour
     {
         if (!playerWin)
         {
-            // increment the index up one
-            nextIndex = currentIndex + 1;
-            // if the next index is past the array length, loop it back to zero
-            if (nextIndex >= totalPlayers)
+            int nextIndex = 0;
+            while (true)
             {
-                // maybe put the shuffle in here so that it randomizes constantly?
-                // only real downside is that it could have people go more than once in a row
-                // but hey that might actually be fun!
-                nextIndex = 0;
+                // increment the index up one
+                nextIndex = currentIndex + 1;
+                // if the next index is past the array length, loop it back to zero
+                if (nextIndex >= totalPlayers)
+                {
+                    nextIndex = 0;
+                }
+                if(isOut[nextIndex] == false)
+                {
+                    break;
+                }
             }
             // set the current index from the next index var
             currentIndex = nextIndex;
@@ -71,35 +72,28 @@ public class PlayerSwitching : MonoBehaviour
         }
     }
 
-    public static void ShuffleArray<T>(T[] arr)
-    {
-        for (int i = arr.Length - 1; i > 0; i--)
-        {
-            int r = Random.Range(0, i);
-            T tmp = arr[i];
-            arr[i] = arr[r];
-            arr[r] = tmp;
-        }
-    }
-
     public void RemovePlayer()
     {
-        if (totalPlayers > 1)
+        if (remainingPlayers > 1)
         {
-            for (int i = 0; i < DataManager.Instance.PlayerList.Count; i++)
+            for (int i = 0; i < DataManager.PlayerList.Count; i++)
             {
                 if (i == currentIndex)
                 {
                     isOut[i] = true;
-                    totalPlayers--;
+                    remainingPlayers--;
                     Debug.Log("Removed player " + i + 1);
-                    Debug.Log("Total players remaining: " + totalPlayers);
+                    Debug.Log("Total players remaining: " + remainingPlayers);
                 }
             }
         }
-        if (totalPlayers == 1)
+        if (remainingPlayers == 1)
         {
             playerWin = true;
+        }
+        else
+        {
+            SwitchPlayer();
         }
 
     }

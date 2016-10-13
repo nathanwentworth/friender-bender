@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using InControl;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -27,7 +26,8 @@ public class PlayerManager : MonoBehaviour
             DisplayNumberOfPlayers();
         }
 
-        DataManager.Instance.PlayerList = PlayerList;
+        DataManager.PlayerList = PlayerList;
+        DataManager.TotalPlayers = PlayerList.Count;
     }
 
     bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void DisplayNumberOfPlayers() {
-        playersText.text = DataManager.Instance.PlayerList.Count + "";
+        playersText.text = DataManager.PlayerList.Count + "";
     }
 
     bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
