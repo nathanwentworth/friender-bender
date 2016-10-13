@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PlayerSwitching : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class PlayerSwitching : MonoBehaviour
         totalPlayers = DataManager.TotalPlayers;
         remainingPlayers = totalPlayers;
         isOut = new bool[remainingPlayers];
+        for(int i = 0; i < totalPlayers; i++)
+        {
+            isOut[i] = false;
+        }
         // Start the timer
         timer = turnTime;
     }
@@ -48,35 +53,29 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        if (!playerWin)
+        int nextIndex = currentIndex + 1;
+        for(int i = 0; i < totalPlayers; i++)
         {
-            int nextIndex = 0;
-            while (true)
+            if(nextIndex + i == 4)
             {
-                // increment the index up one
-                nextIndex = currentIndex + 1;
-                // if the next index is past the array length, loop it back to zero
-                if (nextIndex >= totalPlayers)
-                {
-                    nextIndex = 0;
-                }
-                if(isOut[nextIndex] == false)
-                {
-                    break;
-                }
+                nextIndex = 0;
             }
-            // set the current index from the next index var
-            currentIndex = nextIndex;
-            // once the indexer runs through, start the timer again
-            timer = turnTime;
+            else if (!isOut[nextIndex])
+            {
+                break;
+            }
         }
+        // set the current index from the next index var
+        currentIndex = nextIndex;
+        // once the indexer runs through, start the timer again
+        timer = turnTime;
     }
 
     public void RemovePlayer()
     {
         if (remainingPlayers > 1)
         {
-            for (int i = 0; i < DataManager.PlayerList.Count; i++)
+            for (int i = 0; i < totalPlayers; i++)
             {
                 if (i == currentIndex)
                 {
