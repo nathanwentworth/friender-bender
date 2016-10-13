@@ -17,7 +17,6 @@ public class PlayerManager : MonoBehaviour
         if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice))
         {
             PlayerList.Add(inputDevice);
-            Debug.Log(inputDevice.GetHashCode());
             DisplayNumberOfPlayers();
         }
 

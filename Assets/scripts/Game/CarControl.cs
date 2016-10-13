@@ -57,8 +57,7 @@ public class CarControl : MonoBehaviour
         if (!playerSwitch.playerWin)
         {
             InputDevice controller = DataManager.PlayerList[currentIndex];
-            Debug.Log(controller.GetHashCode());
-            brakingForce = InputManager.ActiveDevice.LeftTrigger.Value;
+            brakingForce = controller.LeftTrigger.Value;
             accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
             x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
             //Hardcoded deadzone
