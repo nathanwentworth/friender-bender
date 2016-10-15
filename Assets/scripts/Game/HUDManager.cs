@@ -31,7 +31,8 @@ public class HUDManager : MonoBehaviour
 
     void Update()
     {
-        if (InputManager.ActiveDevice.Command.WasPressed)
+        InputDevice Controller = DataManager.PlayerList[playerSwitch.currentIndex];
+        if (Controller.Command.WasPressed)
         {
             if (pauseCanvas.activeSelf)
             {

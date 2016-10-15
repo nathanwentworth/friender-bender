@@ -14,20 +14,19 @@ public class PlayerManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice))
+        if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice) && ListIsntFull())
         {
             PlayerList.Add(inputDevice);
+            UpdateDataManager();
             DisplayNumberOfPlayers();
         }
 
-        if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice))
+        if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice) && DataManager.TotalPlayers > 0)
         {
             PlayerList.Remove(inputDevice);
+            UpdateDataManager();
             DisplayNumberOfPlayers();
         }
-
-        DataManager.PlayerList = PlayerList;
-        DataManager.TotalPlayers = PlayerList.Count;
     }
 
     bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
@@ -40,8 +39,17 @@ public class PlayerManager : MonoBehaviour
         return inputDevice.Action2.WasPressed;
     }
 
+    bool ListIsntFull()
+    {
+        if(DataManager.TotalPlayers == maxPlayers)
+        {
+            return false;
+        }
+        return true;
+    }
+
     private void DisplayNumberOfPlayers() {
-        playersText.text = DataManager.PlayerList.Count + "";
+        playersText.text = DataManager.TotalPlayers + "";
     }
 
     bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
@@ -56,5 +64,10 @@ public class PlayerManager : MonoBehaviour
         return true;
     }
 
-
+    private void UpdateDataManager()
+    {
+        DataManager.PlayerList = PlayerList;
+        DataManager.TotalPlayers = PlayerList.Count;
+        Debug.Log(DataManager.TotalPlayers);
+    }
 }

@@ -12,6 +12,9 @@ public static class DataManager
         totalPlayers,
         currentMPH;
 
+    private static GameMode
+        currentGameMode;
+
     private static float
         turnTime;
 
@@ -20,6 +23,19 @@ public static class DataManager
 
     private static bool
         randomPlayerOrder;
+
+    public enum GameMode
+    {
+        None,
+        Party,
+        HotPotato
+    }
+
+    public static GameMode CurrentGameMode
+    {
+        get { return currentGameMode; }
+        set { currentGameMode = value; }
+    }
 
     public static int CurrentIndex
     {

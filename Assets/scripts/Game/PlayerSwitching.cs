@@ -11,11 +11,14 @@ public class PlayerSwitching : MonoBehaviour
         currentIndex = 0;
     public float
         timer,
+        passingControllerTimer,
+        passTime = 3,
         turnTime = 7;
     private bool
         randomPlayerOrder;
     public bool
         playerWin,
+        passingController,
         DEBUG_MODE;
     private bool[]
         isOut;
@@ -47,28 +50,45 @@ public class PlayerSwitching : MonoBehaviour
                 {
                     SwitchPlayer();
                 }
+                if (passingController)
+                {
+                    passingControllerTimer -= Time.deltaTime;
+                    if(passingControllerTimer <= 0)
+                    {
+
+                    }
+                }
             }
         }
     }
 
     private void SwitchPlayer()
     {
-        int nextIndex = currentIndex + 1;
-        for(int i = 0; i < totalPlayers; i++)
+        if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
         {
-            if(nextIndex + i == 4)
+            int nextIndex = currentIndex + 1;
+            for (int i = 0; i < totalPlayers; i++)
             {
-                nextIndex = 0;
+                if (nextIndex + i == 4)
+                {
+                    nextIndex = 0;
+                }
+                else if (!isOut[nextIndex])
+                {
+                    break;
+                }
             }
-            else if (!isOut[nextIndex])
-            {
-                break;
-            }
+            // set the current index from the next index var
+            currentIndex = nextIndex;
+            // once the indexer runs through, start the timer again
+            timer = turnTime;
         }
-        // set the current index from the next index var
-        currentIndex = nextIndex;
-        // once the indexer runs through, start the timer again
-        timer = turnTime;
+        else
+        {
+            Time.timeScale = 0;
+            passingControllerTimer = passTime;
+            passingController = true;
+        }
     }
 
     public void RemovePlayer()

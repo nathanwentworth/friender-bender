@@ -7,7 +7,7 @@ public class uiManager : MonoBehaviour
 {
 
     private int selectedCar;
-    private int gameMode;
+    private int gameMode = 0;
     private int selectedTrack;
     private int menuIndex;
 
@@ -25,27 +25,42 @@ public class uiManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        if (inputDevice.Action2.WasPressed && menuIndex > 0)
+        if (menuIndex != 1 && inputDevice.Action2.WasPressed)
         {
             int backIndex = menuIndex - 1;
-            if (backIndex == 2 && gameMode == 1) { backIndex--; }
-            else if (backIndex == 4) { backIndex = 0; }
-            else if (menuIndex == 2)
+            switch (backIndex)
             {
-                if (DataManager.PlayerList.Count <= 1)
-                {
-                    CanvasDisplay(backIndex);
-                }
+                case -1:
+                    backIndex = 1;
+                    break;
+                case 2:
+                    if (DataManager.TotalPlayers == 0)
+                    {
+                        break;
+                    }
+                    return;
+                case 3:
+                    backIndex--;
+                    break;
+                case 4:
+                    Debug.Log("Clearing Player List and setting Total Players to 0...");
+                    DataManager.PlayerList.Clear();
+                    DataManager.TotalPlayers = 0;
+                    if(gameMode == 0)
+                    {
+                        backIndex--;
+                    }
+                    break;
+                default:
+                    break;
             }
-            else {
-                CanvasDisplay(backIndex);
-            }
+            CanvasDisplay(backIndex);
         }
-        else if (inputDevice.Command.WasPressed && menuIndex == 2)
+        else if (menuIndex == 3 && inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1)
         {
             // If the start button is pressed in the player select screen
             // go to the next menu!
-            CanvasDisplay(3);
+            CanvasDisplay(5);
         }
     }
 
@@ -55,7 +70,7 @@ public class uiManager : MonoBehaviour
         {
             if (containers[i].activeSelf == true)
             {
-                print("Current menu index: " + i);
+                Debug.Log("Current menu index: " + i);
                 return i;
             }
         }
@@ -78,7 +93,7 @@ public class uiManager : MonoBehaviour
         containers[menuIndex].SetActive(false);
         containers[selectedMenu].SetActive(true);
         menuIndex = selectedMenu;
-        print("Current menu index: " + menuIndex);
+        Debug.Log("Current menu index: " + menuIndex);
     }
 
     public void SetGameMode(int mode)
@@ -86,14 +101,16 @@ public class uiManager : MonoBehaviour
         gameMode = mode;
         if (mode == 0)
         {
-            print("selected normal mode!");
+            Debug.Log("Selected Party mode!");
+            DataManager.CurrentGameMode = DataManager.GameMode.Party;
         }
         else if (mode == 1)
         {
-            print("selected potato mode!");
-        }
-        else {
-            print("<color=red>error!</color> a nonexistent game mode was selected");
+            Debug.Log("Selected Hot Potato mode!");
+            DataManager.CurrentGameMode = DataManager.GameMode.HotPotato;
+            DataManager.PlayerList.Add(InputManager.ActiveDevice);
+            DataManager.TotalPlayers = 1;
+            Debug.Log("Added Device: " + InputManager.ActiveDevice);
         }
     }
 
@@ -103,18 +120,22 @@ public class uiManager : MonoBehaviour
         switch (track)
         {
             case 1:
-                print("Selected Easy");
+                Debug.Log("Selected Easy");
                 break;
             case 2:
-                print("Selected Med");
+                Debug.Log("Selected Med");
                 break;
             case 3:
-                print("Selected Hard");
-                break;
-            default:
-                print("Dunno what happened there, but something went wrong.");
+                Debug.Log("Selected Hard");
                 break;
         }
+    }
+
+    public void SelectNumberOfPlayers(int players)
+    {
+        Debug.Log(players + " total players");
+        DataManager.TotalPlayers = players;
+        CanvasDisplay(5);
     }
 
     void RotateCarModel()
@@ -128,22 +149,19 @@ public class uiManager : MonoBehaviour
         switch (car)
         {
             case 1:
-                print("Selected Gremlin");
+                Debug.Log("Selected Gremlin");
                 break;
             case 2:
-                print("Selected Banana");
+                Debug.Log("Selected Banana");
                 break;
             case 3:
-                print("Selected Big Wheel");
+                Debug.Log("Selected Big Wheel");
                 break;
             case 4:
-                print("Selected Verminator");
+                Debug.Log("Selected Verminator");
                 break;
             case 5:
-                print("Selected AE86");
-                break;
-            default:
-                print("Dunno what happened there, but something went wrong.");
+                Debug.Log("Selected AE86");
                 break;
         }
     }
