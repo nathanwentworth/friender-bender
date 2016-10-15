@@ -12,6 +12,11 @@ public class uiManager : MonoBehaviour
     private int menuIndex;
 
     public GameObject[] containers;
+    public GameObject rotatingModel;
+    public Mesh[] cars;
+    public Mesh[] tracks;
+
+    System.Random random = new System.Random();
 
     void Start()
     {
@@ -61,6 +66,12 @@ public class uiManager : MonoBehaviour
             // If the start button is pressed in the player select screen
             // go to the next menu!
             CanvasDisplay(5);
+        }
+        else if (menuIndex == 5) {
+            RotateModel(cars);
+        }
+        else if (menuIndex == 6) {
+          RotateModel(tracks);
         }
     }
 
@@ -138,9 +149,21 @@ public class uiManager : MonoBehaviour
         CanvasDisplay(5);
     }
 
-    void RotateCarModel()
+    void RotateModel(Mesh[] models)
     {
-
+      Mesh activeMesh;
+      int buttonNum;
+      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
+      bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
+      if (buttonNumSuccess) {
+        activeMesh = models[buttonNum];
+      } else {
+        activeMesh = models[random.Next(0, 4)];
+      }
+      
+      rotatingModel.GetComponent<MeshFilter>().sharedMesh = activeMesh;
+      rotatingModel.SetActive(true);
     }
 
     public void SetCar(int car)
