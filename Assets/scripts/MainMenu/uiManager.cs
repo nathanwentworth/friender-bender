@@ -17,6 +17,7 @@ public class uiManager : MonoBehaviour
     {
         menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
+        // FLOCKA
         int hey = selectedCar + gameMode + selectedTrack;
         hey += 1;
     }
