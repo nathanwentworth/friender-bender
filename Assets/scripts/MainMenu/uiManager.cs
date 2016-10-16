@@ -13,8 +13,8 @@ public class uiManager : MonoBehaviour
 
     public GameObject[] containers;
     public GameObject rotatingModel;
-    public Mesh[] cars;
-    public Mesh[] tracks;
+    public Mesh[] carModels;
+    public Mesh[] trackModels;
 
     System.Random random = new System.Random();
 
@@ -68,10 +68,10 @@ public class uiManager : MonoBehaviour
             CanvasDisplay(5);
         }
         else if (menuIndex == 5) {
-            RotateModel(cars);
+            RotateModel(carModels);
         }
         else if (menuIndex == 6) {
-          RotateModel(tracks);
+          RotateModel(trackModels);
         }
     }
 

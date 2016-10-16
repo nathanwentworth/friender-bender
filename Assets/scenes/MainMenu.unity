@@ -1817,8 +1817,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 339.9338, y: -431.91064}
-  m_SizeDelta: {x: 599.8676, y: 783.8213}
+  m_AnchoredPosition: {x: 319.96802, y: -226}
+  m_SizeDelta: {x: 559.93604, y: 372}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &554132885
 MonoBehaviour:
@@ -3199,7 +3199,7 @@ GameObject:
   - 23: {fileID: 1124975717}
   - 95: {fileID: 1124975721}
   m_Layer: 0
-  m_Name: car-model
+  m_Name: rotating-model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3218,7 +3218,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: daab54160ddf946108343eacd3d864d8, type: 2}
+  - {fileID: 2100000, guid: 9e783a89abeb74beb98d888143881a21, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -5319,13 +5319,13 @@ MonoBehaviour:
   - {fileID: 298478579}
   - {fileID: 1532567826}
   rotatingModel: {fileID: 1124975716}
-  cars:
+  carModels:
   - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
   - {fileID: 4300000, guid: f5a957bf0cc008842bef7513fd8ae3c8, type: 3}
-  - {fileID: 4300000, guid: 562fd142620a70741a0fae0465accf8d, type: 3}
-  - {fileID: 4300000, guid: c7eed096166d78746a3e69e324f549bc, type: 3}
-  - {fileID: 4300000, guid: 3b85410f573a8f9419c305700e642e4c, type: 3}
-  tracks:
+  - {fileID: 4300000, guid: 419a8ba4798e3db4b9122ae0f9fa56a8, type: 3}
+  - {fileID: 4300000, guid: 1cb81649d2f8d88409bdf450d0f56227, type: 3}
+  - {fileID: 4300000, guid: 22d502d9eba004a4aa9feac007bce425, type: 3}
+  trackModels:
   - {fileID: 4300002, guid: 050c8c8f4101ffa40a736bc66b23bec7, type: 3}
   - {fileID: 4300000, guid: 050c8c8f4101ffa40a736bc66b23bec7, type: 3}
 --- !u!1 &2026418426
@@ -5428,7 +5428,7 @@ RectTransform:
   m_Father: {fileID: 1532567830}
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.8}
+  m_AnchorMax: {x: 0.3333, y: 0.8}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5440,7 +5440,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2057828290}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -405508275, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 1297475563, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
@@ -5449,7 +5449,7 @@ MonoBehaviour:
     m_Top: 40
     m_Bottom: 40
   m_ChildAlignment: 0
-  m_Spacing: 20
+  m_Spacing: 40
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
 --- !u!222 &2057828293
@@ -5492,8 +5492,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 959.8014, y: -431.91064}
-  m_SizeDelta: {x: 599.8676, y: 783.8213}
+  m_AnchoredPosition: {x: 319.96802, y: -638}
+  m_SizeDelta: {x: 559.93604, y: 372}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058799910
 MonoBehaviour:
