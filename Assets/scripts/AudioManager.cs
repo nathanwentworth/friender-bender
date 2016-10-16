@@ -1,7 +1,26 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-	/*How can I make it so that the AudioManager detects all the audio sources attached to the object? My thinking being that if it can detect that, then it can know what functions and what don't, without having to manually wire them up every blody time?*/
+	[Header("Impact Audio Source on Car")]
+	public AudioSource ImpactSource;
+
+	[Header("Low-Speed Impact Sounds")]
+	public AudioClip LowSpeedImpact1;
+	public AudioClip LowSpeedImpact2;
+	public AudioClip LowSpeedImpact3;
+	private AudioClip[] Impacts;
+
+	public void Start(){
+		Impacts = new AudioClip[]{LowSpeedImpact1, LowSpeedImpact2, LowSpeedImpact3};
+	}
+
+	public void LowImpact(){
+		ImpactSource.clip = Impacts [Random.Range(0, Impacts.Length)];
+		ImpactSource.Play ();
+		Debug.Log ("Low-Speed Impact");
+	}
+
 }

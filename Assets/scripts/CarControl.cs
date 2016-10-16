@@ -29,6 +29,11 @@ public class CarControl : MonoBehaviour
 
     private Vector3 carOriginTrans;
 
+	[Header("Audio Bits")]
+	//public GameObject AudioManagerObj;
+	public AudioManager AudioManagerScript;
+	public AudioSource carEngine;
+
     private void Start()
     {
         newCarHealth = carHealth;
@@ -94,8 +99,8 @@ public class CarControl : MonoBehaviour
         // ((1200f - (motor * 0.75f)) / 1200f) old motor calculation
         //print(steering);
 
-		//Wwise engine sound! Sets RTPC "engine_pitch"
-		// AkSoundEngine.SetRTPCValue("engine_pitch", rigid.velocity.magnitude);
+		//Changes the pitch of the engine audioSource
+		carEngine.pitch = ((mph * 0.01f) - 0.3f);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -173,6 +178,7 @@ public class CarControl : MonoBehaviour
                 {
                     StartCoroutine("DamageCooldown");
                 }
+				AudioManagerScript.LowImpact ();
             }
             else if (mph > 65 && mph < 94)
             {
