@@ -55,6 +55,7 @@ public class PlayerSwitching : MonoBehaviour
                     if (System.DateTime.Now.Second - passingControllerTime >= passTime)
                     {
                         Time.timeScale = 1;
+                        passingController = false;
                     }
                 }
             }
@@ -63,15 +64,15 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        int nextIndex = currentIndex + 1;
+        int nextIndex = currentIndex;
         for (int i = 0; i < totalPlayers; i++)
         {
+            nextIndex++;
             if (nextIndex + i == totalPlayers)
             {
-                Debug.Log("Total Players: " + totalPlayers + ", Next Index: " + nextIndex);
                 nextIndex = 0;
             }
-            else if (!isOut[nextIndex])
+            if (!isOut[nextIndex])
             {
                 break;
             }
