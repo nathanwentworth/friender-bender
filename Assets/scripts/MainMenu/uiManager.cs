@@ -26,6 +26,13 @@ public class uiManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
+        if(menuIndex == 2 && inputDevice.AnyButtonWasPressed)
+        {
+            DataManager.PlayerList.Add(inputDevice);
+            DataManager.TotalPlayers = 1;
+            Debug.Log("Added Device: " + inputDevice);
+        }
+
         if (menuIndex != 1 && inputDevice.Action2.WasPressed)
         {
             int backIndex = menuIndex - 1;
@@ -42,11 +49,11 @@ public class uiManager : MonoBehaviour
                     return;
                 case 3:
                     backIndex--;
-                    break;
-                case 4:
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
                     DataManager.PlayerList.Clear();
                     DataManager.TotalPlayers = 0;
+                    break;
+                case 4:
                     if(gameMode == 0)
                     {
                         backIndex--;
@@ -109,9 +116,6 @@ public class uiManager : MonoBehaviour
         {
             Debug.Log("Selected Hot Potato mode!");
             DataManager.CurrentGameMode = DataManager.GameMode.HotPotato;
-            DataManager.PlayerList.Add(InputManager.ActiveDevice);
-            DataManager.TotalPlayers = 1;
-            Debug.Log("Added Device: " + InputManager.ActiveDevice);
         }
     }
 
