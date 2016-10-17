@@ -3213,6 +3213,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000013360064992, guid: afffbe96fcb38498c8215e435c0a826e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224000014255291212, guid: afffbe96fcb38498c8215e435c0a826e,
         type: 2}
       propertyPath: m_LocalPosition.x
@@ -3367,6 +3372,21 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000013360064992, guid: afffbe96fcb38498c8215e435c0a826e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013360064992, guid: afffbe96fcb38498c8215e435c0a826e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013360064992, guid: afffbe96fcb38498c8215e435c0a826e,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: afffbe96fcb38498c8215e435c0a826e, type: 2}
   m_IsPrefabParent: 0
@@ -3375,6 +3395,19 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000011670704128, guid: afffbe96fcb38498c8215e435c0a826e,
     type: 2}
   m_PrefabInternal: {fileID: 452212359}
+--- !u!114 &452212361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 452212360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventSys: {fileID: 41235354}
+  activeButton: {fileID: 1134789353}
 --- !u!1001 &466137549
 Prefab:
   m_ObjectHideFlags: 0
@@ -6319,8 +6352,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentIndex: 0
   timer: 0
+  passingControllerTimer: 0
+  passTime: 3
   turnTime: 7
   playerWin: 0
+  passingController: 0
   DEBUG_MODE: 0
 --- !u!4 &740151043
 Transform:

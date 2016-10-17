@@ -11,7 +11,7 @@ public class PlayerSwitching : MonoBehaviour
         currentIndex = 0;
     public float
         timer,
-        passingControllerTimer,
+        passingControllerTime,
         passTime = 3,
         turnTime = 7;
     private bool
@@ -28,7 +28,7 @@ public class PlayerSwitching : MonoBehaviour
         totalPlayers = DataManager.TotalPlayers;
         remainingPlayers = totalPlayers;
         isOut = new bool[remainingPlayers];
-        for(int i = 0; i < totalPlayers; i++)
+        for (int i = 0; i < totalPlayers; i++)
         {
             isOut[i] = false;
         }
@@ -52,10 +52,9 @@ public class PlayerSwitching : MonoBehaviour
                 }
                 if (passingController)
                 {
-                    passingControllerTimer -= Time.deltaTime;
-                    if(passingControllerTimer <= 0)
+                    if (System.DateTime.Now.Second - passingControllerTime >= passTime)
                     {
-
+                        Time.timeScale = 1;
                     }
                 }
             }
@@ -64,51 +63,48 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
+        int nextIndex = currentIndex + 1;
+        for (int i = 0; i < totalPlayers; i++)
         {
-            int nextIndex = currentIndex + 1;
-            for (int i = 0; i < totalPlayers; i++)
+            if (nextIndex + i == totalPlayers)
             {
-                if (nextIndex + i == 4)
-                {
-                    nextIndex = 0;
-                }
-                else if (!isOut[nextIndex])
-                {
-                    break;
-                }
+                Debug.Log("Total Players: " + totalPlayers + ", Next Index: " + nextIndex);
+                nextIndex = 0;
             }
-            // set the current index from the next index var
-            currentIndex = nextIndex;
-            // once the indexer runs through, start the timer again
-            timer = turnTime;
+            else if (!isOut[nextIndex])
+            {
+                break;
+            }
         }
-        else
+        // set the current index from the next index var
+        currentIndex = nextIndex;
+        if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
+            passingControllerTime = System.DateTime.Now.Second;
             Time.timeScale = 0;
-            passingControllerTimer = passTime;
             passingController = true;
         }
+        timer = turnTime;
     }
 
     public void RemovePlayer()
     {
-        if (remainingPlayers > 1)
-        {
-            for (int i = 0; i < totalPlayers; i++)
-            {
-                if (i == currentIndex)
-                {
-                    isOut[i] = true;
-                    remainingPlayers--;
-                    Debug.Log("Removed player " + i + 1);
-                    Debug.Log("Total players remaining: " + remainingPlayers);
-                }
-            }
-        }
+        isOut[currentIndex] = true;
+        remainingPlayers--;
+        Debug.Log("Removed player " + (currentIndex + 1));
+        Debug.Log("Total players remaining: " + remainingPlayers);
+
         if (remainingPlayers == 1)
         {
             playerWin = true;
+            for (int i = 0; i < totalPlayers; i++)
+            {
+                if (isOut[i] == false)
+                {
+                    Debug.Log("Player " + (i + 1) + " wins!");
+                    break;
+                }
+            }
         }
         else
         {

@@ -42,12 +42,12 @@ public class CarControl : MonoBehaviour
             rigid.velocity = Vector3.zero;
             transform.position = carOriginTrans;
         }
-        currentIndex = playerSwitch.currentIndex;
+        if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
+        else { currentIndex = 0; }
         if (!playerSwitch.DEBUG_MODE)
         {
             if (newCarHealth <= 0)
             {
-                Debug.Log("KABOOM. Your car blew up! Player " + (currentIndex + 1) + " was eliminated!");
                 playerSwitch.RemovePlayer();
                 newCarHealth = 100;
             }
@@ -57,7 +57,6 @@ public class CarControl : MonoBehaviour
         if (!playerSwitch.playerWin)
         {
             InputDevice controller = DataManager.PlayerList[currentIndex];
-            controller.Vibrate(100f);
             brakingForce = controller.LeftTrigger.Value;
             accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
             x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
