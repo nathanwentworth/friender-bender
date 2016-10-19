@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using InControl;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 
 public class uiManager : MonoBehaviour
 {
@@ -15,6 +15,11 @@ public class uiManager : MonoBehaviour
     public GameObject rotatingModel;
     public Mesh[] carModels;
     public Mesh[] trackModels;
+    public Image[] controllerIcons;
+    public Sprite controllerInactive;
+    public Sprite controllerActive;
+    public string[] modeDescriptions;
+    public Text modeDescriptionText;
 
     System.Random random = new System.Random();
 
@@ -51,6 +56,7 @@ public class uiManager : MonoBehaviour
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
                     DataManager.PlayerList.Clear();
                     DataManager.TotalPlayers = 0;
+                    rotatingModel.SetActive(false);
                     if(gameMode == 0)
                     {
                         backIndex--;
@@ -60,6 +66,9 @@ public class uiManager : MonoBehaviour
                     break;
             }
             CanvasDisplay(backIndex);
+        }
+        else if (menuIndex == 2) {
+          DisplayModeDescriptions();
         }
         else if (menuIndex == 3 && inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1)
         {
@@ -87,6 +96,16 @@ public class uiManager : MonoBehaviour
         }
         containers[0].SetActive(true);
         return 0;
+    }
+
+    public void DisplayPlayerControllers() {
+      for (int i = 0; i < 4; i++) {
+        if (i < DataManager.TotalPlayers) {
+          controllerIcons[i].sprite = controllerActive;
+        } else {
+          controllerIcons[i].sprite = controllerInactive;
+        }
+      }
     }
 
     public void LoadScene(string levelName)
@@ -164,6 +183,17 @@ public class uiManager : MonoBehaviour
       
       rotatingModel.GetComponent<MeshFilter>().sharedMesh = activeMesh;
       rotatingModel.SetActive(true);
+    }
+
+    private void DisplayModeDescriptions() {
+      int mode = -1;
+      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      if (buttonName == "btn-party") {
+        mode = 0;
+      } else {
+        mode = 1;
+      }
+      modeDescriptionText.text = modeDescriptions[mode];
     }
 
     public void SetCar(int car)
