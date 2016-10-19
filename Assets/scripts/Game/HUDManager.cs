@@ -9,24 +9,18 @@ public class HUDManager : MonoBehaviour
     public Image speedometerBar;
     public GameObject pauseCanvas;
 
-    public GameObject[] turnDisplayText;
     public Text timer;
     public Text currentPlayerText;
 
     private float speedometerBarFillAmount;
     private float maxSpeed = 150;
     private int[] players;
-    private int totalPlayers;
 
     public PlayerSwitching playerSwitch;
 
     void Start()
     {
-        totalPlayers = DataManager.TotalPlayers;
-        for (int i = 0; i < totalPlayers; i++)
-        {
-            turnDisplayText[i].SetActive(true);
-        }
+        // totalPlayers = DataManager.TotalPlayers;
     }
 
     void Update()
