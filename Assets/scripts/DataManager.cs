@@ -1,60 +1,74 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
+using InControl;
 
-public class DataManager : MonoBehaviour {
+public static class DataManager
+{
 
-	private static DataManager instance;
-  public static DataManager Instance { get; private set; }
+    public static List<InputDevice> PlayerList = new List<InputDevice>();
 
-  private void Awake() {
-    if (Instance != null && Instance != this) {
-      Destroy(this.gameObject);
-    } else {
-      Instance = this;
+    private static int
+        currentIndex,
+        totalPlayers,
+        currentMPH;
+
+    private static GameMode
+        currentGameMode;
+
+    private static float
+        turnTime;
+
+    private static int[]
+        playerArr;
+
+    private static bool
+        randomPlayerOrder;
+
+    public enum GameMode
+    {
+        None,
+        Party,
+        HotPotato
     }
-    DontDestroyOnLoad(transform.gameObject);
-  }
 
-	private int
-		currentIndex,
-		totalPlayers,
-		currentMPH;
+    public static GameMode CurrentGameMode
+    {
+        get { return currentGameMode; }
+        set { currentGameMode = value; }
+    }
 
-	private float
-		turnTime;
+    public static int CurrentIndex
+    {
+        get { return currentIndex; }
+        set { currentIndex = value; }
+    }
+    public static int TotalPlayers
+    {
+        get { return totalPlayers; }
+        set { totalPlayers = value; }
+    }
+    public static int CurrentMPH
+    {
+        get { return currentMPH; }
+        set { currentMPH = value; }
+    }
 
-	private int[]
-		playerArr;
+    public static float TurnTime
+    {
+        get { return turnTime; }
+        set { turnTime = value; }
+    }
 
-	private bool
-		randomPlayerOrder;
+    public static int[] PlayerArr
+    {
+        get { return playerArr; }
+        set { playerArr = value; }
+    }
 
-	public int CurrentIndex {
-		get {return currentIndex;}
-		set {currentIndex = value;}
-	}
-	public int TotalPlayers {
-		get {return totalPlayers;}
-		set {totalPlayers = value;}
-	}
-	public int CurrentMPH {
-		get {return currentMPH;}
-		set {currentMPH = value;}
-	}
-
-	public float TurnTime {
-		get {return turnTime;}
-		set {turnTime = value;}
-	}
-
-	public int[] PlayerArr {
-		get {return playerArr;}
-		set {playerArr = value;}
-	}
-
-	public bool RandomPlayerOrder {
-		get {return randomPlayerOrder;}
-		set {randomPlayerOrder = value;}
-	}
+    public static bool RandomPlayerOrder
+    {
+        get { return randomPlayerOrder; }
+        set { randomPlayerOrder = value; }
+    }
 
 }
