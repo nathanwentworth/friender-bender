@@ -178,7 +178,6 @@ public class CarControl : MonoBehaviour
                 {
                     StartCoroutine("DamageCooldown");
                 }
-				AudioManagerScript.LowImpact ();
             }
             else if (mph > 65 && mph < 94)
             {
