@@ -28,6 +28,11 @@ public class CarControl : MonoBehaviour
     private bool invincible;
     private int newCarHealth;
 
+    [Header("Audio Bits")]
+    //public GameObject AudioManagerObj;
+    public AudioManager AudioManagerScript;
+    public AudioSource carEngine;
+
     private Vector3 carOriginTrans;
 
     private void Start()
@@ -86,6 +91,9 @@ public class CarControl : MonoBehaviour
         DataManager.CurrentMPH = mph;
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
+
+        //Changes the pitch of the engine audioSource
+        carEngine.pitch = ((mph * 0.01f) - 0.3f);
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -217,4 +225,5 @@ public class AxleInfo
     public WheelCollider rightWheel;
     public bool motor; // is this wheel attached to motor?
     public bool steering; // does this wheel apply steer angle?
+>>>>>>> master:Assets/scripts/Game/CarControl.cs
 }
