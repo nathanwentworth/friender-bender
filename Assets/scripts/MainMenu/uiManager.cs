@@ -25,8 +25,10 @@ public class uiManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
+        // FLOCKA
         int hey = selectedCar + gameMode + selectedTrack;
         hey += 1;
     }
@@ -34,6 +36,13 @@ public class uiManager : MonoBehaviour
     private void Update()
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
+
+        if(menuIndex == 2 && inputDevice.AnyButtonWasPressed)
+        {
+            DataManager.PlayerList.Add(inputDevice);
+            DataManager.TotalPlayers = 1;
+            Debug.Log("Added Device: " + inputDevice);
+        }
 
         if (menuIndex != 1 && inputDevice.Action2.WasPressed)
         {
@@ -51,12 +60,12 @@ public class uiManager : MonoBehaviour
                     return;
                 case 3:
                     backIndex--;
-                    break;
-                case 4:
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
                     DataManager.PlayerList.Clear();
                     DataManager.TotalPlayers = 0;
                     rotatingModel.SetActive(false);
+                    break;
+                case 4:
                     if(gameMode == 0)
                     {
                         backIndex--;
@@ -138,9 +147,6 @@ public class uiManager : MonoBehaviour
         {
             Debug.Log("Selected Hot Potato mode!");
             DataManager.CurrentGameMode = DataManager.GameMode.HotPotato;
-            DataManager.PlayerList.Add(InputManager.ActiveDevice);
-            DataManager.TotalPlayers = 1;
-            Debug.Log("Added Device: " + InputManager.ActiveDevice);
         }
     }
 

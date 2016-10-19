@@ -13,6 +13,9 @@ public class CarControl : MonoBehaviour
     public int carHealth = 100;
     public float controllerDeadzone = 0.15f;
 
+    [Header("PowerUp Variables")]
+    public int speedBoostPower;
+
     [Header("Data References")]
     public PlayerSwitching playerSwitch;
 
@@ -42,12 +45,12 @@ public class CarControl : MonoBehaviour
             rigid.velocity = Vector3.zero;
             transform.position = carOriginTrans;
         }
-        currentIndex = playerSwitch.currentIndex;
+        if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
+        else { currentIndex = 0; }
         if (!playerSwitch.DEBUG_MODE)
         {
             if (newCarHealth <= 0)
             {
-                Debug.Log("KABOOM. Your car blew up! Player " + (currentIndex + 1) + " was eliminated!");
                 playerSwitch.RemovePlayer();
                 newCarHealth = 100;
             }
@@ -56,8 +59,13 @@ public class CarControl : MonoBehaviour
         //CONTROLS
         if (!playerSwitch.playerWin)
         {
-            InputDevice controller = DataManager.PlayerList[currentIndex];
-            controller.Vibrate(100f);
+            InputDevice controller = null;
+            if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
+            else { controller = DataManager.PlayerList[currentIndex]; }
+            if (controller.Action1.WasPressed)
+            {
+               StartCoroutine(PowerUps.SpeedBoost(transform, rigid, speedBoostPower));
+            }
             brakingForce = controller.LeftTrigger.Value;
             accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
             x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
@@ -184,6 +192,20 @@ public class CarControl : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.25f);
+        }
+    }
+
+    private class PowerUps
+    {
+        public static IEnumerator SpeedBoost(Transform transform, Rigidbody rigid, int maxForce)
+        {
+            int i = 0;
+            while (i < 20)
+            {
+                rigid.AddForce(transform.forward * maxForce, ForceMode.Acceleration);
+                yield return new WaitForSeconds(0.01f);
+                i++;
+            }
         }
     }
 }

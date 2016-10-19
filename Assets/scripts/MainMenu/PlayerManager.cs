@@ -9,6 +9,12 @@ public class PlayerManager : MonoBehaviour
     List<InputDevice> PlayerList = new List<InputDevice>(maxPlayers);
     public uiManager manager;
 
+    void OnEnable()
+    {
+        DisplayNumberOfPlayers();
+        PlayerList = DataManager.PlayerList;
+    }
+
     void Update()
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
@@ -22,6 +28,7 @@ public class PlayerManager : MonoBehaviour
 
         if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice) && DataManager.TotalPlayers > 0)
         {
+            Debug.Log("bloop");
             PlayerList.Remove(inputDevice);
             UpdateDataManager();
             manager.DisplayPlayerControllers();
@@ -63,6 +70,5 @@ public class PlayerManager : MonoBehaviour
     {
         DataManager.PlayerList = PlayerList;
         DataManager.TotalPlayers = PlayerList.Count;
-        Debug.Log(DataManager.TotalPlayers);
     }
 }
