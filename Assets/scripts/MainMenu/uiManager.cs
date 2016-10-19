@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using InControl;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
 
 public class uiManager : MonoBehaviour
 {
@@ -12,9 +12,20 @@ public class uiManager : MonoBehaviour
     private int menuIndex;
 
     public GameObject[] containers;
+    public GameObject rotatingModel;
+    public Mesh[] carModels;
+    public Mesh[] trackModels;
+    public Image[] controllerIcons;
+    public Sprite controllerInactive;
+    public Sprite controllerActive;
+    public string[] modeDescriptions;
+    public Text modeDescriptionText;
+
+    System.Random random = new System.Random();
 
     void Start()
     {
+        Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
         // FLOCKA
@@ -25,6 +36,13 @@ public class uiManager : MonoBehaviour
     private void Update()
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
+
+        if(menuIndex == 2 && inputDevice.AnyButtonWasPressed)
+        {
+            DataManager.PlayerList.Add(inputDevice);
+            DataManager.TotalPlayers = 1;
+            Debug.Log("Added Device: " + inputDevice);
+        }
 
         if (menuIndex != 1 && inputDevice.Action2.WasPressed)
         {
@@ -42,11 +60,12 @@ public class uiManager : MonoBehaviour
                     return;
                 case 3:
                     backIndex--;
-                    break;
-                case 4:
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
                     DataManager.PlayerList.Clear();
                     DataManager.TotalPlayers = 0;
+                    rotatingModel.SetActive(false);
+                    break;
+                case 4:
                     if(gameMode == 0)
                     {
                         backIndex--;
@@ -57,11 +76,20 @@ public class uiManager : MonoBehaviour
             }
             CanvasDisplay(backIndex);
         }
+        else if (menuIndex == 2) {
+          DisplayModeDescriptions();
+        }
         else if (menuIndex == 3 && inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1)
         {
             // If the start button is pressed in the player select screen
             // go to the next menu!
             CanvasDisplay(5);
+        }
+        else if (menuIndex == 5) {
+            RotateModel(carModels);
+        }
+        else if (menuIndex == 6) {
+          RotateModel(trackModels);
         }
     }
 
@@ -77,6 +105,16 @@ public class uiManager : MonoBehaviour
         }
         containers[0].SetActive(true);
         return 0;
+    }
+
+    public void DisplayPlayerControllers() {
+      for (int i = 0; i < 4; i++) {
+        if (i < DataManager.TotalPlayers) {
+          controllerIcons[i].sprite = controllerActive;
+        } else {
+          controllerIcons[i].sprite = controllerInactive;
+        }
+      }
     }
 
     public void LoadScene(string levelName)
@@ -109,9 +147,6 @@ public class uiManager : MonoBehaviour
         {
             Debug.Log("Selected Hot Potato mode!");
             DataManager.CurrentGameMode = DataManager.GameMode.HotPotato;
-            DataManager.PlayerList.Add(InputManager.ActiveDevice);
-            DataManager.TotalPlayers = 1;
-            Debug.Log("Added Device: " + InputManager.ActiveDevice);
         }
     }
 
@@ -139,9 +174,32 @@ public class uiManager : MonoBehaviour
         CanvasDisplay(5);
     }
 
-    void RotateCarModel()
+    void RotateModel(Mesh[] models)
     {
+      Mesh activeMesh;
+      int buttonNum;
+      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
+      bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
+      if (buttonNumSuccess) {
+        activeMesh = models[buttonNum];
+      } else {
+        activeMesh = models[random.Next(0, 4)];
+      }
+      
+      rotatingModel.GetComponent<MeshFilter>().sharedMesh = activeMesh;
+      rotatingModel.SetActive(true);
+    }
 
+    private void DisplayModeDescriptions() {
+      int mode = -1;
+      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      if (buttonName == "btn-party") {
+        mode = 0;
+      } else {
+        mode = 1;
+      }
+      modeDescriptionText.text = modeDescriptions[mode];
     }
 
     public void SetCar(int car)
