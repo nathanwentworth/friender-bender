@@ -228,7 +228,7 @@ namespace InControl
 			LowerDeadZone = Mathf.Max( negativeSide.LowerDeadZone, positiveSide.LowerDeadZone );
 			UpperDeadZone = Mathf.Min( negativeSide.UpperDeadZone, positiveSide.UpperDeadZone );
 			Raw = negativeSide.Raw || positiveSide.Raw;
-			var value = Utility.ValueFromSides( negativeSide.RawValue, positiveSide.RawValue );
+			var value = Utility.ValueFromSides( negativeSide.Value, positiveSide.Value );
 			CommitWithValue( value, updateTick, deltaTime );
 		}
 

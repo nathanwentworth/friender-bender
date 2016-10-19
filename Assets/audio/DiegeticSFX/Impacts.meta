@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/audio/DiegeticSFX/Impacts.meta
 guid: d320a9adac339de47a2e9b44dc7847e6
 folderAsset: yes
 timeCreated: 1476145379
 licenseType: Free
+=======
+guid: dac8690f18b1fb843a01af5f864ab897
+folderAsset: yes
+timeCreated: 1476307849
+licenseType: Pro
+>>>>>>> master:Assets/models/materials.meta
 DefaultImporter:
   userData: 
   assetBundleName: 
