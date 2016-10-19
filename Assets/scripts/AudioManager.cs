@@ -13,7 +13,7 @@ public class AudioManager : MonoBehaviour
 	public AudioClip LowSpeedImpact3;
 	private AudioClip[] Impacts;
 
-	public void Start(){
+/*	public void Start(){
 		Impacts = new AudioClip[]{LowSpeedImpact1, LowSpeedImpact2, LowSpeedImpact3};
 	}
 
@@ -21,6 +21,6 @@ public class AudioManager : MonoBehaviour
 		ImpactSource.clip = Impacts [Random.Range(0, Impacts.Length)];
 		ImpactSource.Play ();
 		Debug.Log ("Low-Speed Impact");
-	}
+	}*/
 
 }
