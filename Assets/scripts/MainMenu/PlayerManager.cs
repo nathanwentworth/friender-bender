@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
 using InControl;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class PlayerManager : MonoBehaviour
 {
 
     const int maxPlayers = 4;
     List<InputDevice> PlayerList = new List<InputDevice>(maxPlayers);
-    public Text playersText;
+    public uiManager manager;
 
     void OnEnable()
     {
@@ -24,7 +23,7 @@ public class PlayerManager : MonoBehaviour
         {
             PlayerList.Add(inputDevice);
             UpdateDataManager();
-            DisplayNumberOfPlayers();
+            manager.DisplayPlayerControllers();
         }
 
         if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice) && DataManager.TotalPlayers > 0)
@@ -32,7 +31,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("bloop");
             PlayerList.Remove(inputDevice);
             UpdateDataManager();
-            DisplayNumberOfPlayers();
+            manager.DisplayPlayerControllers();
         }
     }
 
@@ -53,10 +52,6 @@ public class PlayerManager : MonoBehaviour
             return false;
         }
         return true;
-    }
-
-    private void DisplayNumberOfPlayers() {
-        playersText.text = DataManager.TotalPlayers + "";
     }
 
     bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
