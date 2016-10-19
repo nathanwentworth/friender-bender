@@ -14,14 +14,26 @@ public class PlayerSwitching : MonoBehaviour
         passingControllerTime,
         passTime = 3,
         turnTime = 7;
-    private bool
-        randomPlayerOrder;
     public bool
         playerWin,
         passingController,
         DEBUG_MODE;
     private bool[]
         isOut;
+    public GameObject
+        InControl;
+
+    private void Awake()
+    {
+        if(Application.isEditor && DataManager.CurrentGameMode == DataManager.GameMode.None)
+        {
+            DEBUG_MODE = true;
+        }
+        if (DEBUG_MODE)
+        {
+            Instantiate(InControl);
+        }
+    }
 
     private void Start()
     {

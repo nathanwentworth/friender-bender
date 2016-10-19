@@ -15,6 +15,7 @@ public class uiManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
         // FLOCKA

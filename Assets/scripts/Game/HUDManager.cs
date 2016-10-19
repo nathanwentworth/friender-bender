@@ -34,8 +34,10 @@ public class HUDManager : MonoBehaviour
     {
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
-        if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { Controller = DataManager.PlayerList[currentIndex]; }
+        if (playerSwitch.DEBUG_MODE) { Controller = InputManager.ActiveDevice; }
+        else if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { Controller = DataManager.PlayerList[currentIndex]; }
         else { Controller = DataManager.PlayerList[0]; }
+
         if (Controller.Command.WasPressed)
         {
             if (pauseCanvas.activeSelf)
