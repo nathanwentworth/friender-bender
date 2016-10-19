@@ -16,6 +16,7 @@ public class HUDManager : MonoBehaviour
     private float maxSpeed = 150;
     private int[] players;
     public PlayerSwitching playerSwitch;
+    private int currentIndex;
 
     void Start()
     {

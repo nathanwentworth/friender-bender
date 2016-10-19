@@ -11,8 +11,8 @@ public class PlayerManager : MonoBehaviour
 
     void OnEnable()
     {
-        DisplayNumberOfPlayers();
         PlayerList = DataManager.PlayerList;
+        manager.DisplayPlayerControllers();
     }
 
     void Update()

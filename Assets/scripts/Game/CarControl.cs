@@ -225,5 +225,4 @@ public class AxleInfo
     public WheelCollider rightWheel;
     public bool motor; // is this wheel attached to motor?
     public bool steering; // does this wheel apply steer angle?
->>>>>>> master:Assets/scripts/Game/CarControl.cs
 }
