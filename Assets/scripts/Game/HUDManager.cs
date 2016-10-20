@@ -62,7 +62,7 @@ public class HUDManager : MonoBehaviour
             speedometerBar.fillAmount = speedometerBarFillAmount;
         }
         timer.text = string.Format("{0:F1}", playerSwitch.timer);
-        currentPlayerText.text = "P" + playerSwitch.currentIndex + 1;
+        currentPlayerText.text = "P" + (playerSwitch.currentIndex + 1);
     }
 
     public void Pause() {
