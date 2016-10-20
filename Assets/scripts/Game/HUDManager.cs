@@ -1,21 +1,36 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 using InControl;
+using UnityEngine.SceneManagement;
 
 public class HUDManager : MonoBehaviour
 {
 
+    [Header("HUD")]
+
     public Text MPHDisplay;
     public Image speedometerBar;
-    public GameObject pauseCanvas;
-
     public Text timer;
     public Text currentPlayerText;
+
+    [Header("Pause")]
+
+    public GameObject pauseCanvas;
+
+    [Header("Overlay")]
+
+    public GameObject overlayPanel;
+    public Text overlayText;
+    public GameObject gameOverPanel;
+
+    [Header("References")]
+
+    public PlayerSwitching playerSwitch;
 
     private float speedometerBarFillAmount;
     private float maxSpeed = 150;
     private int[] players;
-    public PlayerSwitching playerSwitch;
     private int currentIndex;
 
     void Start()
@@ -33,16 +48,7 @@ public class HUDManager : MonoBehaviour
 
         if (Controller.Command.WasPressed)
         {
-            if (pauseCanvas.activeSelf)
-            {
-                Time.timeScale = 1;
-                pauseCanvas.SetActive(false);
-            }
-            else
-            {
-                Time.timeScale = 0;
-                pauseCanvas.SetActive(true);
-            }
+            Pause();
         }
         if (!playerSwitch.DEBUG_MODE)
         {
@@ -52,6 +58,33 @@ public class HUDManager : MonoBehaviour
             speedometerBar.fillAmount = speedometerBarFillAmount;
         }
         timer.text = string.Format("{0:F1}", playerSwitch.timer);
-        currentPlayerText.text = (playerSwitch.currentIndex + 1).ToString();
+        currentPlayerText.text = "P" + playerSwitch.currentIndex + 1;
     }
+
+    public void Pause() {
+        if (pauseCanvas.activeSelf) {
+            Time.timeScale = 1;
+            pauseCanvas.SetActive(false);
+        } else {
+            Time.timeScale = 0;
+            pauseCanvas.SetActive(true);
+        }
+    }
+
+    public void LoadScene(int scene) {
+        SceneManager.LoadScene(scene);
+    }
+
+    public void DisplayOverlayText(string text) {
+        overlayPanel.SetActive(true);
+        overlayText.text = text;
+        StartCoroutine(DisplayPostGameMenu());
+    }
+
+    IEnumerator DisplayPostGameMenu() {
+        yield return new WaitForSeconds(3);
+        gameOverPanel.SetActive(true);
+    }
+
+
 }

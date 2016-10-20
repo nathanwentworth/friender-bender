@@ -22,6 +22,7 @@ public class PlayerSwitching : MonoBehaviour
         isOut;
     public GameObject
         InControl;
+    public HUDManager hudManager;
 
     private void Awake()
     {
@@ -114,6 +115,7 @@ public class PlayerSwitching : MonoBehaviour
             {
                 if (isOut[i] == false)
                 {
+                    hudManager.DisplayOverlayText("PLAYER " + (i + 1) + " WINS!");
                     Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }

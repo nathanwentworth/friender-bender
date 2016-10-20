@@ -27,6 +27,7 @@ public class CarControl : MonoBehaviour
     private int currentIndex = 0;
     private bool invincible;
     private int newCarHealth;
+    private bool playing;
 
     [Header("Audio Bits")]
     //public GameObject AudioManagerObj;
@@ -44,44 +45,51 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !playerSwitch.playerWin)
-        {
-            transform.rotation = Quaternion.identity;
-            rigid.velocity = Vector3.zero;
-            transform.position = carOriginTrans;
-        }
-        if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
-        else { currentIndex = 0; }
-        if (!playerSwitch.DEBUG_MODE)
-        {
-            if (newCarHealth <= 0)
+
+        if (Time.timeScale == 1) { playing = true; } else { playing = false;}
+
+        if (playing) {
+            if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !playerSwitch.playerWin)
             {
-                playerSwitch.RemovePlayer();
-                newCarHealth = 100;
+                transform.rotation = Quaternion.identity;
+                rigid.velocity = Vector3.zero;
+                transform.position = carOriginTrans;
             }
+            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
+            else { currentIndex = 0; }
+            if (!playerSwitch.DEBUG_MODE)
+            {
+                if (newCarHealth <= 0)
+                {
+                    playerSwitch.RemovePlayer();
+                    newCarHealth = 100;
+                }
+            }
+
+            //CONTROLS
+            if (!playerSwitch.playerWin)
+            {
+                InputDevice controller = null;
+                if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
+                else { controller = DataManager.PlayerList[currentIndex]; }
+                if (controller.Action1.WasPressed)
+                {
+                   StartCoroutine(PowerUps.SpeedBoost(transform, rigid, speedBoostPower));
+                }
+                brakingForce = controller.LeftTrigger.Value;
+                accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
+                x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
+                //Hardcoded deadzone
+                if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
+                else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+            }
+            else
+            {
+                rigid.constraints = RigidbodyConstraints.FreezeAll;
+            }
+            
         }
 
-        //CONTROLS
-        if (!playerSwitch.playerWin)
-        {
-            InputDevice controller = null;
-            if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
-            else { controller = DataManager.PlayerList[currentIndex]; }
-            if (controller.Action1.WasPressed)
-            {
-               StartCoroutine(PowerUps.SpeedBoost(transform, rigid, speedBoostPower));
-            }
-            brakingForce = controller.LeftTrigger.Value;
-            accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
-            x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
-            //Hardcoded deadzone
-            if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
-            else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
-        }
-        else
-        {
-            rigid.constraints = RigidbodyConstraints.FreezeAll;
-        }
 
     }
 

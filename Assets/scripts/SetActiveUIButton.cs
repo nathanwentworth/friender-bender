@@ -11,6 +11,6 @@ public class SetActiveUIButton : MonoBehaviour
 
     void OnEnable()
     {
-        eventSys.GetComponent<EventSystem>().SetSelectedGameObject(activeButton);
+       eventSys.GetComponent<EventSystem>().SetSelectedGameObject(activeButton);
     }
 }
