@@ -18,6 +18,10 @@ public class HUDManager : MonoBehaviour
 
     public GameObject pauseCanvas;
 
+    [Header("Notification")]
+
+    public Text notificationText;
+
     [Header("Overlay")]
 
     public GameObject overlayPanel;
@@ -35,7 +39,7 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
-        // totalPlayers = DataManager.TotalPlayers;
+        notificationText.text = "";
     }
 
     void Update()
@@ -75,6 +79,12 @@ public class HUDManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
+    public IEnumerator DisplayNotificationText(string text) {
+        notificationText.text = text;
+        yield return new WaitForSeconds(2);
+        notificationText.text = "";
+    }
+
     public void DisplayOverlayText(string text) {
         overlayPanel.SetActive(true);
         overlayText.text = text;
@@ -85,6 +95,7 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
     }
+
 
 
 }

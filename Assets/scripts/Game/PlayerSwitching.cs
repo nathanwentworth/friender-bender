@@ -105,6 +105,9 @@ public class PlayerSwitching : MonoBehaviour
     {
         isOut[currentIndex] = true;
         remainingPlayers--;
+        if (remainingPlayers > 1) {
+            StartCoroutine(Notifications());
+        }
         Debug.Log("Removed player " + (currentIndex + 1));
         Debug.Log("Total players remaining: " + remainingPlayers);
 
@@ -126,6 +129,12 @@ public class PlayerSwitching : MonoBehaviour
             SwitchPlayer();
         }
 
+    }
+
+    private IEnumerator Notifications() {
+        StartCoroutine(hudManager.DisplayNotificationText("PLAYER " + (currentIndex + 1) + " ELIMINATED!"));
+        yield return new WaitForSeconds(2);
+        StartCoroutine(hudManager.DisplayNotificationText("Players left: " + remainingPlayers));
     }
 
 }
