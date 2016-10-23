@@ -11,7 +11,9 @@ public class HUDManager : MonoBehaviour
 
     public Text MPHDisplay;
     public Image speedometerBar;
+    public Image timerBar;
     public Text timer;
+    public Gradient timerGradient;
     public Text currentPlayerText;
 
     [Header("Pause")]
@@ -33,6 +35,7 @@ public class HUDManager : MonoBehaviour
     public PlayerSwitching playerSwitch;
 
     private float speedometerBarFillAmount;
+    private float timerBarFillAmount;
     private float maxSpeed = 150;
     private int[] players;
     private int currentIndex;
@@ -62,6 +65,9 @@ public class HUDManager : MonoBehaviour
             speedometerBar.fillAmount = speedometerBarFillAmount;
         }
         timer.text = string.Format("{0:F1}", playerSwitch.timer);
+        timerBarFillAmount = (0.5f + (0.5f * (playerSwitch.timer / playerSwitch.turnTime)));
+        timerBar.fillAmount = timerBarFillAmount;
+        timerBar.color = timerGradient.Evaluate (playerSwitch.timer / playerSwitch.turnTime);
         currentPlayerText.text = "P" + (playerSwitch.currentIndex + 1);
     }
 

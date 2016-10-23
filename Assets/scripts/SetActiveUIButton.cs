@@ -6,11 +6,18 @@ using UnityEngine.EventSystems;
 public class SetActiveUIButton : MonoBehaviour
 {
 
-    public GameObject eventSys;
-    public GameObject activeButton;
+  public GameObject eventSys;
+  public GameObject activeButton;
 
-    void OnEnable()
-    {
-       eventSys.GetComponent<EventSystem>().SetSelectedGameObject(activeButton);
-    }
+  private void OnEnable()
+  {
+    StartCoroutine(HighlightButton());
+  }
+
+  IEnumerator HighlightButton()
+  {
+    eventSys.GetComponent<EventSystem>().SetSelectedGameObject(null);
+    yield return null;
+    eventSys.GetComponent<EventSystem>().SetSelectedGameObject(activeButton);
+  }
 }

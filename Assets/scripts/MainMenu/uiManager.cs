@@ -185,6 +185,7 @@ public class uiManager : MonoBehaviour
     {
       Mesh activeMesh;
       int buttonNum;
+      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
@@ -200,12 +201,9 @@ public class uiManager : MonoBehaviour
 
     private void DisplayModeDescriptions() {
       int mode = -1;
+      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
-      if (buttonName == "btn-party") {
-        mode = 0;
-      } else {
-        mode = 1;
-      }
+      mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];
     }
 
