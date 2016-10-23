@@ -511,12 +511,12 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 1
-  m_Mass: 80
+  m_Mass: 70
   m_WheelDampingRate: 100
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 0.9
+    m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
@@ -1138,6 +1138,69 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 976837355}
   m_Script: {fileID: 11500000, guid: 50a5ef82f516543529cd884b9d36779e, type: 3}
+--- !u!1 &149816181
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 149816183}
+  - 108: {fileID: 149816182}
+  m_Layer: 0
+  m_Name: Spotlight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!108 &149816182
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149816181}
+  m_Enabled: 1
+  serializedVersion: 7
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 7.85
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+--- !u!4 &149816183
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 149816181}
+  m_LocalRotation: {x: 0.3228898, y: -0, z: -0, w: 0.9464366}
+  m_LocalPosition: {x: 56.061016, y: 1.431, z: 58.624}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 37.670002, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
 --- !u!1001 &157345951
 Prefab:
   m_ObjectHideFlags: 0
@@ -5847,12 +5910,12 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 1
-  m_Mass: 80
+  m_Mass: 70
   m_WheelDampingRate: 100
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 0.9
+    m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
@@ -8924,6 +8987,51 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: e32ff273a72494c1da3fb928358c6344,
         type: 3}
+    - target: {fileID: 114000011201730618, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010130893230, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectDistance.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010130893230, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectDistance.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000010130893230, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012191757034, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012191757034, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectDistance.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012191757034, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_EffectDistance.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012191757034, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_UseGraphicAlpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013439241410, guid: 1f2d0745f43294df5a5a34f19689c95a,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
   m_IsPrefabParent: 0
@@ -11420,6 +11528,7 @@ GameObject:
   - 124: {fileID: 1237379678}
   - 92: {fileID: 1237379677}
   - 81: {fileID: 1237379676}
+  - 114: {fileID: 1237379680}
   m_Layer: 0
   m_Name: cam
   m_TagString: Untagged
@@ -11499,6 +11608,25 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
+--- !u!114 &1237379680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1237379674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6ffff0e474954f3a926daf865cc2eaa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _lineColor: {r: 0, g: 0, b: 0, a: 1}
+  _backgroundColor: {r: 1, g: 1, b: 1, a: 0}
+  _lowThreshold: 0.062
+  _highThreshold: 0.383
+  _depthSensitivity: 1.49
+  _normalSensitivity: 0
+  _fallOffDepth: 556.44
+  _shader: {fileID: 4800000, guid: b8cb1cfbd02c146ccbe95b4baf27a54e, type: 3}
 --- !u!1 &1261152197 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 419a8ba4798e3db4b9122ae0f9fa56a8, type: 3}
@@ -12285,7 +12413,7 @@ MonoBehaviour:
     rightWheel: {fileID: 1384202320}
     motor: 0
     steering: 0
-  maxMotorTorque: 1700
+  maxMotorTorque: 2500
   maxSteeringAngle: 5
   maxBrakingTorque: 3000
   antiRollValue: 0
@@ -12302,7 +12430,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1363622826}
   serializedVersion: 2
-  m_Mass: 1380
+  m_Mass: 1600
   m_Drag: 0.5
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -12784,12 +12912,12 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 1
-  m_Mass: 80
+  m_Mass: 70
   m_WheelDampingRate: 100
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 0.9
+    m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
@@ -17300,12 +17428,12 @@ WheelCollider:
     targetPosition: 0.5
   m_SuspensionDistance: 0.3
   m_ForceAppPointDistance: 1
-  m_Mass: 80
+  m_Mass: 70
   m_WheelDampingRate: 100
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 0.9
+    m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
@@ -17373,10 +17501,10 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1829825321}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -10.031, z: 47.8}
+  m_LocalRotation: {x: -0, y: -0.5252183, z: -0, w: 0.8509676}
+  m_LocalPosition: {x: 58.71, y: 0.72, z: 60.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -63.481003, z: 0}
   m_Children:
   - {fileID: 22198350}
   m_Father: {fileID: 0}
@@ -18438,6 +18566,25 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 419a8ba4798e3db4b9122ae0f9fa56a8, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1950589940 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013950151148, guid: 1f2d0745f43294df5a5a34f19689c95a,
+    type: 2}
+  m_PrefabInternal: {fileID: 976837355}
+--- !u!114 &1950589941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1950589940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 3, y: 3}
+  m_UseGraphicAlpha: 1
 --- !u!1 &1958927219
 GameObject:
   m_ObjectHideFlags: 0

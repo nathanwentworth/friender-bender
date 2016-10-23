@@ -57,13 +57,13 @@ public class HUDManager : MonoBehaviour
         {
             Pause();
         }
-        if (!playerSwitch.DEBUG_MODE)
-        {
+        // if (!playerSwitch.DEBUG_MODE)
+        // {
             float MPH = DataManager.CurrentMPH;
             MPHDisplay.text = MPH + "";
             speedometerBarFillAmount = (MPH / maxSpeed) * 0.75f;
             speedometerBar.fillAmount = speedometerBarFillAmount;
-        }
+        // }
         timer.text = string.Format("{0:F1}", playerSwitch.timer);
         timerBarFillAmount = (0.5f + (0.5f * (playerSwitch.timer / playerSwitch.turnTime)));
         timerBar.fillAmount = timerBarFillAmount;
