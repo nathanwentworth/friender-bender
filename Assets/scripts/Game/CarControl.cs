@@ -71,7 +71,7 @@ public class CarControl : MonoBehaviour
             {
                 InputDevice controller = null;
                 if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
-                else { controller = DataManager.PlayerList[currentIndex]; }
+                else { controller = DataManager.PlayerList[currentIndex].Controller; }
                 if (controller.Action1.WasPressed)
                 {
                    StartCoroutine(PowerUps.SpeedBoost(transform, rigid, speedBoostPower));

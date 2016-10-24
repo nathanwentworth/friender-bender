@@ -37,9 +37,11 @@ public class uiManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        if(menuIndex == 2 && inputDevice.AnyButtonWasPressed)
+        if(menuIndex == 2 && inputDevice.Action1.WasPressed && DataManager.TotalPlayers == 0)
         {
-            DataManager.PlayerList.Add(inputDevice);
+            PlayerData player = new PlayerData();
+            DataManager.PlayerList.Add(player);
+            DataManager.PlayerList[0].Controller = inputDevice;
             DataManager.TotalPlayers = 1;
             Debug.Log("Added Device: " + inputDevice);
         }
