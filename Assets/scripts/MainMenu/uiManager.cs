@@ -79,11 +79,18 @@ public class uiManager : MonoBehaviour
         else if (menuIndex == 2) {
           DisplayModeDescriptions();
         }
-        else if (menuIndex == 3 && inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1)
+        else if (menuIndex == 3)
         {
-            // If the start button is pressed in the player select screen
-            // go to the next menu!
-            CanvasDisplay(5);
+            if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
+                // If the start button is pressed in the player select screen
+                // go to the next menu!
+                CanvasDisplay(5);                
+            }
+            else if (inputDevice.Action1.WasPressed) {
+                // flash controller when a is pressed again!
+                // do this later lol :^)
+                // controllerIcons[i].gameObject.transform.x = 1;
+            }
         }
         else if (menuIndex == 5) {
             RotateModel(carModels);
@@ -178,6 +185,7 @@ public class uiManager : MonoBehaviour
     {
       Mesh activeMesh;
       int buttonNum;
+      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
@@ -193,12 +201,9 @@ public class uiManager : MonoBehaviour
 
     private void DisplayModeDescriptions() {
       int mode = -1;
+      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
-      if (buttonName == "btn-party") {
-        mode = 0;
-      } else {
-        mode = 1;
-      }
+      mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];
     }
 

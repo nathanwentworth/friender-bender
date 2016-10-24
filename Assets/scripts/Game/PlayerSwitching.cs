@@ -22,6 +22,7 @@ public class PlayerSwitching : MonoBehaviour
         isOut;
     public GameObject
         InControl;
+    public HUDManager hudManager;
 
     private void Awake()
     {
@@ -93,6 +94,8 @@ public class PlayerSwitching : MonoBehaviour
         currentIndex = nextIndex;
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
+            string notifText1 = "PLAYER " + (currentIndex + 1) + " IS UP";
+            StartCoroutine(Notifications(notifText1, ""));
             passingControllerTime = System.DateTime.Now.Second;
             Time.timeScale = 0;
             passingController = true;
@@ -104,6 +107,11 @@ public class PlayerSwitching : MonoBehaviour
     {
         isOut[currentIndex] = true;
         remainingPlayers--;
+        if (remainingPlayers > 1) {
+            string notifText1 = "PLAYER " + (currentIndex + 1) + " ELIMINATED!";
+            string notifText2 = "Players left: " + remainingPlayers;
+            StartCoroutine(Notifications(notifText1, notifText2));
+        }
         Debug.Log("Removed player " + (currentIndex + 1));
         Debug.Log("Total players remaining: " + remainingPlayers);
 
@@ -114,6 +122,7 @@ public class PlayerSwitching : MonoBehaviour
             {
                 if (isOut[i] == false)
                 {
+                    hudManager.DisplayOverlayText("PLAYER " + (i + 1) + " WINS!");
                     Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }
@@ -124,6 +133,23 @@ public class PlayerSwitching : MonoBehaviour
             SwitchPlayer();
         }
 
+    }
+
+    private IEnumerator StartingCountdown() {
+        Time.timeScale = 0.00001f;
+        float pauseEndTime = Time.realtimeSinceStartup + 3;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return 0;
+        }
+        Time.timeScale = 1;
+    }
+
+
+    private IEnumerator Notifications(string notifText1, string notifText2) {
+        StartCoroutine(hudManager.DisplayNotificationText(notifText1));
+        yield return new WaitForSeconds(2);
+        StartCoroutine(hudManager.DisplayNotificationText(notifText2));
     }
 
 }
