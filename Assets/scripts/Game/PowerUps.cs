@@ -2,11 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PowerUps {
+public class PowerUps : MonoBehaviour {
 
     public enum PowerUpTypes
     {
         SpeedBoost
+    }
+
+    private CarControl car;
+
+    void Start()
+    {
+        car = GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>();
     }
 
     public void Execute(PowerUpTypes powerup)

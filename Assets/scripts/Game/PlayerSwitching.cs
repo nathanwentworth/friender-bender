@@ -9,14 +9,18 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers;
     public int
         currentIndex = 0;
+    private float
+        passingControllerTime;
+    [HideInInspector]
     public float
-        timer,
-        passingControllerTime,
+        timer;
+    public float
         passTime = 3,
         turnTime = 7;
+    private bool
+        passingController;
     public bool
         playerWin,
-        passingController,
         DEBUG_MODE;
     private bool[]
         isOut;

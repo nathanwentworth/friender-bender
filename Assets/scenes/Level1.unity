@@ -372,7 +372,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1 &50437990 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 419a8ba4798e3db4b9122ae0f9fa56a8, type: 3}
@@ -1200,7 +1200,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 37.670002, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
 --- !u!1001 &157345951
 Prefab:
   m_ObjectHideFlags: 0
@@ -6065,7 +6065,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000013220477864, guid: ea87eba467930f544aac64de7b60ac2a, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1000011357153772, guid: ea87eba467930f544aac64de7b60ac2a, type: 2}
       propertyPath: m_IsActive
@@ -6447,8 +6447,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 740151043}
   - 114: {fileID: 740151042}
+  - 114: {fileID: 740151044}
   m_Layer: 0
-  m_Name: PlayerSwitching
+  m_Name: GameSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6467,11 +6468,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentIndex: 0
   timer: 0
-  passingControllerTime: 0
   passTime: 3
   turnTime: 7
   playerWin: 0
-  passingController: 0
   DEBUG_MODE: 0
   InControl: {fileID: 1000013346135206, guid: 39b51b3a815f7584fbf6d2c738f34c7f, type: 2}
   hudManager: {fileID: 148294001}
@@ -6487,7 +6486,18 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
+--- !u!114 &740151044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 740151041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42631d6b7550a3d43aabe7666ac986ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &743042837
 Prefab:
   m_ObjectHideFlags: 0
@@ -8909,7 +8919,7 @@ Prefab:
     - target: {fileID: 224000011746086122, guid: 1f2d0745f43294df5a5a34f19689c95a,
         type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 224000011746086122, guid: 1f2d0745f43294df5a5a34f19689c95a,
         type: 2}
@@ -12143,7 +12153,7 @@ Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 3189714}
     m_Modifications:
     - target: {fileID: 400000, guid: 2ddd8c334b4bae24ba323bf07eb529d0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12175,7 +12185,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 2ddd8c334b4bae24ba323bf07eb529d0, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 237
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 2ddd8c334b4bae24ba323bf07eb529d0, type: 3}
       propertyPath: m_Name
@@ -12388,7 +12398,7 @@ GameObject:
   - 114: {fileID: 1363622827}
   m_Layer: 0
   m_Name: Goblin
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17508,7 +17518,7 @@ Transform:
   m_Children:
   - {fileID: 22198350}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1001 &1832754560
 Prefab:
   m_ObjectHideFlags: 0
