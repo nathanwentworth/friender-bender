@@ -13,7 +13,6 @@ public class PlayerManager : MonoBehaviour
     {
         PlayerList = DataManager.PlayerList;
         manager.DisplayPlayerControllers();
-        Debug.Log(DataManager.TotalPlayers);
     }
 
     void Update()
@@ -24,18 +23,24 @@ public class PlayerManager : MonoBehaviour
         {
             PlayerData player = new PlayerData();
             player.Controller = inputDevice;
+            player.PlayerNumber = PlayerList.Count + 1;
             PlayerList.Add(player);
             UpdateDataManager();
             manager.DisplayPlayerControllers();
-            Debug.Log(DataManager.TotalPlayers);
+            Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);
         }
 
         if (LeaveButtonWasPressedOnDevice(inputDevice) && PlayerUsingDevice(inputDevice) != null && DataManager.TotalPlayers > 0)
         {
-            PlayerList.Remove(PlayerUsingDevice(inputDevice));
+            PlayerData player = PlayerUsingDevice(inputDevice);
+            PlayerList.Remove(player);
             UpdateDataManager();
             manager.DisplayPlayerControllers();
-            Debug.Log(DataManager.TotalPlayers);
+            Debug.Log("Removed Device: " + inputDevice + " who was Player " + player.PlayerNumber);
+            for(int i = 0; i < DataManager.TotalPlayers; i++)
+            {
+                DataManager.PlayerList[i].PlayerNumber = i + 1;
+            }
         }
     }
 

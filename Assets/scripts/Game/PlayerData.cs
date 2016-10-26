@@ -5,9 +5,10 @@ using InControl;
 public class PlayerData {
 
     private InputDevice controller;
-    private PowerUps.PowerUpTypes currentPowerUp;
+    private PowerUps.PowerUpType currentPowerUp;
     private int playerNum;
     private string playerName;
+    private int lives;
 
     public InputDevice Controller
     {
@@ -15,7 +16,7 @@ public class PlayerData {
         set { controller = value; }
     }
 
-    public PowerUps.PowerUpTypes CurrentPowerUp
+    public PowerUps.PowerUpType CurrentPowerUp
     {
         get { return currentPowerUp; }
         set { currentPowerUp = value; }
@@ -31,5 +32,11 @@ public class PlayerData {
     {
         get { return playerName; }
         set { playerName = value; }
+    }
+
+    public int Lives
+    {
+        get { return lives; }
+        set { lives = value; }
     }
 }

@@ -6071,6 +6071,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 82000014166185520, guid: ea87eba467930f544aac64de7b60ac2a,
+        type: 2}
+      propertyPath: Mute
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea87eba467930f544aac64de7b60ac2a, type: 2}
   m_IsPrefabParent: 0
@@ -6498,6 +6503,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42631d6b7550a3d43aabe7666ac986ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerupCooldownTime: 7
+  sb_force: 50
 --- !u!1001 &743042837
 Prefab:
   m_ObjectHideFlags: 0
@@ -12426,7 +12433,6 @@ MonoBehaviour:
   maxMotorTorque: 2500
   maxSteeringAngle: 5
   maxBrakingTorque: 3000
-  antiRollValue: 0
   carHealth: 100
   controllerDeadzone: 0.15
   speedBoostPower: 100

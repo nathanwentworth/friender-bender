@@ -21,11 +21,12 @@ public class uiManager : MonoBehaviour
     public string[] modeDescriptions;
     public Text modeDescriptionText;
 
+    public int numberOfLives = 3;
+
     System.Random random = new System.Random();
 
     void Start()
     {
-        Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
         //doing this to get rid of dumb warning, can delete later
         // FLOCKA
@@ -40,10 +41,11 @@ public class uiManager : MonoBehaviour
         if(menuIndex == 2 && inputDevice.Action1.WasPressed && DataManager.TotalPlayers == 0)
         {
             PlayerData player = new PlayerData();
+            player.Controller = inputDevice;
+            player.PlayerNumber = DataManager.PlayerList.Count + 1;
             DataManager.PlayerList.Add(player);
-            DataManager.PlayerList[0].Controller = inputDevice;
-            DataManager.TotalPlayers = 1;
-            Debug.Log("Added Device: " + inputDevice);
+            DataManager.TotalPlayers = DataManager.PlayerList.Count;
+            Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);
         }
 
         if (menuIndex != 1 && inputDevice.Action2.WasPressed)
@@ -86,7 +88,8 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
-                CanvasDisplay(5);                
+                CanvasDisplay(5);
+                SetPlayerLives();         
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!
@@ -99,6 +102,14 @@ public class uiManager : MonoBehaviour
         }
         else if (menuIndex == 6) {
           RotateModel(trackModels);
+        }
+    }
+
+    private void SetPlayerLives()
+    {
+        foreach(PlayerData player in DataManager.PlayerList)
+        {
+            player.Lives = numberOfLives;
         }
     }
 
