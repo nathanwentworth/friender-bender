@@ -9,7 +9,6 @@ public class CarControl : MonoBehaviour
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float maxBrakingTorque; //how fast should you brake
-    public int carHealth = 100;
     public float controllerDeadzone = 0.15f;
 
     [Header("PowerUp Variables")]
@@ -23,10 +22,12 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
-    private int currentIndex = 0;
+    //Making this public for Powerup Reference
+    [HideInInspector]
+    public int currentIndex = 0;
     private bool invincible;
-    private int newCarHealth;
     private bool playing;
+    private int trueCurrentIndex;
 
     [Header("Audio Bits")]
     //public GameObject AudioManagerObj;
@@ -37,7 +38,6 @@ public class CarControl : MonoBehaviour
 
     private void Start()
     {
-        newCarHealth = carHealth;
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
     }
@@ -55,7 +55,8 @@ public class CarControl : MonoBehaviour
                 rigid.velocity = Vector3.zero;
                 transform.position = carOriginTrans;
             }
-            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
+            trueCurrentIndex = playerSwitch.currentIndex;
+            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = trueCurrentIndex; }
             else { currentIndex = 0; }
 
             //CONTROLS
@@ -133,40 +134,14 @@ public class CarControl : MonoBehaviour
         {
             if(mph > 41)
             {
-                DataManager.PlayerList[currentIndex].Lives -= 1;
-                Debug.Log("Player " + DataManager.PlayerList[currentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[currentIndex].Lives + " lives remaining.");
-                if(DataManager.PlayerList[currentIndex].Lives <= 0)
+                int trueCurrentIndex = playerSwitch.currentIndex;
+                DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
+                Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
+                if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
                 {
                     playerSwitch.RemovePlayer();
                 }
             }
-            //if (mph > 41 && mph < 64)
-            //{
-            //    Debug.Log("Minor Damage. Health: " + (newCarHealth - 20) + "/" + carHealth);
-            //    newCarHealth -= 20;
-            //    if (newCarHealth > 0)
-            //    {
-            //        StartCoroutine("DamageCooldown");
-            //    }
-            //}
-            //else if (mph > 65 && mph < 94)
-            //{
-            //    Debug.Log("Moderate Damage. Health: " + (newCarHealth - 40) + "/" + carHealth);
-            //    newCarHealth -= 40;
-            //    if (newCarHealth > 0)
-            //    {
-            //        StartCoroutine("DamageCooldown");
-            //    }
-            //}
-            //else if (mph > 95)
-            //{
-            //    Debug.Log("High Damage. Health: " + (newCarHealth - 60) + "/" + carHealth);
-            //    newCarHealth -= 60;
-            //    if (newCarHealth > 0)
-            //    {
-            //        StartCoroutine("DamageCooldown");
-            //    }
-            //}
         }
     }
 

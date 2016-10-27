@@ -67,10 +67,10 @@ public class uiManager : MonoBehaviour
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
                     DataManager.PlayerList.Clear();
                     DataManager.TotalPlayers = 0;
-                    rotatingModel.SetActive(false);
                     break;
                 case 4:
-                    if(gameMode == 0)
+                    rotatingModel.SetActive(false);
+                    if (gameMode == 0)
                     {
                         backIndex--;
                     }
@@ -88,8 +88,7 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
-                CanvasDisplay(5);
-                SetPlayerLives();         
+                CanvasDisplay(5);     
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!
@@ -98,6 +97,7 @@ public class uiManager : MonoBehaviour
             }
         }
         else if (menuIndex == 5) {
+            SetPlayerLives();
             RotateModel(carModels);
         }
         else if (menuIndex == 6) {
@@ -191,10 +191,18 @@ public class uiManager : MonoBehaviour
     {
         Debug.Log(players + " total players");
         DataManager.TotalPlayers = players;
+        for(int i = DataManager.PlayerList.Count; i < players; i++)
+        {
+            PlayerData player = new PlayerData();
+            player.PlayerNumber = DataManager.PlayerList.Count + 1;
+            DataManager.PlayerList.Add(player);
+            DataManager.TotalPlayers = DataManager.PlayerList.Count;
+            Debug.Log("Added Device: null as Player " + player.PlayerNumber);
+        }
         CanvasDisplay(5);
     }
 
-    void RotateModel(Mesh[] models)
+    private void RotateModel(Mesh[] models)
     {
       Mesh activeMesh;
       int buttonNum;

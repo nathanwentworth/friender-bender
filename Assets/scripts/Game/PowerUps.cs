@@ -29,18 +29,39 @@ public class PowerUps : MonoBehaviour {
     void Update()
     {
         InputDevice controller = InputManager.ActiveDevice;
-        if (controller.Action1.WasPressed)
+        if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
         {
-            PlayerData player = PlayerWhoPressedButton(controller);
-            PowerUpType powerup = player.CurrentPowerUp;
-            if(powerup == PowerUpType.None)
+            if (controller.Action1.WasPressed)
             {
-                return;
+                PlayerData player = PlayerWhoPressedButton(controller);
+                PowerUpType powerup = player.CurrentPowerUp;
+                if (powerup == PowerUpType.None)
+                {
+                    return;
+                }
+                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+                Execute(powerup);
+                player.CurrentPowerUp = PowerUpType.None;
+                StartCoroutine(Cooldown(player));
             }
-            Debug.Log("Using Powerup: " + powerup.ToString());
-            Execute(powerup);
-            player.CurrentPowerUp = PowerUpType.None;
-            StartCoroutine(Cooldown(player));
+        }
+        else if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
+        {
+            if (controller.Action1.WasPressed)
+            {
+                int currentIndex = car.GetComponent<CarControl>().currentIndex;
+                PlayerData player = DataManager.PlayerList[currentIndex];
+                PowerUpType powerup = player.CurrentPowerUp;
+                if (powerup == PowerUpType.None)
+                {
+                    return;
+                }
+                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+                Execute(powerup);
+                player.CurrentPowerUp = PowerUpType.None;
+                Debug.Log(DataManager.PlayerList[currentIndex].CurrentPowerUp);
+                StartCoroutine(Cooldown(player));
+            }
         }
     }
 
