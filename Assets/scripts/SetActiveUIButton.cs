@@ -14,7 +14,7 @@ public class SetActiveUIButton : MonoBehaviour
     StartCoroutine(HighlightButton());
   }
 
-  IEnumerator HighlightButton()
+  private IEnumerator HighlightButton()
   {
     eventSys.GetComponent<EventSystem>().SetSelectedGameObject(null);
     yield return null;

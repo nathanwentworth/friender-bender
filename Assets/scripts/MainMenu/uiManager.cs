@@ -8,29 +8,36 @@ public class uiManager : MonoBehaviour
 
     private int selectedCar;
     private int gameMode = 0;
-    private int selectedTrack;
     private int menuIndex;
 
+    [Header("Controller Add Screen")]
+    public Image[] controllerIcons;
+    public Sprite controllerInactive;
+    public Sprite controllerActive;
+
+    [Header("Mode Selection")]
+    public string[] modeDescriptions;
+    public Text modeDescriptionText;
+
+    [Header("Car/Track Selection")]
     public GameObject[] containers;
     public GameObject rotatingModel;
     public Mesh[] carModels;
     public Mesh[] trackModels;
-    public Image[] controllerIcons;
-    public Sprite controllerInactive;
-    public Sprite controllerActive;
-    public string[] modeDescriptions;
-    public Text modeDescriptionText;
+
+    [Header("Options")]
+    public Text turnTimeDisplayText;
+    public Slider turnTimeSlider;
+
 
     System.Random random = new System.Random();
 
     void Start()
     {
+        DataManager.Load();
         Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
-        //doing this to get rid of dumb warning, can delete later
-        // FLOCKA
-        int hey = selectedCar + gameMode + selectedTrack;
-        hey += 1;
+        turnTimeSlider.onValueChanged.AddListener(delegate {SliderValueChanged ();});
     }
 
     private void Update()
@@ -100,6 +107,8 @@ public class uiManager : MonoBehaviour
         }
     }
 
+    // checks which panel is currently active, each loaded into an array
+    // 0 is options, 1 is main menu, everything goes from there
     private int GetCurrentMenuIndex()
     {
         for (int i = 0; i < containers.Length; i++)
@@ -114,6 +123,8 @@ public class uiManager : MonoBehaviour
         return 0;
     }
 
+    // for the party mode screen
+    // displays current number of connected controllers by swapping sprites
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
@@ -124,16 +135,21 @@ public class uiManager : MonoBehaviour
       }
     }
 
+    // public function to load scenes by string name
     public void LoadScene(string levelName)
     {
         SceneManager.LoadScene(levelName);
     }
 
+    // quits the game!!!!!!!!
     public void QuitGame()
     {
         Application.Quit();
     }
 
+    // will hide or show a canvas
+    // hides the currently active one, and replaces it with whatever is being
+    // selected, whether that's via a ui button press or back button
     public void CanvasDisplay(int selectedMenu)
     {
         containers[menuIndex].SetActive(false);
@@ -157,23 +173,8 @@ public class uiManager : MonoBehaviour
         }
     }
 
-    public void SelectTrack(int track)
-    {
-        selectedTrack = track;
-        switch (track)
-        {
-            case 1:
-                Debug.Log("Selected Easy");
-                break;
-            case 2:
-                Debug.Log("Selected Med");
-                break;
-            case 3:
-                Debug.Log("Selected Hard");
-                break;
-        }
-    }
-
+    // for potato mode
+    // sets number of players based on the button pressed
     public void SelectNumberOfPlayers(int players)
     {
         Debug.Log(players + " total players");
@@ -181,7 +182,20 @@ public class uiManager : MonoBehaviour
         CanvasDisplay(5);
     }
 
-    void RotateModel(Mesh[] models)
+    // options menu function
+    // when called, sets new length of turn time, changes text display,
+    // and saves value
+    // saving value everytime it's changed might be too much? dunno.
+    public void SliderValueChanged() {
+        turnTimeDisplayText.text = turnTimeSlider.value + "s";
+        DataManager.TurnTime = turnTimeSlider.value;
+        DataManager.Save();
+    }
+
+    // for the car/track selection screens
+    // rotates a model being loaded in as a mesh from an array
+    // todo: add material switching later
+    private void RotateModel(Mesh[] models)
     {
       Mesh activeMesh;
       int buttonNum;
@@ -199,6 +213,8 @@ public class uiManager : MonoBehaviour
       rotatingModel.SetActive(true);
     }
 
+    // for the "set game mode" panel
+    // displays a short description of each game mode when highlighting a button
     private void DisplayModeDescriptions() {
       int mode = -1;
       if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
@@ -210,6 +226,7 @@ public class uiManager : MonoBehaviour
     public void SetCar(int car)
     {
         selectedCar = car;
+        Debug.Log(selectedCar);
         switch (car)
         {
             case 1:

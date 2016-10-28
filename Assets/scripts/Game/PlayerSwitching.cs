@@ -14,7 +14,7 @@ public class PlayerSwitching : MonoBehaviour
         timer,
         passingControllerTime,
         passTime = 3,
-        turnTime = 7;
+        turnTime;
     public bool
         playerWin,
         passingController,
@@ -39,6 +39,8 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        turnTime = DataManager.TurnTime;
         totalPlayers = DataManager.TotalPlayers;
         remainingPlayers = totalPlayers;
         isOut = new bool[remainingPlayers];
