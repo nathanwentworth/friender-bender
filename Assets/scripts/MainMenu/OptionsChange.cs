@@ -1,37 +1,31 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class OptionsChange : MonoBehaviour {
 
 	public Slider turnTimeSlider;
-	public Toggle randomPlayerToggle;
-	public Text playerNumberText;
 	public Text turnTimeText;
+	public Text textSaved;
+
+  // options menu function
+  // when called, sets new length of turn time, changes text display,
+  // and saves value
+  // saving value everytime it's changed might be too much? dunno.
 
 	void OnEnable() {
-
 		turnTimeSlider.value = DataManager.TurnTime;
-		randomPlayerToggle.isOn = DataManager.RandomPlayerOrder;
-
 
 		turnTimeSlider.onValueChanged.AddListener(TurnTimeSet);
-		randomPlayerToggle.onValueChanged.AddListener(SetRandomPlayerOrder);
 		TurnTimeSet(turnTimeSlider.value);
-		SetRandomPlayerOrder(randomPlayerToggle.isOn);
-	}
-
-	public void SetRandomPlayerOrder(bool toggle) {
-		if (toggle) {
-			DataManager.RandomPlayerOrder = true;
-		} else {
-			DataManager.RandomPlayerOrder = false;
-		}
 	}
 
 	public void TurnTimeSet(float val) {
+		DataManager.TurnTime = turnTimeSlider.value;
 		val = Mathf.Round(val * 10f) / 10f;
 		DataManager.TurnTime = val;
-		turnTimeText.text = val + "";
+		turnTimeText.text = val + "s";
+		DataManager.Save();
 	}
 
 	void OnDisable() {

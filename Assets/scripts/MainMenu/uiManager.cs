@@ -32,12 +32,11 @@ public class uiManager : MonoBehaviour
 
     System.Random random = new System.Random();
 
-    void Start()
+    private void Awake()
     {
         DataManager.Load();
         Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
-        turnTimeSlider.onValueChanged.AddListener(delegate {SliderValueChanged ();});
     }
 
     private void Update()
@@ -181,17 +180,7 @@ public class uiManager : MonoBehaviour
         DataManager.TotalPlayers = players;
         CanvasDisplay(5);
     }
-
-    // options menu function
-    // when called, sets new length of turn time, changes text display,
-    // and saves value
-    // saving value everytime it's changed might be too much? dunno.
-    public void SliderValueChanged() {
-        turnTimeDisplayText.text = turnTimeSlider.value + "s";
-        DataManager.TurnTime = turnTimeSlider.value;
-        DataManager.Save();
-    }
-
+    
     // for the car/track selection screens
     // rotates a model being loaded in as a mesh from an array
     // todo: add material switching later
