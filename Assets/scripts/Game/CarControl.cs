@@ -42,7 +42,6 @@ public class CarControl : MonoBehaviour
     private void Start()
     {
         currentlyCheckingIfCarIsStopped = false;
-        newCarHealth = carHealth;
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
     }

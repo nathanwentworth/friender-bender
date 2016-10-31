@@ -78,6 +78,11 @@ public static class DataManager
     }
     public static void Load() {
         turnTime = PlayerPrefs.GetFloat("Turn Time");
+        //Default Turn Time Set
+        if(turnTime == 0)
+        {
+            turnTime = 7;
+        }
         Debug.Log("Loaded data");
     }
 

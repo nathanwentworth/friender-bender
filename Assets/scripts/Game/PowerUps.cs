@@ -111,7 +111,7 @@ public class PowerUps : MonoBehaviour {
         PlayerSwitching pSwitch = gameObject.GetComponent<PlayerSwitching>();
         HUDManager hud = pSwitch.hudManager;
         pSwitch.SkipPlayer();
-        //hud.EnqueueAction(hud.DisplayNotificationText(String.Format("Player {0} has been skipped!"), pSwitch.NextPlayer());
+        hud.EnqueueAction(hud.DisplayNotificationText(String.Format("PLAYER {0} SKIPPED!", (pSwitch.NextPlayer() + 1 ))));
         yield return null;
     }
 
