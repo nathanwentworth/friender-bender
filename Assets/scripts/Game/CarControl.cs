@@ -13,6 +13,8 @@ public class CarControl : MonoBehaviour
     public int carHealth = 100;
     public float controllerDeadzone = 0.15f;
 
+    public GameObject[] spawnPoints;
+
     [Header("PowerUp Variables")]
     public int speedBoostPower;
 
@@ -35,9 +37,11 @@ public class CarControl : MonoBehaviour
     public AudioSource carEngine;
 
     private Vector3 carOriginTrans;
+    private bool currentlyCheckingIfCarIsStopped;
 
     private void Start()
     {
+        currentlyCheckingIfCarIsStopped = false;
         newCarHealth = carHealth;
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
@@ -99,6 +103,10 @@ public class CarControl : MonoBehaviour
         DataManager.CurrentMPH = mph;
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
+
+        if (mph < 1 && !currentlyCheckingIfCarIsStopped) {
+            StartCoroutine(CheckIfCarIsStopped());
+        }
 
         //Changes the pitch of the engine audioSource
         carEngine.pitch = ((mph * 0.01f) - 0.3f);
@@ -223,6 +231,34 @@ public class CarControl : MonoBehaviour
                 i++;
             }
         }
+    }
+
+    private void ResetCarPosition() {
+        float minD = 100000000;
+        Transform closestSpawn = null;
+        Transform carPos = transform;
+        for (int i = 0; i < spawnPoints.Length; i++) {
+            float d = Vector3.Distance(spawnPoints[i].transform.position, carPos.position);
+            if (d < minD) {
+                minD = d;
+                closestSpawn = spawnPoints[i].transform;
+            }
+        }
+        transform.position = closestSpawn.transform.position;
+        transform.rotation = closestSpawn.transform.rotation;
+    }
+
+    private IEnumerator CheckIfCarIsStopped() {
+        currentlyCheckingIfCarIsStopped = true;
+        Debug.Log("Checking to see if car is stopped");
+        yield return new WaitForSeconds(3f);
+        if (mph < 1) {
+            Debug.Log("Car is stopped! Resetting position");
+            ResetCarPosition();
+        } else {
+            Debug.Log("Car is not stopped, not resetting position");
+        }
+        currentlyCheckingIfCarIsStopped = false;
     }
 }
 
