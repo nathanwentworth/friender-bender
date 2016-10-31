@@ -9,14 +9,19 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers;
     public int
         currentIndex = 0;
+    private float
+        passingControllerTime;
+    [HideInInspector]
     public float
-        timer,
-        passingControllerTime,
+        timer;
+    public float
         passTime = 3,
         turnTime = 7;
+    private bool
+        skipTurn,
+        passingController;
     public bool
         playerWin,
-        passingController,
         DEBUG_MODE;
     private bool[]
         isOut;
@@ -85,7 +90,11 @@ public class PlayerSwitching : MonoBehaviour
             {
                 nextIndex = 0;
             }
-            if (!isOut[nextIndex])
+            if (!isOut[nextIndex] && skipTurn)
+            {
+                skipTurn = false;
+            }
+            else if(!isOut[nextIndex] && !skipTurn)
             {
                 break;
             }
@@ -101,6 +110,29 @@ public class PlayerSwitching : MonoBehaviour
             passingController = true;
         }
         timer = turnTime;
+    }
+
+    public int NextPlayer()
+    {
+        int nextIndex = currentIndex;
+        for (int i = 0; i < totalPlayers; i++)
+        {
+            nextIndex++;
+            if (nextIndex + i == totalPlayers)
+            {
+                nextIndex = 0;
+            }
+            if (!isOut[nextIndex])
+            {
+                return nextIndex;
+            }
+        }
+        return -1;
+    }
+
+    public void SkipPlayer()
+    {
+        skipTurn = true;
     }
 
     public void RemovePlayer()
