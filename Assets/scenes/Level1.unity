@@ -1132,6 +1132,34 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 4.308219
   m_Center: {x: 0, y: 4.308218, z: -0.17885911}
+--- !u!1 &147802725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 147802726}
+  m_Layer: 0
+  m_Name: spawn-point (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &147802726
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 147802725}
+  m_LocalRotation: {x: -0, y: 0.118553415, z: -0, w: 0.99294776}
+  m_LocalPosition: {x: -44.3, y: -3.24, z: 112.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 13.317, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
 --- !u!114 &148294001 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114000011275741734, guid: 1f2d0745f43294df5a5a34f19689c95a,
@@ -4098,6 +4126,34 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 22d502d9eba004a4aa9feac007bce425, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &514747289
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 514747290}
+  m_Layer: 0
+  m_Name: spawn-point (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &514747290
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 514747289}
+  m_LocalRotation: {x: -0, y: -0.121377036, z: -0, w: 0.9926065}
+  m_LocalPosition: {x: -126.6, y: -3.24, z: 113.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: -13.64, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
 --- !u!1001 &520786818
 Prefab:
   m_ObjectHideFlags: 0
@@ -4657,6 +4713,34 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &566346269
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 566346270}
+  m_Layer: 0
+  m_Name: spawn-point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &566346270
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 566346269}
+  m_LocalRotation: {x: -0, y: -0.47826755, z: -0, w: 0.87821424}
+  m_LocalPosition: {x: 13.88, y: -3.24, z: 83.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: -57.011, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
 --- !u!1001 &569449481
 Prefab:
   m_ObjectHideFlags: 0
@@ -12435,6 +12519,10 @@ MonoBehaviour:
   maxBrakingTorque: 3000
   carHealth: 100
   controllerDeadzone: 0.15
+  spawnPoints:
+  - {fileID: 566346269}
+  - {fileID: 147802725}
+  - {fileID: 514747289}
   speedBoostPower: 100
   playerSwitch: {fileID: 740151042}
   AudioManagerScript: {fileID: 668872955}
