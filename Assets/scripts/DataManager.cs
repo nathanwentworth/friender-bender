@@ -5,7 +5,7 @@ using InControl;
 public static class DataManager
 {
 
-    public static List<InputDevice> PlayerList = new List<InputDevice>();
+    public static List<PlayerData> PlayerList = new List<PlayerData>();
 
     private static int
         currentIndex,

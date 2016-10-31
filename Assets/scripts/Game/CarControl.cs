@@ -9,8 +9,6 @@ public class CarControl : MonoBehaviour
     public float maxMotorTorque; // maximum torque the motor can apply to wheel
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float maxBrakingTorque; //how fast should you brake
-    public int antiRollValue; //prevents car from flipping
-    public int carHealth = 100;
     public float controllerDeadzone = 0.15f;
 
     public GameObject[] spawnPoints;
@@ -26,10 +24,12 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
-    private int currentIndex = 0;
+    //Making this public for Powerup Reference
+    [HideInInspector]
+    public int currentIndex = 0;
     private bool invincible;
-    private int newCarHealth;
     private bool playing;
+    private int trueCurrentIndex;
 
     [Header("Audio Bits")]
     //public GameObject AudioManagerObj;
@@ -50,36 +50,26 @@ public class CarControl : MonoBehaviour
     private void Update()
     {
 
-        if (Time.timeScale == 1) { playing = true; } else { playing = false;}
+        if (Time.timeScale == 1) { playing = true; } else { playing = false; }
 
-        if (playing) {
+        if (playing)
+        {
             if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !playerSwitch.playerWin)
             {
                 transform.rotation = Quaternion.identity;
                 rigid.velocity = Vector3.zero;
                 transform.position = carOriginTrans;
             }
-            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = playerSwitch.currentIndex; }
+            trueCurrentIndex = playerSwitch.currentIndex;
+            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = trueCurrentIndex; }
             else { currentIndex = 0; }
-            if (!playerSwitch.DEBUG_MODE)
-            {
-                if (newCarHealth <= 0)
-                {
-                    playerSwitch.RemovePlayer();
-                    newCarHealth = 100;
-                }
-            }
 
             //CONTROLS
             if (!playerSwitch.playerWin)
             {
                 InputDevice controller = null;
                 if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
-                else { controller = DataManager.PlayerList[currentIndex]; }
-                if (controller.Action1.WasPressed)
-                {
-                   StartCoroutine(PowerUps.SpeedBoost(transform, rigid, speedBoostPower));
-                }
+                else { controller = DataManager.PlayerList[currentIndex].Controller; }
                 brakingForce = controller.LeftTrigger.Value;
                 accelerationForce = Mathf.Clamp(controller.RightTrigger.Value, 0.4f, 1.0f);
                 x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
@@ -91,7 +81,7 @@ public class CarControl : MonoBehaviour
             {
                 rigid.constraints = RigidbodyConstraints.FreezeAll;
             }
-            
+
         }
 
 
@@ -149,33 +139,16 @@ public class CarControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!invincible)
+        if (!playerSwitch.DEBUG_MODE && !invincible)
         {
-            if (mph > 41 && mph < 64)
+            if(mph > 41)
             {
-                Debug.Log("Minor Damage. Health: " + (newCarHealth - 20) + "/" + carHealth);
-                newCarHealth -= 20;
-                if (newCarHealth > 0)
+                int trueCurrentIndex = playerSwitch.currentIndex;
+                DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
+                Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
+                if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
                 {
-                    StartCoroutine("DamageCooldown");
-                }
-            }
-            else if (mph > 65 && mph < 94)
-            {
-                Debug.Log("Moderate Damage. Health: " + (newCarHealth - 40) + "/" + carHealth);
-                newCarHealth -= 40;
-                if (newCarHealth > 0)
-                {
-                    StartCoroutine("DamageCooldown");
-                }
-            }
-            else if (mph > 95)
-            {
-                Debug.Log("High Damage. Health: " + (newCarHealth - 60) + "/" + carHealth);
-                newCarHealth -= 60;
-                if (newCarHealth > 0)
-                {
-                    StartCoroutine("DamageCooldown");
+                    playerSwitch.RemovePlayer();
                 }
             }
         }
@@ -216,20 +189,6 @@ public class CarControl : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.25f);
-        }
-    }
-
-    private class PowerUps
-    {
-        public static IEnumerator SpeedBoost(Transform transform, Rigidbody rigid, int maxForce)
-        {
-            int i = 0;
-            while (i < 20)
-            {
-                rigid.AddForce(transform.forward * maxForce, ForceMode.Acceleration);
-                yield return new WaitForSeconds(0.01f);
-                i++;
-            }
         }
     }
 
