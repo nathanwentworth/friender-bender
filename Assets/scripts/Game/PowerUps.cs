@@ -8,21 +8,22 @@ public class PowerUps : MonoBehaviour {
     public enum PowerUpType
     {
         None,
-        SpeedBoost
+        SpeedBoost,
+        SkipTurn
     }
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
     public int sb_force;
 
     private GameObject car;
+    System.Random random = new System.Random();
 
     void Start()
     {
         car = GameObject.FindGameObjectWithTag("Player");
         foreach(PlayerData player in DataManager.PlayerList)
         {
-            player.CurrentPowerUp = PowerUpType.SpeedBoost;
-            Debug.Log("Giving all players in list SpeedBoost");
+            RandomPowerup(player);
         }
     }
 
@@ -49,17 +50,16 @@ public class PowerUps : MonoBehaviour {
         {
             if (controller.Action1.WasPressed)
             {
-                int currentIndex = car.GetComponent<CarControl>().currentIndex;
+                int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
                 PlayerData player = DataManager.PlayerList[currentIndex];
                 PowerUpType powerup = player.CurrentPowerUp;
                 if (powerup == PowerUpType.None)
                 {
                     return;
                 }
-                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+                Debug.Log("Player " + player.PlayerNumber + " is using Powerup: " + powerup.ToString());
                 Execute(powerup);
                 player.CurrentPowerUp = PowerUpType.None;
-                Debug.Log(DataManager.PlayerList[currentIndex].CurrentPowerUp);
                 StartCoroutine(Cooldown(player));
             }
         }
@@ -85,6 +85,9 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.SpeedBoost:
                 StartCoroutine(SpeedBoost(car, sb_force));
                 break;
+            case PowerUpType.SkipTurn:
+                StartCoroutine(SkipTurn());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -103,11 +106,27 @@ public class PowerUps : MonoBehaviour {
         }
     }
 
+    private IEnumerator SkipTurn()
+    {
+        PlayerSwitching pSwitch = gameObject.GetComponent<PlayerSwitching>();
+        HUDManager hud = pSwitch.hudManager;
+        pSwitch.SkipPlayer();
+        //hud.EnqueueAction(hud.DisplayNotificationText(String.Format("Player {0} has been skipped!"), pSwitch.NextPlayer());
+        yield return null;
+    }
+
+    private void RandomPowerup(PlayerData player)
+    {
+        Array values = Enum.GetValues(typeof(PowerUpType));
+        PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
+        player.CurrentPowerUp = randomPowerup;
+        Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
+    }
+
     private IEnumerator Cooldown(PlayerData player)
     {
         yield return new WaitForSeconds(powerupCooldownTime);
         Array values = Enum.GetValues(typeof(PowerUpType));
-        System.Random random = new System.Random();
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
         player.CurrentPowerUp = randomPowerup;
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
