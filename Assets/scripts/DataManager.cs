@@ -71,4 +71,14 @@ public static class DataManager
         set { randomPlayerOrder = value; }
     }
 
+    public static void Save() {
+        PlayerPrefs.SetFloat("Turn Time", turnTime);
+        PlayerPrefs.Save();
+        Debug.Log("Saved data");
+    }
+    public static void Load() {
+        turnTime = PlayerPrefs.GetFloat("Turn Time");
+        Debug.Log("Loaded data");
+    }
+
 }

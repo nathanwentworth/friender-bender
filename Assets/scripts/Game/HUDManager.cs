@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using InControl;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using InControl;
 
 public class HUDManager : MonoBehaviour
 {
@@ -40,9 +41,13 @@ public class HUDManager : MonoBehaviour
     private int[] players;
     private int currentIndex;
 
+    Queue<IEnumerator> notifications = new Queue<IEnumerator>();
+
+
     void Start()
     {
         notificationText.text = "";
+        StartCoroutine(Process());
     }
 
     void Update()
@@ -85,10 +90,32 @@ public class HUDManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
+    public void EnqueueAction(IEnumerator notif) {
+        notifications.Enqueue(notif);
+    }
+
+    private IEnumerator Process() {
+        while (true) {
+            if (notifications.Count > 0) {
+                yield return StartCoroutine(notifications.Dequeue());
+            }
+            else {
+                yield return null;
+            }
+        }
+    }
+
+    public void EnqueueWait(float aWaitTime) {
+        notifications.Enqueue(Wait(aWaitTime));
+    }
+    private IEnumerator Wait(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+    }
+
+
     public IEnumerator DisplayNotificationText(string text) {
         notificationText.text = text;
-        yield return new WaitForSeconds(2);
-        notificationText.text = "";
+        yield return null;
     }
 
     public void DisplayOverlayText(string text) {
@@ -101,7 +128,4 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
     }
-
-
-
 }
