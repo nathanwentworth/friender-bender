@@ -15,17 +15,22 @@ public class PowerUps : MonoBehaviour {
     [Header("SpeedBoost")]
     public int sb_force;
 
-    private GameObject car;
     private PlayerSwitching pSwitch;
+    private HUDManager hud;
+
+
+    private GameObject car;
+    System.Random random = new System.Random();
 
     void Start()
     {
         car = GameObject.FindGameObjectWithTag("Player");
-        pSwitch = GetComponent<PlayerSwitching>();
         foreach(PlayerData player in DataManager.PlayerList)
         {
             RandomPowerup(player);
         }
+        pSwitch = gameObject.GetComponent<PlayerSwitching>();
+        hud = pSwitch.hudManager;
     }
 
     void Update()
@@ -51,7 +56,7 @@ public class PowerUps : MonoBehaviour {
         {
             if (controller.Action1.WasPressed)
             {
-                int currentIndex = pSwitch.currentIndex;
+                int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
                 PlayerData player = DataManager.PlayerList[currentIndex];
                 PowerUpType powerup = player.CurrentPowerUp;
                 if (powerup == PowerUpType.None)
@@ -109,15 +114,9 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SkipTurn()
     {
-        HUDManager hud = pSwitch.hudManager;
         pSwitch.SkipPlayer();
-        hud.EnqueueAction(hud.DisplayNotificationText(String.Format("PLAYER {0} SKIPPED!", (pSwitch.NextPlayer() + 1 ))));
-        yield return null;
-    }
-
-    private IEnumerator Endturn()
-    {
-        pSwitch.SwitchPlayer();
+        string skippedText = "PLAYER " + (pSwitch.NextPlayer() + 1) + " SKIPPED";
+        hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }
 
@@ -136,5 +135,6 @@ public class PowerUps : MonoBehaviour {
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
         player.CurrentPowerUp = randomPowerup;
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
+        hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
     }
 }
