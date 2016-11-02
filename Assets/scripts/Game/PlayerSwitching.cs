@@ -78,7 +78,7 @@ public class PlayerSwitching : MonoBehaviour
         }
     }
 
-    private void SwitchPlayer()
+    public void SwitchPlayer()
     {
         int nextIndex = currentIndex;
         for (int i = 0; i < totalPlayers; i++)

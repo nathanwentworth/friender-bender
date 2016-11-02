@@ -16,11 +16,12 @@ public class PowerUps : MonoBehaviour {
     public int sb_force;
 
     private GameObject car;
-    System.Random random = new System.Random();
+    private PlayerSwitching pSwitch;
 
     void Start()
     {
         car = GameObject.FindGameObjectWithTag("Player");
+        pSwitch = GetComponent<PlayerSwitching>();
         foreach(PlayerData player in DataManager.PlayerList)
         {
             RandomPowerup(player);
@@ -50,7 +51,7 @@ public class PowerUps : MonoBehaviour {
         {
             if (controller.Action1.WasPressed)
             {
-                int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
+                int currentIndex = pSwitch.currentIndex;
                 PlayerData player = DataManager.PlayerList[currentIndex];
                 PowerUpType powerup = player.CurrentPowerUp;
                 if (powerup == PowerUpType.None)
@@ -108,10 +109,15 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SkipTurn()
     {
-        PlayerSwitching pSwitch = gameObject.GetComponent<PlayerSwitching>();
         HUDManager hud = pSwitch.hudManager;
         pSwitch.SkipPlayer();
         hud.EnqueueAction(hud.DisplayNotificationText(String.Format("PLAYER {0} SKIPPED!", (pSwitch.NextPlayer() + 1 ))));
+        yield return null;
+    }
+
+    private IEnumerator Endturn()
+    {
+        pSwitch.SwitchPlayer();
         yield return null;
     }
 
