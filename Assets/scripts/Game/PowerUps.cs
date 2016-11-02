@@ -120,6 +120,7 @@ public class PowerUps : MonoBehaviour {
     {
         pSwitch.timer = pSwitch.timer + 2.5f;
         string timerText = "+2 SECONDS";
+        Debug.Log("Adding 2 seconds to time");
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
         yield return null;
     }
