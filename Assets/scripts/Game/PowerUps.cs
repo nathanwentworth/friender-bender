@@ -9,7 +9,8 @@ public class PowerUps : MonoBehaviour {
     {
         None,
         SpeedBoost,
-        SkipTurn
+        SkipTurn,
+        AddSecondsToTurn
     }
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
@@ -25,49 +26,38 @@ public class PowerUps : MonoBehaviour {
     void Start()
     {
         car = GameObject.FindGameObjectWithTag("Player");
+        pSwitch = gameObject.GetComponent<PlayerSwitching>();
+        hud = pSwitch.hudManager;
         foreach(PlayerData player in DataManager.PlayerList)
         {
             RandomPowerup(player);
         }
-        pSwitch = gameObject.GetComponent<PlayerSwitching>();
-        hud = pSwitch.hudManager;
     }
 
     void Update()
     {
         InputDevice controller = InputManager.ActiveDevice;
-        if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
-        {
-            if (controller.Action1.WasPressed)
-            {
-                PlayerData player = PlayerWhoPressedButton(controller);
-                PowerUpType powerup = player.CurrentPowerUp;
-                if (powerup == PowerUpType.None)
-                {
-                    return;
-                }
-                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
-                Execute(powerup);
-                player.CurrentPowerUp = PowerUpType.None;
-                StartCoroutine(Cooldown(player));
-            }
-        }
-        else if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
-        {
-            if (controller.Action1.WasPressed)
-            {
+
+        if (controller.Action1.WasPressed && !pSwitch.passingController) {
+            PlayerData player;
+            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) {
+                player = PlayerWhoPressedButton(controller);
+            } else {
                 int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
-                PlayerData player = DataManager.PlayerList[currentIndex];
-                PowerUpType powerup = player.CurrentPowerUp;
-                if (powerup == PowerUpType.None)
-                {
-                    return;
-                }
-                Debug.Log("Player " + player.PlayerNumber + " is using Powerup: " + powerup.ToString());
-                Execute(powerup);
-                player.CurrentPowerUp = PowerUpType.None;
-                StartCoroutine(Cooldown(player));
+                player = DataManager.PlayerList[currentIndex];
             }
+            PowerUpType powerup = player.CurrentPowerUp;
+            if (powerup == PowerUpType.None)
+            {
+                return;
+            }
+            Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+            Execute(powerup);
+            player.CurrentPowerUp = PowerUpType.None;
+            Debug.LogWarning(player.CurrentPowerUp + "ybyb");
+            hud.DisplayPowerups(player.PlayerNumber, " ");
+            StartCoroutine(Cooldown(player));
+
         }
     }
 
@@ -93,6 +83,12 @@ public class PowerUps : MonoBehaviour {
                 break;
             case PowerUpType.SkipTurn:
                 StartCoroutine(SkipTurn());
+                break;
+            case PowerUpType.AddSecondsToTurn:
+                StartCoroutine(AddSecondsToTurn());
+                break;
+            case PowerUpType.ReversedTurning:
+                StartCoroutine(ReversedTurning());
                 break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
@@ -120,21 +116,35 @@ public class PowerUps : MonoBehaviour {
         yield return null;
     }
 
+    private IEnumerator AddSecondsToTurn()
+    {
+        pSwitch.timer = pSwitch.timer + 2.5f;
+        string timerText = "+2 SECONDS";
+        hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        yield return null;
+    }
+
+    private IEnumerator ReversedTurning()
+    {
+        pSwitch.timer = pSwitch.timer + 2.5f;
+        string timerText = "+2 SECONDS";
+        hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        yield return null;
+    }
+
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
-        PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
+        PowerUpType randomPowerup = (PowerUpType)values.GetValue(UnityEngine.Random.Range(1, values.Length));
         player.CurrentPowerUp = randomPowerup;
+        hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
     }
 
     private IEnumerator Cooldown(PlayerData player)
     {
+        Debug.Log("Starting Cooldown for Player " + player.PlayerNumber);
         yield return new WaitForSeconds(powerupCooldownTime);
-        Array values = Enum.GetValues(typeof(PowerUpType));
-        PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
-        player.CurrentPowerUp = randomPowerup;
-        Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
-        hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
+        RandomPowerup(player);
     }
 }

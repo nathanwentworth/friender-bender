@@ -25,6 +25,7 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
+    private bool grounded;
     //Making this public for Powerup Reference
     [HideInInspector]
     public int currentIndex = 0;
@@ -76,6 +77,11 @@ public class CarControl : MonoBehaviour
                 //Hardcoded deadzone
                 if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
                 else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+
+                if (!grounded) {
+                    Vector2 rotationalInput = new Vector2 (x_Input.y, x_Input.x); 
+                    rigid.AddRelativeTorque(rotationalInput * 5000);
+                }
             }
             else
             {
@@ -117,6 +123,15 @@ public class CarControl : MonoBehaviour
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+            IsGrounded(axleInfo.rightWheel, axleInfo.leftWheel);
+        }
+    }
+
+    private void IsGrounded(WheelCollider right, WheelCollider left) {
+        if (right.isGrounded && left.isGrounded) {
+            grounded = true;
+        } else {
+            grounded = false;
         }
     }
 
@@ -147,6 +162,7 @@ public class CarControl : MonoBehaviour
                 DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
                 Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
                 hudManager.UpdateLivesDisplay();
+                StartCoroutine(DamageCooldown());
                 if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
                 {
                     playerSwitch.RemovePlayer();
