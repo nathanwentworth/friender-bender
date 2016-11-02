@@ -10,8 +10,6 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers;
     public int
         currentIndex = 0;
-    private float
-        passingControllerTime;
     [HideInInspector]
     public float
         timer;
@@ -86,7 +84,7 @@ public class PlayerSwitching : MonoBehaviour
         for (int i = 0; i < totalPlayers; i++)
         {
             nextIndex++;
-            if (nextIndex + i == totalPlayers)
+            if (nextIndex >= totalPlayers)
             {
                 nextIndex = 0;
             }
@@ -108,7 +106,6 @@ public class PlayerSwitching : MonoBehaviour
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
-            passingControllerTime = System.DateTime.Now.Second;
             Time.timeScale = 0;
             passingController = true;
         }
@@ -122,7 +119,7 @@ public class PlayerSwitching : MonoBehaviour
         for (int i = 0; i < totalPlayers; i++)
         {
             nextIndex++;
-            if (nextIndex + i == totalPlayers)
+            if (nextIndex >= totalPlayers)
             {
                 nextIndex = 0;
             }

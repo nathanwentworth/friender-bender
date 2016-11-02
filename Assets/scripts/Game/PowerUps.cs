@@ -115,7 +115,7 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator SkipTurn()
     {
         pSwitch.SkipPlayer();
-        string skippedText = "PLAYER " + pSwitch.NextPlayer() + " SKIPPED";
+        string skippedText = "PLAYER " + (pSwitch.NextPlayer() + 1) + " SKIPPED";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }
