@@ -496,7 +496,7 @@ Transform:
   m_Children:
   - {fileID: 1081447019}
   m_Father: {fileID: 860178109}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!146 &65802502
 WheelCollider:
   m_ObjectHideFlags: 0
@@ -516,7 +516,7 @@ WheelCollider:
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 2.75
+    m_AsymptoteSlip: 3.5
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
@@ -5999,13 +5999,13 @@ WheelCollider:
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 2.75
+    m_AsymptoteSlip: 3.75
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.2
-    m_AsymptoteSlip: 0.6
+    m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 1.5
     m_Stiffness: 1
   m_Enabled: 1
@@ -7876,8 +7876,8 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 1805578425}
-  - {fileID: 1384202321}
   - {fileID: 65802501}
+  - {fileID: 1384202321}
   - {fileID: 663742762}
   m_Father: {fileID: 1363622829}
   m_RootOrder: 0
@@ -13135,11 +13135,11 @@ WheelCollider:
     m_ExtremumValue: 2.5
     m_AsymptoteSlip: 2.75
     m_AsymptoteValue: 2
-    m_Stiffness: 1
+    m_Stiffness: 5
   m_SidewaysFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.2
-    m_AsymptoteSlip: 0.6
+    m_AsymptoteSlip: 0.5
     m_AsymptoteValue: 1.5
     m_Stiffness: 1
   m_Enabled: 1
@@ -13156,7 +13156,7 @@ Transform:
   m_Children:
   - {fileID: 1447107312}
   m_Father: {fileID: 860178109}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &1401168327
 Prefab:
   m_ObjectHideFlags: 0
@@ -17649,7 +17649,7 @@ WheelCollider:
   m_ForwardFriction:
     m_ExtremumSlip: 0.25
     m_ExtremumValue: 2.5
-    m_AsymptoteSlip: 2.75
+    m_AsymptoteSlip: 3.5
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
