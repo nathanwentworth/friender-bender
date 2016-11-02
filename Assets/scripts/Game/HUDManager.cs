@@ -19,6 +19,7 @@ public class HUDManager : MonoBehaviour
     public Image[] livesDisplay;
     public Sprite livesDisplayInactive;
     public Sprite livesDisplayActive;
+    public Text[] powerupText;
 
     [Header("Pause")]
 
@@ -121,9 +122,14 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    public void DisplayPowerups(int player, string powerup) {
+        powerupText[player].text = player + ": " + powerup;
+    }
+
     public void EnqueueWait(float aWaitTime) {
         notifications.Enqueue(Wait(aWaitTime));
     }
+
     private IEnumerator Wait(float waitTime) {
         yield return new WaitForSeconds(waitTime);
     }

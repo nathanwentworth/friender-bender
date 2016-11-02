@@ -15,6 +15,10 @@ public class PowerUps : MonoBehaviour {
     [Header("SpeedBoost")]
     public int sb_force;
 
+    private PlayerSwitching pSwitch;
+    private HUDManager hud;
+
+
     private GameObject car;
     System.Random random = new System.Random();
 
@@ -25,6 +29,8 @@ public class PowerUps : MonoBehaviour {
         {
             RandomPowerup(player);
         }
+        pSwitch = gameObject.GetComponent<PlayerSwitching>();
+        hud = pSwitch.hudManager;
     }
 
     void Update()
@@ -108,10 +114,9 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SkipTurn()
     {
-        PlayerSwitching pSwitch = gameObject.GetComponent<PlayerSwitching>();
-        HUDManager hud = pSwitch.hudManager;
         pSwitch.SkipPlayer();
-        //hud.EnqueueAction(hud.DisplayNotificationText(String.Format("Player {0} has been skipped!"), pSwitch.NextPlayer());
+        string skippedText = "PLAYER " + pSwitch.NextPlayer() + " SKIPPED";
+        hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }
 
@@ -130,5 +135,6 @@ public class PowerUps : MonoBehaviour {
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(random.Next(1, values.Length));
         player.CurrentPowerUp = randomPowerup;
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
+        hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
     }
 }
