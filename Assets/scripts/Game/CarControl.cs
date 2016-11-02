@@ -18,6 +18,7 @@ public class CarControl : MonoBehaviour
 
     [Header("Data References")]
     public PlayerSwitching playerSwitch;
+    public HUDManager hudManager;
 
     private Vector2 x_Input;
     private float accelerationForce = 0;
@@ -145,6 +146,7 @@ public class CarControl : MonoBehaviour
                 int trueCurrentIndex = playerSwitch.currentIndex;
                 DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
                 Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
+                hudManager.UpdateLivesDisplay();
                 if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
                 {
                     playerSwitch.RemovePlayer();

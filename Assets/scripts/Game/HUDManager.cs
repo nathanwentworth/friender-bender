@@ -16,6 +16,9 @@ public class HUDManager : MonoBehaviour
     public Text timer;
     public Gradient timerGradient;
     public Text currentPlayerText;
+    public Image[] livesDisplay;
+    public Sprite livesDisplayInactive;
+    public Sprite livesDisplayActive;
 
     [Header("Pause")]
 
@@ -48,6 +51,7 @@ public class HUDManager : MonoBehaviour
     {
         notificationText.text = "";
         StartCoroutine(Process());
+        UpdateLivesDisplay();
     }
 
     void Update()
@@ -92,6 +96,18 @@ public class HUDManager : MonoBehaviour
 
     public void EnqueueAction(IEnumerator notif) {
         notifications.Enqueue(notif);
+    }
+
+    public void UpdateLivesDisplay() {
+        Debug.Log("updating lives display");
+        int trueCurrentIndex = playerSwitch.currentIndex;
+        for (int i = 0; i < DataManager.LivesCount; i++) {
+            if (i < DataManager.PlayerList[trueCurrentIndex].Lives) {
+                livesDisplay[i].sprite = livesDisplayActive;
+            } else {
+                livesDisplay[i].sprite = livesDisplayInactive;
+            }
+        }
     }
 
     private IEnumerator Process() {

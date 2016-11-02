@@ -10,7 +10,8 @@ public static class DataManager
     private static int
         currentIndex,
         totalPlayers,
-        currentMPH;
+        currentMPH,
+        livesCount;
 
     private static GameMode
         currentGameMode;
@@ -51,6 +52,11 @@ public static class DataManager
     {
         get { return currentMPH; }
         set { currentMPH = value; }
+    }
+    public static int LivesCount
+    {
+        get { return livesCount; }
+        set { livesCount = value; }
     }
 
     public static float TurnTime

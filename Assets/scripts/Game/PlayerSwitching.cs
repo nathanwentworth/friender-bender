@@ -112,6 +112,7 @@ public class PlayerSwitching : MonoBehaviour
             Time.timeScale = 0;
             passingController = true;
         }
+        hudManager.UpdateLivesDisplay();
         timer = turnTime;
     }
 
