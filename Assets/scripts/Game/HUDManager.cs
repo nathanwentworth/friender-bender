@@ -123,7 +123,7 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player].text = player + ": " + powerup;
+        powerupText[player - 1].text = player + ": " + powerup;
     }
 
     public void EnqueueWait(float aWaitTime) {
