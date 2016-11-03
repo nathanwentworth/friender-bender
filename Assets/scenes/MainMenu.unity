@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4469248, g: 0.49678648, b: 0.5750846, a: 1}
+  m_IndirectSpecularColor: {r: 0.44692492, g: 0.4967869, b: 0.57508546, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -850,8 +850,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 357251187}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!1 &312841050
 GameObject:
   m_ObjectHideFlags: 0
@@ -1176,8 +1176,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 448079553}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!225 &368122049
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -1474,8 +1474,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 680827209}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!1 &410515447
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,13 +3704,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b5e8de77c5b4597ae7fbfb49a95e22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  logDebugInfo: 1
+  logDebugInfo: 0
   invertYAxis: 0
   useFixedUpdate: 0
-  dontDestroyOnLoad: 1
+  dontDestroyOnLoad: 0
   suspendInBackground: 0
   enableICade: 0
-  enableXInput: 1
+  enableXInput: 0
   xInputOverrideUpdateRate: 0
   xInputUpdateRate: 0
   xInputOverrideBufferSize: 0
@@ -4444,8 +4444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 1321505287}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!114 &1270393015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4457,9 +4457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1deab92ab7b944209b65ad1c481addda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnTimeSlider: {fileID: 1321505289}
-  turnTimeText: {fileID: 1663094148}
-  textSaved: {fileID: 44497626}
+  turnTimeSlider: {fileID: 0}
+  turnTimeText: {fileID: 0}
+  textSaved: {fileID: 0}
 --- !u!1 &1277407965
 GameObject:
   m_ObjectHideFlags: 0
@@ -5599,8 +5599,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 1001899473}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!1 &1532567826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5720,8 +5720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0635fdb9b3ea32149b97fa7eaf798547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventSys: {fileID: 2009049224}
-  activeButton: {fileID: 554132883}
+  eventSys: {fileID: 0}
+  activeButton: {fileID: 0}
 --- !u!1 &1663094146
 GameObject:
   m_ObjectHideFlags: 0
@@ -6437,7 +6437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad84958d98bb45609989727bc0555a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 2009049228}
+  manager: {fileID: 0}
 --- !u!225 &1920170742
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6916,7 +6916,7 @@ MonoBehaviour:
   analogMoveThreshold: 0.5
   moveRepeatFirstDuration: 0.8
   moveRepeatDelayDuration: 0.1
-  allowMobileDevice: 0
+  allowMobileDevice: 1
   allowMouseInput: 1
   focusOnMouseHover: 0
 --- !u!114 &2009049226
@@ -6969,28 +6969,29 @@ MonoBehaviour:
   - Each player passes around the same controller
   modeDescriptionText: {fileID: 701631262}
   containers:
-  - {fileID: 1270393008}
   - {fileID: 403807621}
   - {fileID: 1527492621}
   - {fileID: 1920170739}
   - {fileID: 368122047}
   - {fileID: 298478579}
   - {fileID: 1532567826}
+  - {fileID: 1270393008}
   rotatingModel: {fileID: 1124975716}
   carModels:
   - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
-  - {fileID: 4300000, guid: f5a957bf0cc008842bef7513fd8ae3c8, type: 3}
-  - {fileID: 4300000, guid: 419a8ba4798e3db4b9122ae0f9fa56a8, type: 3}
-  - {fileID: 4300000, guid: 1cb81649d2f8d88409bdf450d0f56227, type: 3}
-  - {fileID: 4300000, guid: 22d502d9eba004a4aa9feac007bce425, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
   trackModels:
-  - {fileID: 4300002, guid: 050c8c8f4101ffa40a736bc66b23bec7, type: 3}
-  - {fileID: 4300000, guid: 050c8c8f4101ffa40a736bc66b23bec7, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
+  - {fileID: 4300000, guid: b90f823b0e046a54bbd2578058ffffb1, type: 3}
   turnTimeDisplayText: {fileID: 1663094148}
   turnTimeSlider: {fileID: 1321505289}
   numberOfLives: 3
   submitSound: {fileID: 8300000, guid: 02799c96e5c4e45f19814bbc7cdb3880, type: 3}
-  cancelSound: {fileID: 8300000, guid: 66d587c6d94a342cfbcb70d031053a65, type: 3}
+  cancelSound: {fileID: 8300000, guid: ddd0d6faf9fe7481695132f704979ce8, type: 3}
   switchSound: {fileID: 8300000, guid: afef434e7b3824a789bb6a040eaf3c5e, type: 3}
 --- !u!82 &2009049229
 AudioSource:
