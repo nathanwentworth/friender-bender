@@ -12,35 +12,21 @@ public class PowerUps : MonoBehaviour {
         SkipTurn,
         AddSecondsToTurn,
         ReversedTurning,
-<<<<<<< HEAD
-=======
-        ScreenDistraction,
-        Shield,
->>>>>>> origin/master
         Endturn,
         LargeObject
     }
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
     public int sb_force;
-<<<<<<< HEAD
     public GameObject randomObj;
     public Transform randomObjSpawn;
-=======
-    [Header("Glitch")]
-    public GameObject cam;
-    [Header("Data References")]
-    public AudioManager audioManager;
-    [Header("LargeObject")]
-    public GameObject[] objects;
-    public Transform spawn;
->>>>>>> origin/master
 
     private PlayerSwitching pSwitch;
     private HUDManager hud;
 
 
     private GameObject car;
+    System.Random random = new System.Random();
 
     void Start()
     {
@@ -115,12 +101,6 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.LargeObject:
                 StartCoroutine(RandomLargeObject());
                 break;
-            case PowerUpType.Endturn:
-                StartCoroutine(EndTurn());
-                break;
-            case PowerUpType.LargeObject:
-                StartCoroutine(RandomLargeObject());
-                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -165,40 +145,14 @@ public class PowerUps : MonoBehaviour {
         pSwitch.timer = pSwitch.timer + 2.5f;
         string timerText = "+2 SECONDS";
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
-<<<<<<< HEAD
         hud.EnqueueWait(1.2f);
         hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return null;
-=======
-        yield return new WaitForSeconds(3f);
-        carControl.turningMultiplier = 1;
     }
 
     private IEnumerator EndTurn()
     {
         pSwitch.timer = 0;
-        yield return null;
-    }
-
-    private IEnumerator ScreenDistraction()
-    {
-        StartCoroutine(audioManager.PowerupSounds("distraction"));
-        cam.GetComponent<AnalogGlitch>().enabled = true;
-        yield return new WaitForSeconds(3f);
-        cam.GetComponent<AnalogGlitch>().enabled = false;
->>>>>>> origin/master
-    }
-
-    private IEnumerator EndTurn()
-    {
-        pSwitch.timer = 0;
-        yield return null;
-    }
-
-    private IEnumerator RandomLargeObject()
-    {
-        GameObject i = Instantiate(objects[0]);
-        i.transform.position = spawn.position;
         yield return null;
     }
 
