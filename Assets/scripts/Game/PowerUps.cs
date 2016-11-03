@@ -10,11 +10,16 @@ public class PowerUps : MonoBehaviour {
         None,
         SpeedBoost,
         SkipTurn,
-        AddSecondsToTurn
+        AddSecondsToTurn,
+        ReversedTurning,
+        Endturn,
+        LargeObject
     }
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
     public int sb_force;
+    public GameObject randomObj;
+    public Transform randomObjSpawn;
 
     private PlayerSwitching pSwitch;
     private HUDManager hud;
@@ -28,9 +33,10 @@ public class PowerUps : MonoBehaviour {
         car = GameObject.FindGameObjectWithTag("Player");
         pSwitch = gameObject.GetComponent<PlayerSwitching>();
         hud = pSwitch.hudManager;
-        foreach(PlayerData player in DataManager.PlayerList)
+        foreach (PlayerData player in DataManager.PlayerList)
         {
-            RandomPowerup(player);
+            player.CurrentPowerUp = PowerUpType.LargeObject;
+            hud.DisplayPowerups(player.PlayerNumber, player.CurrentPowerUp.ToString());
         }
     }
 
@@ -54,7 +60,6 @@ public class PowerUps : MonoBehaviour {
             Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
             Execute(powerup);
             player.CurrentPowerUp = PowerUpType.None;
-            Debug.LogWarning(player.CurrentPowerUp + "ybyb");
             hud.DisplayPowerups(player.PlayerNumber, " ");
             StartCoroutine(Cooldown(player));
 
@@ -65,7 +70,7 @@ public class PowerUps : MonoBehaviour {
     {
         foreach (PlayerData player in DataManager.PlayerList)
         {
-            if(controller == player.Controller)
+            if (controller == player.Controller)
             {
                 return player;
             }
@@ -90,6 +95,12 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.ReversedTurning:
                 StartCoroutine(ReversedTurning());
                 break;
+            case PowerUpType.Endturn:
+                StartCoroutine(EndTurn());
+                break;
+            case PowerUpType.LargeObject:
+                StartCoroutine(RandomLargeObject());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -113,6 +124,8 @@ public class PowerUps : MonoBehaviour {
         pSwitch.SkipPlayer();
         string skippedText = "PLAYER " + (pSwitch.NextPlayer() + 1) + " SKIPPED";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
+        hud.EnqueueWait(1.2f);
+        hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return null;
     }
 
@@ -122,6 +135,8 @@ public class PowerUps : MonoBehaviour {
         string timerText = "+2 SECONDS";
         Debug.Log("Adding 2 seconds to time");
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        hud.EnqueueWait(1.2f);
+        hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return null;
     }
 
@@ -130,6 +145,14 @@ public class PowerUps : MonoBehaviour {
         pSwitch.timer = pSwitch.timer + 2.5f;
         string timerText = "+2 SECONDS";
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        hud.EnqueueWait(1.2f);
+        hud.EnqueueAction(hud.DisplayNotificationText(""));
+        yield return null;
+    }
+
+    private IEnumerator EndTurn()
+    {
+        pSwitch.timer = 0;
         yield return null;
     }
 
@@ -139,6 +162,8 @@ public class PowerUps : MonoBehaviour {
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(UnityEngine.Random.Range(1, values.Length));
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
+        hud.EnqueueWait(1.2f);
+        hud.EnqueueAction(hud.DisplayNotificationText(""));
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
     }
 
@@ -147,5 +172,12 @@ public class PowerUps : MonoBehaviour {
         Debug.Log("Starting Cooldown for Player " + player.PlayerNumber);
         yield return new WaitForSeconds(powerupCooldownTime);
         RandomPowerup(player);
+    }
+
+    private IEnumerator RandomLargeObject()
+    {
+        GameObject i = Instantiate(randomObj);
+        i.transform.position = randomObjSpawn.position;
+        yield return null;
     }
 }
