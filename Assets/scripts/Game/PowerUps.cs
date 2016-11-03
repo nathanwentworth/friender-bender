@@ -107,6 +107,7 @@ public class PowerUps : MonoBehaviour {
                 break;
             case PowerUpType.Shield:
                 StartCoroutine(Shield());
+                break;
             case PowerUpType.Endturn:
                 StartCoroutine(EndTurn());
                 break;
