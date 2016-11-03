@@ -77,7 +77,7 @@ public class PlayerSwitching : MonoBehaviour
         }
     }
 
-    public void SwitchPlayer()
+    private void SwitchPlayer()
     {
         int nextIndex = currentIndex;
         for (int i = 0; i < totalPlayers; i++)
@@ -104,7 +104,7 @@ public class PlayerSwitching : MonoBehaviour
             string notifText1 = "PLAYER " + (currentIndex + 1) + " IS UP";
             // StartCoroutine(Notifications(notifText1, ""));
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
-            hudManager.EnqueueWait(1.2f);
+            hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
         }
         hudManager.UpdateLivesDisplay();
@@ -143,9 +143,9 @@ public class PlayerSwitching : MonoBehaviour
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             // StartCoroutine(Notifications(notifText1, notifText2));
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
-            hudManager.EnqueueWait(1.2f);
+            hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
-            hudManager.EnqueueWait(1.2f);
+            hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
         }
         Debug.Log("Removed player " + (currentIndex + 1));

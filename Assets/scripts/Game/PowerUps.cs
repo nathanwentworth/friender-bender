@@ -13,9 +13,7 @@ public class PowerUps : MonoBehaviour {
         AddSecondsToTurn,
         ReversedTurning,
         ScreenDistraction,
-        Shield,
-        Endturn,
-        LargeObject
+        Shield
     }
 
     public float powerupCooldownTime = 7;
@@ -23,8 +21,6 @@ public class PowerUps : MonoBehaviour {
     public int sb_force;
     public GameObject cam;
     public AudioManager audioManager;
-    public GameObject randomObj;
-    public Transform randomObjSpawn;
 
     private PlayerSwitching pSwitch;
     private HUDManager hud;
@@ -40,10 +36,9 @@ public class PowerUps : MonoBehaviour {
         carControl = car.GetComponent<CarControl>();
         pSwitch = gameObject.GetComponent<PlayerSwitching>();
         hud = pSwitch.hudManager;
-        foreach (PlayerData player in DataManager.PlayerList)
+        foreach(PlayerData player in DataManager.PlayerList)
         {
-            player.CurrentPowerUp = PowerUpType.LargeObject;
-            hud.DisplayPowerups(player.PlayerNumber, player.CurrentPowerUp.ToString());
+            RandomPowerup(player);
         }
     }
 
@@ -67,6 +62,7 @@ public class PowerUps : MonoBehaviour {
             Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
             Execute(powerup);
             player.CurrentPowerUp = PowerUpType.None;
+            Debug.LogWarning(player.CurrentPowerUp + "ybyb");
             hud.DisplayPowerups(player.PlayerNumber, " ");
             StartCoroutine(Cooldown(player));
 
@@ -77,7 +73,7 @@ public class PowerUps : MonoBehaviour {
     {
         foreach (PlayerData player in DataManager.PlayerList)
         {
-            if (controller == player.Controller)
+            if(controller == player.Controller)
             {
                 return player;
             }
@@ -108,12 +104,6 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Shield:
                 StartCoroutine(Shield());
                 break;
-            case PowerUpType.Endturn:
-                StartCoroutine(EndTurn());
-                break;
-            case PowerUpType.LargeObject:
-                StartCoroutine(RandomLargeObject());
-                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -138,8 +128,6 @@ public class PowerUps : MonoBehaviour {
         pSwitch.SkipPlayer();
         string skippedText = "PLAYER " + (pSwitch.NextPlayer() + 1) + " SKIPPED";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
-        hud.EnqueueWait(1.2f);
-        hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return null;
     }
 
@@ -149,8 +137,6 @@ public class PowerUps : MonoBehaviour {
         string timerText = "+2 SECONDS";
         Debug.Log("Adding 2 seconds to time");
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
-        hud.EnqueueWait(1.2f);
-        hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return null;
     }
 
@@ -182,12 +168,6 @@ public class PowerUps : MonoBehaviour {
         carControl.shield = false;
     }
 
-    private IEnumerator EndTurn()
-    {
-        pSwitch.timer = 0;
-        yield return null;
-    }
-
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
@@ -195,8 +175,6 @@ public class PowerUps : MonoBehaviour {
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
-        hud.EnqueueWait(1.2f);
-        hud.EnqueueAction(hud.DisplayNotificationText(""));
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
     }
 
@@ -205,12 +183,5 @@ public class PowerUps : MonoBehaviour {
         Debug.Log("Starting Cooldown for Player " + player.PlayerNumber);
         yield return new WaitForSeconds(powerupCooldownTime);
         RandomPowerup(player);
-    }
-
-    private IEnumerator RandomLargeObject()
-    {
-        GameObject i = Instantiate(randomObj);
-        i.transform.position = randomObjSpawn.position;
-        yield return null;
     }
 }
