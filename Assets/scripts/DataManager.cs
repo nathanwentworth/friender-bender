@@ -91,5 +91,9 @@ public static class DataManager
         }
         Debug.Log("Loaded data");
     }
+    public static int RandomVal(int min, int max) {
+        int i = (int)(Random.value * max + min);
+        return i;
+    }
 
 }

@@ -10,14 +10,21 @@ public class PowerUps : MonoBehaviour {
         None,
         SpeedBoost,
         SkipTurn,
-        AddSecondsToTurn
+        AddSecondsToTurn,
+        ReversedTurning,
+        ScreenDistraction,
+        Shield
     }
+
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
     public int sb_force;
+    public GameObject cam;
+    public AudioManager audioManager;
 
     private PlayerSwitching pSwitch;
     private HUDManager hud;
+    private CarControl carControl;
 
 
     private GameObject car;
@@ -26,6 +33,7 @@ public class PowerUps : MonoBehaviour {
     void Start()
     {
         car = GameObject.FindGameObjectWithTag("Player");
+        carControl = car.GetComponent<CarControl>();
         pSwitch = gameObject.GetComponent<PlayerSwitching>();
         hud = pSwitch.hudManager;
         foreach(PlayerData player in DataManager.PlayerList)
@@ -90,6 +98,12 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.ReversedTurning:
                 StartCoroutine(ReversedTurning());
                 break;
+            case PowerUpType.ScreenDistraction:
+                StartCoroutine(ScreenDistraction());
+                break;
+            case PowerUpType.Shield:
+                StartCoroutine(Shield());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -98,6 +112,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SpeedBoost(GameObject car, int maxForce)
     {
+        StartCoroutine(audioManager.PowerupSounds("speedBoost"));
         int i = 0;
         while (i < 20)
         {
@@ -127,16 +142,37 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator ReversedTurning()
     {
-        pSwitch.timer = pSwitch.timer + 2.5f;
-        string timerText = "+2 SECONDS";
+        carControl.turningMultiplier = -1;
+        string timerText = "TURNING REVERSED";
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
-        yield return null;
+        yield return new WaitForSeconds(3f);
+        carControl.turningMultiplier = 1;
+    }
+
+    private IEnumerator ScreenDistraction()
+    {
+        StartCoroutine(audioManager.PowerupSounds("distraction"));
+        cam.GetComponent<AnalogGlitch>().enabled = true;
+        yield return new WaitForSeconds(3f);
+        cam.GetComponent<AnalogGlitch>().enabled = false;
+    }
+
+    private IEnumerator Shield()
+    {
+        carControl.shield = true;
+        string timerText = "SHIELD ACTIVE";
+        hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        hud.EnqueueWait(1f);
+        hud.EnqueueAction(hud.DisplayNotificationText(""));
+        yield return new WaitForSeconds(3f);
+        carControl.shield = false;
     }
 
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
-        PowerUpType randomPowerup = (PowerUpType)values.GetValue(UnityEngine.Random.Range(1, values.Length));
+        int rand = DataManager.RandomVal(1, values.Length);
+        PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
