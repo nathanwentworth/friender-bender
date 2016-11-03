@@ -179,6 +179,5 @@ public class PowerUps : MonoBehaviour {
         GameObject i = Instantiate(randomObj);
         i.transform.position = randomObjSpawn.position;
         yield return null;
-        //okay
     }
 }
