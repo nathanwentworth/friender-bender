@@ -4,23 +4,53 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-	[Header("Impact Audio Source on Car")]
-	public AudioSource ImpactSource;
+    [Header("Impact Audio Source on Car")]
+    public AudioSource impactSource;
+    public AudioSource powerupSource;
 
-	[Header("Low-Speed Impact Sounds")]
-	public AudioClip LowSpeedImpact1;
-	public AudioClip LowSpeedImpact2;
-	public AudioClip LowSpeedImpact3;
-	private AudioClip[] Impacts;
+    [Header("Low-Speed Impact Sounds")]
+    public AudioClip[] lowSpeedImpacts;
+    public AudioClip highSpeedImpact;
 
-/*	public void Start(){
-		Impacts = new AudioClip[]{LowSpeedImpact1, LowSpeedImpact2, LowSpeedImpact3};
-	}
+    [Header("Powerups")]
+    public AudioClip randomLargeObject;
+    public AudioClip speedBoost;
+    public AudioClip distraction;
 
-	public void LowImpact(){
-		ImpactSource.clip = Impacts [Random.Range(0, Impacts.Length)];
-		ImpactSource.Play ();
-		Debug.Log ("Low-Speed Impact");
-	}*/
+    public IEnumerator Impact(bool highSpeed)
+    {
+        if (highSpeed)
+        {
+            Debug.Log("High-Speed Impact");
+            impactSource.PlayOneShot(highSpeedImpact);
+        }
+        else {
+            Debug.Log("Low-Speed Impact");
+            impactSource.PlayOneShot(lowSpeedImpacts[DataManager.RandomVal(0, 1)]);
+        }
+        yield return null;
+    }
+
+    public IEnumerator PowerupSounds(string powerupName)
+    {
+        switch (powerupName)
+        {
+            case "speedBoost":
+                Debug.Log("Playing Speedboost");
+                powerupSource.PlayOneShot(speedBoost);
+                break;
+            //   case "randomLargeObject":
+            // powerupSource.PlayOneShot(randomLargeObject);
+            //     break;
+            case "distraction":
+                Debug.Log("Playing distraction");
+                powerupSource.PlayOneShot(distraction);
+                break;
+            default:
+                Debug.LogError("No sound for this powerup yet :^)");
+                break;
+        }
+        yield return null;
+    }
 
 }
