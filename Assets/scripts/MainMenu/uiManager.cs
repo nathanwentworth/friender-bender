@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
-using InControl;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using InControl;
 
 public class uiManager : MonoBehaviour
 {
@@ -9,6 +11,8 @@ public class uiManager : MonoBehaviour
     private int selectedCar;
     private int gameMode = 0;
     private int menuIndex;
+    private AudioSource audio;
+    private GameObject lastSelectedGameObject;
 
     [Header("Controller Add Screen")]
     public Image[] controllerIcons;
@@ -28,21 +32,40 @@ public class uiManager : MonoBehaviour
     [Header("Options")]
     public Text turnTimeDisplayText;
     public Slider turnTimeSlider;
-
     public int numberOfLives = 3;
+
+    [Header("Sounds")]
+    public AudioClip submitSound;
+    public AudioClip cancelSound;
+    public AudioClip switchSound;
 
     System.Random random = new System.Random();
 
     private void Awake()
     {
         DataManager.Load();
+        DataManager.LivesCount = numberOfLives;
         Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
+        if (GetComponent<AudioSource>() != null) {
+            audio = GetComponent<AudioSource>();
+        }
+        lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
     }
 
     private void Update()
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
+
+        // if (inputDevice.Action1.WasPressed) {
+        //     if (GetComponent<EventSystem>().currentSelectedGameObject == null || GetComponent<EventSystem>().currentSelectedGameObject.GetComponent<Button>() == null) {
+        //         return;
+        //     } else {
+                
+        //     }
+        // }
+
+        CheckIfHighlightedButtonIsChanged();
 
         if(menuIndex == 2 && inputDevice.Action1.WasPressed && DataManager.TotalPlayers == 0)
         {
@@ -159,6 +182,17 @@ public class uiManager : MonoBehaviour
         Application.Quit();
     }
 
+    private void CheckIfHighlightedButtonIsChanged() {
+        if (lastSelectedGameObject == GetComponent<EventSystem>().currentSelectedGameObject) {
+            return;
+        } else if (lastSelectedGameObject == null) {
+            lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
+        } else {
+            StartCoroutine(PlayAudio(switchSound));
+            lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
+        }
+    }
+
     // will hide or show a canvas
     // hides the currently active one, and replaces it with whatever is being
     // selected, whether that's via a ui button press or back button
@@ -166,6 +200,11 @@ public class uiManager : MonoBehaviour
     {
         containers[menuIndex].SetActive(false);
         containers[selectedMenu].SetActive(true);
+        if (selectedMenu > menuIndex) {
+            StartCoroutine(PlayAudio(submitSound));
+        } else {
+            StartCoroutine(PlayAudio(cancelSound));
+        }
         menuIndex = selectedMenu;
         Debug.Log("Current menu index: " + menuIndex);
     }
@@ -209,8 +248,8 @@ public class uiManager : MonoBehaviour
     {
       Mesh activeMesh;
       int buttonNum;
-      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
-      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
+      string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
       if (buttonNumSuccess) {
@@ -227,8 +266,8 @@ public class uiManager : MonoBehaviour
     // displays a short description of each game mode when highlighting a button
     private void DisplayModeDescriptions() {
       int mode = -1;
-      if (GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject == null) { return; }
-      string buttonName = GetComponent<UnityEngine.EventSystems.EventSystem>().currentSelectedGameObject.transform.name;
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
+      string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];
     }
@@ -261,6 +300,11 @@ public class uiManager : MonoBehaviour
     {
         int randVal = Random.Range(1, 6);
         SetCar(randVal);
+    }
+
+    private IEnumerator PlayAudio(AudioClip sound) {
+        audio.PlayOneShot(sound);
+        yield return null;
     }
 
 }

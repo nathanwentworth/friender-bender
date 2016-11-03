@@ -18,22 +18,26 @@ public class CarControl : MonoBehaviour
 
     [Header("Data References")]
     public PlayerSwitching playerSwitch;
+    public HUDManager hudManager;
+    public AudioManager audioManager;
 
     private Vector2 x_Input;
+    public int turningMultiplier;
     private float accelerationForce = 0;
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
+    private bool grounded;
     //Making this public for Powerup Reference
     [HideInInspector]
     public int currentIndex = 0;
+    public bool shield;
     private bool invincible;
     private bool playing;
     private int trueCurrentIndex;
 
     [Header("Audio Bits")]
     //public GameObject AudioManagerObj;
-    public AudioManager AudioManagerScript;
     public AudioSource carEngine;
 
     private Vector3 carOriginTrans;
@@ -41,8 +45,9 @@ public class CarControl : MonoBehaviour
 
     private void Start()
     {
+        turningMultiplier = 1;
+        shield = false;
         currentlyCheckingIfCarIsStopped = false;
-        newCarHealth = carHealth;
         rigid = GetComponent<Rigidbody>();
         carOriginTrans = transform.position;
     }
@@ -75,7 +80,12 @@ public class CarControl : MonoBehaviour
                 x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
                 //Hardcoded deadzone
                 if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
-                else x_Input = x_Input.normalized * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+                else x_Input = x_Input.normalized * turningMultiplier * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+
+                if (!grounded) {
+                    Vector2 rotationalInput = new Vector2 (x_Input.y, x_Input.x); 
+                    rigid.AddRelativeTorque(rotationalInput * 5000);
+                }
             }
             else
             {
@@ -99,7 +109,11 @@ public class CarControl : MonoBehaviour
         }
 
         //Changes the pitch of the engine audioSource
-        carEngine.pitch = ((mph * 0.01f) - 0.3f);
+        if (grounded) {
+            carEngine.pitch = ((mph * 0.01f) - 0.3f);        
+        } else {
+            carEngine.pitch = ((mph * 0.01f));
+        }
 
         foreach (AxleInfo axleInfo in axleInfos)
         {
@@ -117,6 +131,15 @@ public class CarControl : MonoBehaviour
             axleInfo.rightWheel.brakeTorque = brakingForce * maxBrakingTorque;
             ApplyLocalPositionToVisuals(axleInfo.leftWheel);
             ApplyLocalPositionToVisuals(axleInfo.rightWheel);
+            IsGrounded(axleInfo.rightWheel, axleInfo.leftWheel);
+        }
+    }
+
+    private void IsGrounded(WheelCollider right, WheelCollider left) {
+        if (right.isGrounded && left.isGrounded) {
+            grounded = true;
+        } else {
+            grounded = false;
         }
     }
 
@@ -143,13 +166,24 @@ public class CarControl : MonoBehaviour
         {
             if(mph > 41)
             {
-                int trueCurrentIndex = playerSwitch.currentIndex;
-                DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
-                Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
-                if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
-                {
-                    playerSwitch.RemovePlayer();
+                if (!shield) {
+                    int trueCurrentIndex = playerSwitch.currentIndex;
+                    DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
+                    Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
+                    // play high impact impact sound
+                    StartCoroutine(audioManager.Impact(true));
+                    hudManager.UpdateLivesDisplay();
+                    StartCoroutine(DamageCooldown());
+                    if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
+                    {
+                        playerSwitch.RemovePlayer();
+                    }
+                } else {
+                    shield = false;
                 }
+            } else {
+                // play low speed impact sound
+                StartCoroutine(audioManager.Impact(false));
             }
         }
     }

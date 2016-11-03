@@ -10,7 +10,8 @@ public static class DataManager
     private static int
         currentIndex,
         totalPlayers,
-        currentMPH;
+        currentMPH,
+        livesCount;
 
     private static GameMode
         currentGameMode;
@@ -52,6 +53,11 @@ public static class DataManager
         get { return currentMPH; }
         set { currentMPH = value; }
     }
+    public static int LivesCount
+    {
+        get { return livesCount; }
+        set { livesCount = value; }
+    }
 
     public static float TurnTime
     {
@@ -78,7 +84,16 @@ public static class DataManager
     }
     public static void Load() {
         turnTime = PlayerPrefs.GetFloat("Turn Time");
+        //Default Turn Time Set
+        if(turnTime == 0)
+        {
+            turnTime = 7;
+        }
         Debug.Log("Loaded data");
+    }
+    public static int RandomVal(int min, int max) {
+        int i = (int)(Random.value * max + min);
+        return i;
     }
 
 }
