@@ -5,48 +5,22 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
 	[Header("Impact Audio Source on Car")]
-	public AudioSource impactSource;
-	public AudioSource powerupSource;
+	public AudioSource ImpactSource;
 
 	[Header("Low-Speed Impact Sounds")]
-	public AudioClip[] lowSpeedImpacts;
-	public AudioClip highSpeedImpact;
+	public AudioClip LowSpeedImpact1;
+	public AudioClip LowSpeedImpact2;
+	public AudioClip LowSpeedImpact3;
+	private AudioClip[] Impacts;
 
-	[Header("Powerups")]
-	public AudioClip randomLargeObject;
-	public AudioClip speedBoost;
-	public AudioClip distraction;
-
-	public IEnumerator Impact(bool highSpeed) {
-		if (highSpeed) {
-			Debug.Log ("High-Speed Impact");
-			impactSource.PlayOneShot(highSpeedImpact);
-		} else {
-			Debug.Log ("Low-Speed Impact");
-			impactSource.PlayOneShot(lowSpeedImpacts[DataManager.RandomVal(0,1)]);
-		}
-		yield return null;
+/*	public void Start(){
+		Impacts = new AudioClip[]{LowSpeedImpact1, LowSpeedImpact2, LowSpeedImpact3};
 	}
 
-	public IEnumerator PowerupSounds(string powerupName) {
-    switch (powerupName)
-    {
-      case "speedBoost":
-      	Debug.Log("Playing Speedboost");
-				powerupSource.PlayOneShot(speedBoost);
-        break;
-    //   case "randomLargeObject":
-				// powerupSource.PlayOneShot(randomLargeObject);
-    //     break;
-      case "distraction":
-      	Debug.Log("Playing distraction");
-				powerupSource.PlayOneShot(distraction);
-        break;
-      default:
-          Debug.LogError("No sound for this powerup yet :^)");
-          break;
-    }
-    yield return null;
-	}
+	public void LowImpact(){
+		ImpactSource.clip = Impacts [Random.Range(0, Impacts.Length)];
+		ImpactSource.Play ();
+		Debug.Log ("Low-Speed Impact");
+	}*/
 
 }
