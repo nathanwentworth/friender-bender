@@ -13,14 +13,21 @@ public class PowerUps : MonoBehaviour {
         AddSecondsToTurn,
         ReversedTurning,
         ScreenDistraction,
-        Shield
+        Shield,
+        Endturn,
+        LargeObject
     }
 
     public float powerupCooldownTime = 7;
     [Header("SpeedBoost")]
     public int sb_force;
+    [Header("Glitch")]
     public GameObject cam;
+    [Header("Data References")]
     public AudioManager audioManager;
+    [Header("LargeObject")]
+    public GameObject[] objects;
+    public Transform spawn;
 
     private PlayerSwitching pSwitch;
     private HUDManager hud;
@@ -28,7 +35,6 @@ public class PowerUps : MonoBehaviour {
 
 
     private GameObject car;
-    System.Random random = new System.Random();
 
     void Start()
     {
@@ -104,6 +110,12 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Shield:
                 StartCoroutine(Shield());
                 break;
+            case PowerUpType.Endturn:
+                StartCoroutine(EndTurn());
+                break;
+            case PowerUpType.LargeObject:
+                StartCoroutine(RandomLargeObject());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -149,6 +161,12 @@ public class PowerUps : MonoBehaviour {
         carControl.turningMultiplier = 1;
     }
 
+    private IEnumerator EndTurn()
+    {
+        pSwitch.timer = 0;
+        yield return null;
+    }
+
     private IEnumerator ScreenDistraction()
     {
         StartCoroutine(audioManager.PowerupSounds("distraction"));
@@ -166,6 +184,13 @@ public class PowerUps : MonoBehaviour {
         hud.EnqueueAction(hud.DisplayNotificationText(""));
         yield return new WaitForSeconds(3f);
         carControl.shield = false;
+    }
+
+    private IEnumerator RandomLargeObject()
+    {
+        GameObject i = Instantiate(objects[0]);
+        i.transform.position = spawn.position;
+        yield return null;
     }
 
     private void RandomPowerup(PlayerData player)
