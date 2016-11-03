@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-using InControl;
 using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using InControl;
 
 public class HUDManager : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class HUDManager : MonoBehaviour
     public Text timer;
     public Gradient timerGradient;
     public Text currentPlayerText;
+    public Image[] livesDisplay;
+    public Sprite livesDisplayInactive;
+    public Sprite livesDisplayActive;
+    public Text[] powerupText;
 
     [Header("Pause")]
 
@@ -40,9 +45,14 @@ public class HUDManager : MonoBehaviour
     private int[] players;
     private int currentIndex;
 
+    Queue<IEnumerator> notifications = new Queue<IEnumerator>();
+
+
     void Start()
     {
         notificationText.text = "";
+        StartCoroutine(Process());
+        UpdateLivesDisplay();
     }
 
     void Update()
@@ -50,8 +60,8 @@ public class HUDManager : MonoBehaviour
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
         if (playerSwitch.DEBUG_MODE) { Controller = InputManager.ActiveDevice; }
-        else if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { Controller = DataManager.PlayerList[currentIndex]; }
-        else { Controller = DataManager.PlayerList[0]; }
+        else if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { Controller = DataManager.PlayerList[currentIndex].Controller; }
+        else { Controller = DataManager.PlayerList[0].Controller; }
 
         if (Controller.Command.WasPressed)
         {
@@ -85,10 +95,49 @@ public class HUDManager : MonoBehaviour
         SceneManager.LoadScene(scene);
     }
 
+    public void EnqueueAction(IEnumerator notif) {
+        notifications.Enqueue(notif);
+    }
+
+    public void UpdateLivesDisplay() {
+        Debug.Log("updating lives display");
+        int trueCurrentIndex = playerSwitch.currentIndex;
+        for (int i = 0; i < DataManager.LivesCount; i++) {
+            if (i < DataManager.PlayerList[trueCurrentIndex].Lives) {
+                livesDisplay[i].sprite = livesDisplayActive;
+            } else {
+                livesDisplay[i].sprite = livesDisplayInactive;
+            }
+        }
+    }
+
+    private IEnumerator Process() {
+        while (true) {
+            if (notifications.Count > 0) {
+                yield return StartCoroutine(notifications.Dequeue());
+            }
+            else {
+                yield return null;
+            }
+        }
+    }
+
+    public void DisplayPowerups(int player, string powerup) {
+        powerupText[player - 1].text = player + ": " + powerup;
+    }
+
+    public void EnqueueWait(float aWaitTime) {
+        notifications.Enqueue(Wait(aWaitTime));
+    }
+
+    private IEnumerator Wait(float waitTime) {
+        yield return new WaitForSeconds(waitTime);
+    }
+
+
     public IEnumerator DisplayNotificationText(string text) {
         notificationText.text = text;
-        yield return new WaitForSeconds(2);
-        notificationText.text = "";
+        yield return null;
     }
 
     public void DisplayOverlayText(string text) {
@@ -101,7 +150,4 @@ public class HUDManager : MonoBehaviour
         yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
     }
-
-
-
 }

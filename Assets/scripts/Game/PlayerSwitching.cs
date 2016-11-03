@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerSwitching : MonoBehaviour
 {
@@ -9,15 +10,18 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers;
     public int
         currentIndex = 0;
+    [HideInInspector]
     public float
-        timer,
-        passingControllerTime,
+        timer;
+    public float
         passTime = 3,
-        turnTime = 7;
+        turnTime;
+    private bool
+        skipTurn;
     public bool
         playerWin,
-        passingController,
-        DEBUG_MODE;
+        DEBUG_MODE,
+        passingController;
     private bool[]
         isOut;
     public GameObject
@@ -38,6 +42,8 @@ public class PlayerSwitching : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1f;
+        turnTime = DataManager.TurnTime;
         totalPlayers = DataManager.TotalPlayers;
         remainingPlayers = totalPlayers;
         isOut = new bool[remainingPlayers];
@@ -65,11 +71,7 @@ public class PlayerSwitching : MonoBehaviour
                 }
                 if (passingController)
                 {
-                    if (System.DateTime.Now.Second - passingControllerTime >= passTime)
-                    {
-                        Time.timeScale = 1;
-                        passingController = false;
-                    }
+                    StartCoroutine(Sleep(3f));
                 }
             }
         }
@@ -81,11 +83,15 @@ public class PlayerSwitching : MonoBehaviour
         for (int i = 0; i < totalPlayers; i++)
         {
             nextIndex++;
-            if (nextIndex + i == totalPlayers)
+            if (nextIndex >= totalPlayers)
             {
                 nextIndex = 0;
             }
-            if (!isOut[nextIndex])
+            if (!isOut[nextIndex] && skipTurn)
+            {
+                skipTurn = false;
+            }
+            else if(!isOut[nextIndex] && !skipTurn)
             {
                 break;
             }
@@ -94,13 +100,38 @@ public class PlayerSwitching : MonoBehaviour
         currentIndex = nextIndex;
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
-            string notifText1 = "PLAYER " + (currentIndex + 1) + " IS UP";
-            StartCoroutine(Notifications(notifText1, ""));
-            passingControllerTime = System.DateTime.Now.Second;
-            Time.timeScale = 0;
             passingController = true;
+            string notifText1 = "PLAYER " + (currentIndex + 1) + " IS UP";
+            // StartCoroutine(Notifications(notifText1, ""));
+            hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
+            hudManager.EnqueueWait(2f);
+            hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
         }
+        hudManager.UpdateLivesDisplay();
         timer = turnTime;
+    }
+
+    public int NextPlayer()
+    {
+        int nextIndex = currentIndex;
+        for (int i = 0; i < totalPlayers; i++)
+        {
+            nextIndex++;
+            if (nextIndex >= totalPlayers)
+            {
+                nextIndex = 0;
+            }
+            if (!isOut[nextIndex])
+            {
+                return nextIndex;
+            }
+        }
+        return -1;
+    }
+
+    public void SkipPlayer()
+    {
+        skipTurn = true;
     }
 
     public void RemovePlayer()
@@ -109,8 +140,13 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers--;
         if (remainingPlayers > 1) {
             string notifText1 = "PLAYER " + (currentIndex + 1) + " ELIMINATED!";
-            string notifText2 = "Players left: " + remainingPlayers;
-            StartCoroutine(Notifications(notifText1, notifText2));
+            string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
+            // StartCoroutine(Notifications(notifText1, notifText2));
+            hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
+            hudManager.EnqueueWait(2f);
+            hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
+            hudManager.EnqueueWait(2f);
+            hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
         }
         Debug.Log("Removed player " + (currentIndex + 1));
         Debug.Log("Total players remaining: " + remainingPlayers);
@@ -135,6 +171,8 @@ public class PlayerSwitching : MonoBehaviour
 
     }
 
+
+
     private IEnumerator StartingCountdown() {
         Time.timeScale = 0.00001f;
         float pauseEndTime = Time.realtimeSinceStartup + 3;
@@ -145,6 +183,12 @@ public class PlayerSwitching : MonoBehaviour
         Time.timeScale = 1;
     }
 
+    private IEnumerator Sleep(float wait) {
+        Time.timeScale = 0.000001f;
+        yield return new WaitForSeconds(wait * 0.000001f);
+        passingController = false;
+        Time.timeScale = 1f;
+    }
 
     private IEnumerator Notifications(string notifText1, string notifText2) {
         StartCoroutine(hudManager.DisplayNotificationText(notifText1));

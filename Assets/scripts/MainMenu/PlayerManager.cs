@@ -6,7 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
 
     const int maxPlayers = 4;
-    List<InputDevice> PlayerList = new List<InputDevice>(maxPlayers);
+    List<PlayerData> PlayerList = new List<PlayerData>(maxPlayers);
     public uiManager manager;
 
     void OnEnable()
@@ -19,20 +19,41 @@ public class PlayerManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        if (JoinButtonWasPressedOnDevice(inputDevice) && ThereIsNoPlayerUsingDevice(inputDevice) && ListIsntFull())
+        if (JoinButtonWasPressedOnDevice(inputDevice) && PlayerUsingDevice(inputDevice) == null && ListIsntFull())
         {
-            PlayerList.Add(inputDevice);
+            PlayerData player = new PlayerData();
+            player.Controller = inputDevice;
+            player.PlayerNumber = PlayerList.Count + 1;
+            PlayerList.Add(player);
             UpdateDataManager();
             manager.DisplayPlayerControllers();
+            Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);
         }
 
-        if (LeaveButtonWasPressedOnDevice(inputDevice) && !ThereIsNoPlayerUsingDevice(inputDevice) && DataManager.TotalPlayers > 0)
+        if (LeaveButtonWasPressedOnDevice(inputDevice) && PlayerUsingDevice(inputDevice) != null && DataManager.TotalPlayers > 0)
         {
-            Debug.Log("bloop");
-            PlayerList.Remove(inputDevice);
+            PlayerData player = PlayerUsingDevice(inputDevice);
+            PlayerList.Remove(player);
             UpdateDataManager();
             manager.DisplayPlayerControllers();
+            Debug.Log("Removed Device: " + inputDevice + " who was Player " + player.PlayerNumber);
+            for(int i = 0; i < DataManager.TotalPlayers; i++)
+            {
+                DataManager.PlayerList[i].PlayerNumber = i + 1;
+            }
         }
+    }
+
+    PlayerData PlayerUsingDevice(InputDevice controller)
+    {
+        foreach (PlayerData item in PlayerList)
+        {
+            if(controller == item.Controller)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 
     bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
@@ -54,17 +75,17 @@ public class PlayerManager : MonoBehaviour
         return true;
     }
 
-    bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
-    {
-        foreach (InputDevice player in PlayerList)
-        {
-            if (player == inputDevice)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    //bool ThereIsNoPlayerUsingDevice(InputDevice inputDevice)
+    //{
+    //    foreach (InputDevice player in PlayerList)
+    //    {
+    //        if (player == inputDevice)
+    //        {
+    //            return false;
+    //        }
+    //    }
+    //    return true;
+    //}
 
     private void UpdateDataManager()
     {

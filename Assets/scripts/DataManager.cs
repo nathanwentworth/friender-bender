@@ -5,12 +5,13 @@ using InControl;
 public static class DataManager
 {
 
-    public static List<InputDevice> PlayerList = new List<InputDevice>();
+    public static List<PlayerData> PlayerList = new List<PlayerData>();
 
     private static int
         currentIndex,
         totalPlayers,
-        currentMPH;
+        currentMPH,
+        livesCount;
 
     private static GameMode
         currentGameMode;
@@ -52,6 +53,11 @@ public static class DataManager
         get { return currentMPH; }
         set { currentMPH = value; }
     }
+    public static int LivesCount
+    {
+        get { return livesCount; }
+        set { livesCount = value; }
+    }
 
     public static float TurnTime
     {
@@ -69,6 +75,25 @@ public static class DataManager
     {
         get { return randomPlayerOrder; }
         set { randomPlayerOrder = value; }
+    }
+
+    public static void Save() {
+        PlayerPrefs.SetFloat("Turn Time", turnTime);
+        PlayerPrefs.Save();
+        Debug.Log("Saved data");
+    }
+    public static void Load() {
+        turnTime = PlayerPrefs.GetFloat("Turn Time");
+        //Default Turn Time Set
+        if(turnTime == 0)
+        {
+            turnTime = 7;
+        }
+        Debug.Log("Loaded data");
+    }
+    public static int RandomVal(int min, int max) {
+        int i = Mathf.Clamp(Mathf.RoundToInt(Random.value * max), min, max);
+        return i;
     }
 
 }
