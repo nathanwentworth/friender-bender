@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    PlayerData PlayerUsingDevice(InputDevice controller)
+    public PlayerData PlayerUsingDevice(InputDevice controller)
     {
         foreach (PlayerData item in PlayerList)
         {

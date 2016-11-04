@@ -97,4 +97,13 @@ public static class DataManager
         return i;
     }
 
+    public static string GetPlayerIdentifier(int index) {
+        if (PlayerList[index].PlayerName != "" && PlayerList[index].PlayerName != null) {
+            return PlayerList[index].PlayerName;
+        } else {
+            int name = PlayerList[index].PlayerNumber + 1;
+            return "P" + name;
+        }
+    }
+
 }

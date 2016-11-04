@@ -18,6 +18,7 @@ public class uiManager : MonoBehaviour
     public Image[] controllerIcons;
     public Sprite controllerInactive;
     public Sprite controllerActive;
+    public Text[] nameFields;
 
     [Header("Mode Selection")]
     public string[] modeDescriptions;
@@ -166,6 +167,7 @@ public class uiManager : MonoBehaviour
           controllerIcons[i].sprite = controllerActive;
         } else {
           controllerIcons[i].sprite = controllerInactive;
+          nameFields[i].text = "";
         }
       }
     }
