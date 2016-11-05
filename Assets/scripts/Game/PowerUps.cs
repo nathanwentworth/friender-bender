@@ -11,10 +11,10 @@ public class PowerUps : MonoBehaviour {
         SpeedBoost,
         SkipTurn,
         AddSecondsToTurn,
-        ReversedTurning,
+        InvertSteering,
         ScreenDistraction,
         Shield,
-        Endturn,
+        EndTurn,
         LargeObject
     }
 
@@ -29,9 +29,14 @@ public class PowerUps : MonoBehaviour {
     public GameObject[] objects;
     public Transform spawn;
 
+    [Header("Starting Powerup")]
+    [Tooltip("Select None for a random powerup")]
+    public PowerUpType StartingPowerUp;
+
     private PlayerSwitching pSwitch;
     private HUDManager hud;
     private CarControl carControl;
+    private bool shieldActive;
 
 
     private GameObject car;
@@ -44,34 +49,49 @@ public class PowerUps : MonoBehaviour {
         hud = pSwitch.hudManager;
         foreach(PlayerData player in DataManager.PlayerList)
         {
-            RandomPowerup(player);
+            if (StartingPowerUp != PowerUpType.None)
+            {
+                player.CurrentPowerUp = StartingPowerUp;
+            }
+            else {
+                RandomPowerup(player);
+            }
         }
     }
 
     void Update()
     {
         InputDevice controller = InputManager.ActiveDevice;
-
-        if (controller.Action1.WasPressed && !pSwitch.passingController) {
-            PlayerData player;
-            if (DataManager.CurrentGameMode == DataManager.GameMode.Party) {
-                player = PlayerWhoPressedButton(controller);
-            } else {
-                int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
-                player = DataManager.PlayerList[currentIndex];
-            }
-            PowerUpType powerup = player.CurrentPowerUp;
-            if (powerup == PowerUpType.None)
-            {
-                return;
-            }
-            Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+        if (pSwitch.DEBUG_MODE && controller.Action1.WasPressed)
+        {
+            PowerUpType powerup = StartingPowerUp;
             Execute(powerup);
-            player.CurrentPowerUp = PowerUpType.None;
-            Debug.LogWarning(player.CurrentPowerUp + "ybyb");
-            hud.DisplayPowerups(player.PlayerNumber, " ");
-            StartCoroutine(Cooldown(player));
+            Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
+        }
+        else {
+            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame)
+            {
+                PlayerData player;
+                if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
+                {
+                    player = PlayerWhoPressedButton(controller);
+                }
+                else {
+                    int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
+                    player = DataManager.PlayerList[currentIndex];
+                }
+                PowerUpType powerup = player.CurrentPowerUp;
+                if (powerup == PowerUpType.None)
+                {
+                    return;
+                }
+                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+                Execute(powerup);
+                player.CurrentPowerUp = PowerUpType.None;
+                hud.DisplayPowerups(player.PlayerNumber, " ");
+                StartCoroutine(Cooldown(player));
 
+            }
         }
     }
 
@@ -101,16 +121,16 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.AddSecondsToTurn:
                 StartCoroutine(AddSecondsToTurn());
                 break;
-            case PowerUpType.ReversedTurning:
-                StartCoroutine(ReversedTurning());
+            case PowerUpType.InvertSteering:
+                StartCoroutine(InvertSteering());
                 break;
             case PowerUpType.ScreenDistraction:
                 StartCoroutine(ScreenDistraction());
                 break;
             case PowerUpType.Shield:
-                StartCoroutine(Shield());
+                StartCoroutine("Shield");
                 break;
-            case PowerUpType.Endturn:
+            case PowerUpType.EndTurn:
                 StartCoroutine(EndTurn());
                 break;
             case PowerUpType.LargeObject:
@@ -152,7 +172,7 @@ public class PowerUps : MonoBehaviour {
         yield return null;
     }
 
-    private IEnumerator ReversedTurning()
+    private IEnumerator InvertSteering()
     {
         carControl.turningMultiplier = -1;
         string timerText = "TURNING REVERSED";
@@ -182,8 +202,7 @@ public class PowerUps : MonoBehaviour {
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
         hud.EnqueueWait(1f);
         hud.EnqueueAction(hud.DisplayNotificationText(""));
-        yield return new WaitForSeconds(3f);
-        carControl.shield = false;
+        yield return null;
     }
 
     private IEnumerator RandomLargeObject()
@@ -196,7 +215,7 @@ public class PowerUps : MonoBehaviour {
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
-        int rand = DataManager.RandomVal(1, values.Length);
+        int rand = DataManager.RandomVal(1, values.Length - 1);
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
