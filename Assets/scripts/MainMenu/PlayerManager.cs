@@ -9,13 +9,13 @@ public class PlayerManager : MonoBehaviour
     List<PlayerData> PlayerList = new List<PlayerData>(maxPlayers);
     public uiManager manager;
 
-    void OnEnable()
+    private void OnEnable()
     {
         PlayerList = DataManager.PlayerList;
         manager.DisplayPlayerControllers();
     }
 
-    void Update()
+    private void Update()
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
@@ -56,17 +56,17 @@ public class PlayerManager : MonoBehaviour
         return null;
     }
 
-    bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
+    private bool JoinButtonWasPressedOnDevice(InputDevice inputDevice)
     {
         return inputDevice.Action1.WasPressed;
     }
 
-    bool LeaveButtonWasPressedOnDevice(InputDevice inputDevice)
+    private bool LeaveButtonWasPressedOnDevice(InputDevice inputDevice)
     {
         return inputDevice.Action2.WasPressed;
     }
 
-    bool ListIsntFull()
+    private bool ListIsntFull()
     {
         if(DataManager.TotalPlayers == maxPlayers)
         {

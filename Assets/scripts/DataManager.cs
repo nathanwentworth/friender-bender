@@ -32,6 +32,18 @@ public static class DataManager
         HotPotato
     }
 
+    public static Color32 ColorGreen = new Color32(105, 193, 165, 255);
+    public static Color32 ColorOrange = new Color32(246, 143, 104, 255);
+    public static Color32 ColorBlue = new Color32(140, 158, 201, 255);
+    public static Color32 ColorPurple = new Color32(226, 140, 187, 255);
+
+    public static List<Color32> Colors = new List<Color32> { 
+        ColorGreen,
+        ColorOrange,
+        ColorBlue,
+        ColorPurple
+    };
+
     public static GameMode CurrentGameMode
     {
         get { return currentGameMode; }

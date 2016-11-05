@@ -19,6 +19,7 @@ public class uiManager : MonoBehaviour
     public Sprite controllerInactive;
     public Sprite controllerActive;
     public Text[] nameFields;
+    public Color32 inactiveColor;
 
     [Header("Mode Selection")]
     public string[] modeDescriptions;
@@ -164,9 +165,11 @@ public class uiManager : MonoBehaviour
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
-          controllerIcons[i].sprite = controllerActive;
+          // controllerIcons[i].sprite = controllerActive;
+          controllerIcons[i].color = DataManager.Colors[i];
         } else {
-          controllerIcons[i].sprite = controllerInactive;
+          // controllerIcons[i].sprite = controllerInactive;
+          controllerIcons[i].color = inactiveColor;
           nameFields[i].text = "";
         }
       }

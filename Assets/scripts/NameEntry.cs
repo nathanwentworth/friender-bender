@@ -7,20 +7,28 @@ public class NameEntry : MonoBehaviour {
 
 	private char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 	private int index;
-	public int playerNumber;
 	private string playerName;
 	private PlayerData player;
 	private InputDevice controller;
 	private bool acceptInput;
 	private bool textDisplayed;
-
+	private Color32 playerColor;
+	
+	public Color32 defaultColor;
+	public int playerNumber;
 	public GameObject nameEntry;
 	public PlayerManager playerManager;
-	public Color savedColor;
 
-	private void Start() {
+	private void OnEnable() {
 		textDisplayed = false;
 		acceptInput = true;
+		playerName = "";
+		nameEntry.GetComponent<Text>().color = defaultColor;
+		playerColor = DataManager.Colors[playerNumber];
+	}
+	private void OnDisable() {
+		textDisplayed = false;
+		acceptInput = false;
 		playerName = "";
 	}
 
@@ -34,8 +42,13 @@ public class NameEntry : MonoBehaviour {
 		if (controller.Action1.WasPressed) {
 			if (playerName.Length < 3) { EnterChar(); }
 			else { SaveName(); }
-		} else if (controller.Action2.WasPressed && playerName.Length > 0) {
-			DeleteChar();
+		} else if (controller.Action2.WasPressed) {
+			playerName = "";
+			nameEntry.GetComponent<Text>().color = defaultColor;
+		} else if (controller.Action4.WasPressed) {
+			if (playerName.Length > 0) {
+				DeleteChar();
+			}
 		} else if (controller.Direction.Y > 0.5 || controller.Direction.Y < -0.5) {
 			if (acceptInput && playerName.Length < 3) {
 				ChangeNameEntryChar();
@@ -69,12 +82,13 @@ public class NameEntry : MonoBehaviour {
 
 	private void DeleteChar() {
 		playerName = playerName.Substring(0, playerName.Length - 1);
+		nameEntry.GetComponent<Text>().color = defaultColor;
 		DisplayNameEntry();
 	}
 
 	private void SaveName() {
 		DataManager.PlayerList[playerNumber].PlayerName = playerName;
-		nameEntry.GetComponent<Text>().color = savedColor;
+		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");
 	}
 
