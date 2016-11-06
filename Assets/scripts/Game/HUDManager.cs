@@ -144,10 +144,9 @@ public class HUDManager : MonoBehaviour
     public void DisplayOverlayText(string text) {
         overlayPanel.SetActive(true);
         overlayText.text = text;
-        StartCoroutine(DisplayPostGameMenu());
     }
 
-    IEnumerator DisplayPostGameMenu() {
+    public IEnumerator DisplayPostGameMenu() {
         yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
     }

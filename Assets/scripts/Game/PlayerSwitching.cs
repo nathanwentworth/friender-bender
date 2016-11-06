@@ -14,7 +14,6 @@ public class PlayerSwitching : MonoBehaviour
     public float
         timer;
     public float
-        passTime = 3,
         turnTime;
     private bool
         skipTurn;
@@ -76,7 +75,7 @@ public class PlayerSwitching : MonoBehaviour
                 }
                 if (passingController)
                 {
-                    StartCoroutine(Sleep(3f));
+                    StartCoroutine(Sleep(DataManager.PotatoDelay));
                 }
             }
         }
@@ -112,7 +111,10 @@ public class PlayerSwitching : MonoBehaviour
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
-            passingController = true;
+            // passingController = true;
+            StartCoroutine(Sleep(DataManager.PotatoDelay));
+        } else {
+            StartCoroutine(Sleep(DataManager.PartyDelay));
         }
         hudManager.UpdateLivesDisplay();
         timer = turnTime;
@@ -166,6 +168,7 @@ public class PlayerSwitching : MonoBehaviour
                 {
 
                     hudManager.DisplayOverlayText(DataManager.GetPlayerIdentifier(i) + " WINS!");
+                    StartCoroutine(hudManager.DisplayPostGameMenu());
                     Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }

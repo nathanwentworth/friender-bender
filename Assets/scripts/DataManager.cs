@@ -17,7 +17,9 @@ public static class DataManager
         currentGameMode;
 
     private static float
-        turnTime;
+        turnTime,
+        potatoDelay,
+        partyDelay;
 
     private static int[]
         playerArr;
@@ -77,6 +79,18 @@ public static class DataManager
         set { turnTime = value; }
     }
 
+    public static float PotatoDelay
+    {
+        get { return potatoDelay; }
+        set { potatoDelay = value; }
+    }
+
+    public static float PartyDelay
+    {
+        get { return partyDelay; }
+        set { partyDelay = value; }
+    }
+
     public static int[] PlayerArr
     {
         get { return playerArr; }
@@ -90,12 +104,22 @@ public static class DataManager
     }
 
     public static void Save() {
+        Debug.Log ("Turn Time: " + turnTime);
         PlayerPrefs.SetFloat("Turn Time", turnTime);
+        Debug.Log ("Party Delay: " + partyDelay);
+        PlayerPrefs.SetFloat("Party Delay", partyDelay);
+        Debug.Log ("Potato Delay: " + potatoDelay);
+        PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
     public static void Load() {
         turnTime = PlayerPrefs.GetFloat("Turn Time");
+        Debug.Log ("Turn Time: " + turnTime);
+        partyDelay = PlayerPrefs.GetFloat("Party Delay");
+        Debug.Log ("Party Delay: " + partyDelay);
+        potatoDelay = PlayerPrefs.GetFloat("Potato Delay");
+        Debug.Log ("Potato Delay: " + potatoDelay);
         //Default Turn Time Set
         if(turnTime == 0)
         {
@@ -110,11 +134,15 @@ public static class DataManager
     }
 
     public static string GetPlayerIdentifier(int index) {
-        if (PlayerList[index].PlayerName != "" && PlayerList[index].PlayerName != null) {
-            return PlayerList[index].PlayerName;
+        if (PlayerList.Count > 0) {
+            if (PlayerList[index].PlayerName != "" && PlayerList[index].PlayerName != null) {
+                return PlayerList[index].PlayerName;
+            } else {
+                int name = PlayerList[index].PlayerNumber + 1;
+                return "P" + name;
+            }            
         } else {
-            int name = PlayerList[index].PlayerNumber + 1;
-            return "P" + name;
+            return null;
         }
     }
 
