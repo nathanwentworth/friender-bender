@@ -20,6 +20,7 @@ public class PlayerSwitching : MonoBehaviour
         skipTurn;
     public bool
         playerWin,
+        startingGame,
         DEBUG_MODE,
         passingController;
     private bool[]
@@ -53,13 +54,17 @@ public class PlayerSwitching : MonoBehaviour
         }
         // Start the timer
         timer = turnTime;
+        if (!DEBUG_MODE)
+        {
+            StartCoroutine(StartingCountdown());
+        }
     }
 
     private void Update()
     {
         if (!DEBUG_MODE)
         {
-            if (!playerWin)
+            if (!playerWin && !startingGame)
             {
                 if (timer > 0)
                 {
@@ -111,6 +116,7 @@ public class PlayerSwitching : MonoBehaviour
         }
         hudManager.UpdateLivesDisplay();
         timer = turnTime;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>().shield = false;
     }
 
     public int NextPlayer()
@@ -175,14 +181,23 @@ public class PlayerSwitching : MonoBehaviour
 
 
     private IEnumerator StartingCountdown() {
-        Time.timeScale = 0.00001f;
-        float pauseEndTime = Time.realtimeSinceStartup + 3;
-        while (Time.realtimeSinceStartup < pauseEndTime)
-        {
-            yield return 0;
-        }
-        Time.timeScale = 1;
+        startingGame = true;
+        Rigidbody carRigid = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
+        carRigid.constraints = RigidbodyConstraints.FreezeAll;
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText("3"));
+        hudManager.EnqueueWait(1f);
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText("2"));
+        hudManager.EnqueueWait(1f);
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText("1"));
+        hudManager.EnqueueWait(1f);
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText("BEND YOUR FRIENDS!"));
+        hudManager.EnqueueWait(1f);
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+        yield return new WaitForSeconds(3);
+        startingGame = false;
+        carRigid.constraints = RigidbodyConstraints.None;
     }
+
 
     private IEnumerator Sleep(float wait) {
         Time.timeScale = 0.000001f;

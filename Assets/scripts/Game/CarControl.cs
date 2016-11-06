@@ -12,9 +12,7 @@ public class CarControl : MonoBehaviour
     public float controllerDeadzone = 0.15f;
 
     public GameObject[] spawnPoints;
-
-    [Header("PowerUp Variables")]
-    public int speedBoostPower;
+    public GameObject shieldEffect;
 
     [Header("Data References")]
     public PlayerSwitching playerSwitch;
@@ -54,7 +52,7 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-
+        shieldEffect.SetActive(shield);
         if (Time.timeScale == 1) { playing = true; } else { playing = false; }
 
         if (playing)
@@ -164,7 +162,7 @@ public class CarControl : MonoBehaviour
     {
         if (!playerSwitch.DEBUG_MODE && !invincible)
         {
-            if(mph > 41)
+            if(mph > 65 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
             {
                 if (!shield) {
                     int trueCurrentIndex = playerSwitch.currentIndex;
