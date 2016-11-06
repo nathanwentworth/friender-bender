@@ -18,7 +18,7 @@ public class PowerUps : MonoBehaviour {
         LargeObject
     }
 
-    public float powerupCooldownTime = 7;
+    public float powerupCooldownTime;
     [Header("SpeedBoost")]
     public int sb_force;
     [Header("Glitch")]
@@ -43,6 +43,7 @@ public class PowerUps : MonoBehaviour {
 
     void Start()
     {
+        powerupCooldownTime = DataManager.PowerupCooldownTime;
         car = GameObject.FindGameObjectWithTag("Player");
         carControl = car.GetComponent<CarControl>();
         pSwitch = gameObject.GetComponent<PlayerSwitching>();

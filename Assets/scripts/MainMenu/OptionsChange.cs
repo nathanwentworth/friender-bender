@@ -12,6 +12,9 @@ public class OptionsChange : MonoBehaviour {
 	public Slider partyDelaySlider;
 	public Text partyDelayText;
 
+	public Slider powerupCooldownSlider;
+	public Text powerupCooldownText;
+
 	public Text textSaved;
 
   // options menu function
@@ -26,14 +29,17 @@ public class OptionsChange : MonoBehaviour {
 		turnTimeSlider.value = DataManager.TurnTime;
 		potatoDelaySlider.value = DataManager.PotatoDelay;
 		partyDelaySlider.value = DataManager.PartyDelay;
+		powerupCooldownSlider.value = DataManager.PowerupCooldownTime;
 
 		turnTimeSlider.onValueChanged.AddListener(delegate{ TurnTimeChange(turnTimeSlider.value, turnTimeText); });
 		potatoDelaySlider.onValueChanged.AddListener(delegate{ PotatoDelayChange(potatoDelaySlider.value, potatoDelayText); });
 		partyDelaySlider.onValueChanged.AddListener(delegate{ PartyDelayChange(partyDelaySlider.value, partyDelayText); });
+		powerupCooldownSlider.onValueChanged.AddListener(delegate{ PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText); });
 
 		TurnTimeChange(turnTimeSlider.value, turnTimeText);
 		PotatoDelayChange(potatoDelaySlider.value, potatoDelayText);
 		PartyDelayChange(partyDelaySlider.value, partyDelayText);
+		PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText);
 	}
 
 	// when slider is changed
@@ -56,6 +62,13 @@ public class OptionsChange : MonoBehaviour {
 	public void PartyDelayChange(float val, Text dispText) {
 		val = Mathf.Round(val * 10f) / 10f;
 		DataManager.PartyDelay = val;
+		dispText.text = val + "s";
+		DataManager.Save();
+	}
+
+	public void PowerupCooldownChange(float val, Text dispText) {
+		val = Mathf.Round(val * 10f) / 10f;
+		DataManager.PowerupCooldownTime = val;
 		dispText.text = val + "s";
 		DataManager.Save();
 	}

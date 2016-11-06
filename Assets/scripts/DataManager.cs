@@ -19,7 +19,8 @@ public static class DataManager
     private static float
         turnTime,
         potatoDelay,
-        partyDelay;
+        partyDelay,
+        powerupCooldownTime;
 
     private static int[]
         playerArr;
@@ -91,6 +92,12 @@ public static class DataManager
         set { partyDelay = value; }
     }
 
+    public static float PowerupCooldownTime
+    {
+        get { return powerupCooldownTime; }
+        set { powerupCooldownTime = value; }
+    }
+
     public static int[] PlayerArr
     {
         get { return playerArr; }
@@ -104,29 +111,39 @@ public static class DataManager
     }
 
     public static void Save() {
-        Debug.Log ("Turn Time: " + turnTime);
         PlayerPrefs.SetFloat("Turn Time", turnTime);
-        Debug.Log ("Party Delay: " + partyDelay);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
-        Debug.Log ("Potato Delay: " + potatoDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
+        PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
+
     public static void Load() {
-        turnTime = PlayerPrefs.GetFloat("Turn Time");
-        Debug.Log ("Turn Time: " + turnTime);
-        partyDelay = PlayerPrefs.GetFloat("Party Delay");
-        Debug.Log ("Party Delay: " + partyDelay);
-        potatoDelay = PlayerPrefs.GetFloat("Potato Delay");
-        Debug.Log ("Potato Delay: " + potatoDelay);
-        //Default Turn Time Set
-        if(turnTime == 0)
-        {
-            turnTime = 7;
+        if (PlayerPrefs.HasKey("Turn Time")) {
+            turnTime = PlayerPrefs.GetFloat("Turn Time");            
+        } else {
+            turnTime = 7f;
         }
+        if (PlayerPrefs.HasKey("Party Delay")) {
+            partyDelay = PlayerPrefs.GetFloat("Party Delay");            
+        } else {
+            partyDelay = 0f;
+        }
+        if (PlayerPrefs.HasKey("Potato Delay")) {
+            potatoDelay = PlayerPrefs.GetFloat("Potato Delay");            
+        } else {
+            potatoDelay = 3f;
+        }
+        if (PlayerPrefs.HasKey("Powerup Cooldown")) {
+            powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");            
+        } else {
+            powerupCooldownTime = 7f;
+        }
+        
         Debug.Log("Loaded data");
     }
+
     public static int RandomVal(int min, int max)
     {
         int i = Mathf.Clamp(Mathf.RoundToInt(Random.value * max), min, max);
