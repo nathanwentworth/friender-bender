@@ -11,7 +11,7 @@ public class uiManager : MonoBehaviour
     private int selectedCar;
     private int gameMode = 0;
     private int menuIndex;
-    private AudioSource audio;
+    private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
 
     [Header("Controller Add Screen")]
@@ -48,7 +48,7 @@ public class uiManager : MonoBehaviour
         Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();
         if (GetComponent<AudioSource>() != null) {
-            audio = GetComponent<AudioSource>();
+            audioSource = GetComponent<AudioSource>();
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
     }
@@ -303,7 +303,7 @@ public class uiManager : MonoBehaviour
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {
-        audio.PlayOneShot(sound);
+        audioSource.PlayOneShot(sound);
         yield return null;
     }
 
