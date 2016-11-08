@@ -27,6 +27,8 @@ public class PlayerSwitching : MonoBehaviour
         isOut;
     public GameObject
         InControl;
+    public GameObject[]
+        spawnPoints;
     public HUDManager hudManager;
 
     private void Awake()

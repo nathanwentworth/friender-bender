@@ -275,22 +275,23 @@ public class uiManager : MonoBehaviour
     public void SetCar(int car)
     {
         selectedCar = car;
+        DataManager.CarIndex = selectedCar;
         Debug.Log(selectedCar);
         switch (car)
         {
-            case 1:
+            case 0:
                 Debug.Log("Selected Gremlin");
                 break;
-            case 2:
+            case 1:
                 Debug.Log("Selected Banana");
                 break;
-            case 3:
+            case 2:
                 Debug.Log("Selected Big Wheel");
                 break;
-            case 4:
+            case 3:
                 Debug.Log("Selected Verminator");
                 break;
-            case 5:
+            case 4:
                 Debug.Log("Selected AE86");
                 break;
         }
@@ -298,7 +299,7 @@ public class uiManager : MonoBehaviour
 
     public void RandCar()
     {
-        int randVal = Random.Range(1, 6);
+        int randVal = Random.Range(1, 5);
         SetCar(randVal);
     }
 

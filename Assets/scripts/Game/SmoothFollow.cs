@@ -4,7 +4,7 @@ using System.Collections;
 public class SmoothFollow : MonoBehaviour
 {
 
-    public Transform target;
+    private Transform target;
     public float speed = 3f;
 
     public float xOffset = 0f;
@@ -12,6 +12,11 @@ public class SmoothFollow : MonoBehaviour
     public float zOffset = -3f;
     public float rotationSpeed = 3.0f;
     private Vector3 targetVector;
+
+    void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     void FixedUpdate()
     {

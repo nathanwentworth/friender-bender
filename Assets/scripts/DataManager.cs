@@ -11,6 +11,7 @@ public static class DataManager
         currentIndex,
         totalPlayers,
         currentMPH,
+        car,
         livesCount;
 
     private static GameMode
@@ -30,6 +31,12 @@ public static class DataManager
         None,
         Party,
         HotPotato
+    }
+
+    public static int CarIndex
+    {
+        get { return car; }
+        set { car = value; }
     }
 
     public static GameMode CurrentGameMode
