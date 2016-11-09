@@ -14,7 +14,6 @@ public class PlayerSwitching : MonoBehaviour
     public float
         timer;
     public float
-        passTime = 3,
         turnTime;
     private bool
         skipTurn;
@@ -78,7 +77,7 @@ public class PlayerSwitching : MonoBehaviour
                 }
                 if (passingController)
                 {
-                    StartCoroutine(Sleep(3f));
+                    StartCoroutine(Sleep(DataManager.PotatoDelay));
                 }
             }
         }
@@ -105,14 +104,19 @@ public class PlayerSwitching : MonoBehaviour
         }
         // set the current index from the next index var
         currentIndex = nextIndex;
+
+        string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
+
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
+        hudManager.EnqueueWait(2f);
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
-            passingController = true;
-            string notifText1 = "PLAYER " + (currentIndex + 1) + " IS UP";
-            // StartCoroutine(Notifications(notifText1, ""));
-            hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
-            hudManager.EnqueueWait(2f);
-            hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+            // passingController = true;
+            StartCoroutine(Sleep(DataManager.PotatoDelay));
+        } else {
+            StartCoroutine(Sleep(DataManager.PartyDelay));
         }
         hudManager.UpdateLivesDisplay();
         timer = turnTime;
@@ -147,7 +151,7 @@ public class PlayerSwitching : MonoBehaviour
         isOut[currentIndex] = true;
         remainingPlayers--;
         if (remainingPlayers > 1) {
-            string notifText1 = "PLAYER " + (currentIndex + 1) + " ELIMINATED!";
+            string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             // StartCoroutine(Notifications(notifText1, notifText2));
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
@@ -156,8 +160,6 @@ public class PlayerSwitching : MonoBehaviour
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
         }
-        Debug.Log("Removed player " + (currentIndex + 1));
-        Debug.Log("Total players remaining: " + remainingPlayers);
 
         if (remainingPlayers == 1)
         {
@@ -166,7 +168,9 @@ public class PlayerSwitching : MonoBehaviour
             {
                 if (isOut[i] == false)
                 {
-                    hudManager.DisplayOverlayText("PLAYER " + (i + 1) + " WINS!");
+
+                    hudManager.DisplayOverlayText(DataManager.GetPlayerIdentifier(i) + " WINS!");
+                    StartCoroutine(hudManager.DisplayPostGameMenu());
                     Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }

@@ -27,9 +27,9 @@ public class SmoothFollow : MonoBehaviour
             Mathf.Lerp(transform.position.y, target.transform.position.y + yOffset, Time.deltaTime * speed),
             Mathf.Lerp(transform.position.z, target.transform.position.z + zOffset, Time.deltaTime * speed));
 
-        float wantedRotationAngle = target.eulerAngles.y;
+        float targetRotationAngle = target.eulerAngles.y;
         float currentRotationAngle = transform.eulerAngles.y;
-        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, wantedRotationAngle, rotationSpeed * Time.deltaTime);
+        currentRotationAngle = Mathf.LerpAngle(currentRotationAngle, targetRotationAngle, rotationSpeed * Time.deltaTime);
 
         var currentRotation = Quaternion.Euler(0, currentRotationAngle, 0);
         transform.rotation = currentRotation;
