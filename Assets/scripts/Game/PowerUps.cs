@@ -27,7 +27,7 @@ public class PowerUps : MonoBehaviour {
     public AudioManager audioManager;
     [Header("LargeObject")]
     public GameObject[] objects;
-    public Transform spawn;
+    private Transform spawn;
 
     [Header("Starting Powerup")]
     [Tooltip("Select None for a random powerup")]
@@ -43,6 +43,7 @@ public class PowerUps : MonoBehaviour {
 
     void Start()
     {
+        spawn = GameObject.FindGameObjectWithTag("Spawn").transform;
         powerupCooldownTime = DataManager.PowerupCooldownTime;
         car = GameObject.FindGameObjectWithTag("Player");
         carControl = car.GetComponent<CarControl>();
@@ -50,6 +51,7 @@ public class PowerUps : MonoBehaviour {
         hud = pSwitch.hudManager;
         foreach(PlayerData player in DataManager.PlayerList)
         {
+            player.Lives = DataManager.LivesCount;
             if (StartingPowerUp != PowerUpType.None)
             {
                 player.CurrentPowerUp = StartingPowerUp;
@@ -70,7 +72,7 @@ public class PowerUps : MonoBehaviour {
             Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
         }
         else {
-            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame)
+            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin) 
             {
                 PlayerData player;
                 if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
