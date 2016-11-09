@@ -14,10 +14,16 @@ public class uiManager : MonoBehaviour
     private AudioSource audio;
     private GameObject lastSelectedGameObject;
 
+    public GameObject canvasLoad;
+    public Image loadingBar;
+    private AsyncOperation sync;
+
     [Header("Controller Add Screen")]
     public Image[] controllerIcons;
     public Sprite controllerInactive;
     public Sprite controllerActive;
+    public Text[] nameFields;
+    public Color32 inactiveColor;
 
     [Header("Mode Selection")]
     public string[] modeDescriptions;
@@ -163,9 +169,12 @@ public class uiManager : MonoBehaviour
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
-          controllerIcons[i].sprite = controllerActive;
+          // controllerIcons[i].sprite = controllerActive;
+          controllerIcons[i].color = DataManager.Colors[i];
         } else {
-          controllerIcons[i].sprite = controllerInactive;
+          // controllerIcons[i].sprite = controllerInactive;
+          controllerIcons[i].color = inactiveColor;
+          nameFields[i].text = "";
         }
       }
     }
@@ -173,7 +182,8 @@ public class uiManager : MonoBehaviour
     // public function to load scenes by string name
     public void LoadScene(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        // SceneManager.LoadScene(levelName);
+        StartCoroutine(LoadingScreen(levelName));
     }
 
     // quits the game!!!!!!!!
@@ -305,6 +315,19 @@ public class uiManager : MonoBehaviour
     private IEnumerator PlayAudio(AudioClip sound) {
         audio.PlayOneShot(sound);
         yield return null;
+    }
+
+    IEnumerator LoadingScreen(string scene)
+    {
+        canvasLoad.SetActive(true);
+        yield return new WaitForSeconds(4.5f);
+        sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        // sync.allowSceneActivation = false;
+        // startAnimation = true;
+        while (!sync.isDone) {
+            loadingBar.fillAmount = sync.progress;
+            yield return null;
+        }
     }
 
 }

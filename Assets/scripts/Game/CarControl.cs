@@ -12,9 +12,7 @@ public class CarControl : MonoBehaviour
     public float controllerDeadzone = 0.15f;
 
     public GameObject[] spawnPoints;
-
-    [Header("PowerUp Variables")]
-    public int speedBoostPower;
+    public GameObject shieldEffect;
 
     [Header("Data References")]
     public PlayerSwitching playerSwitch;
@@ -54,7 +52,7 @@ public class CarControl : MonoBehaviour
 
     private void Update()
     {
-
+        shieldEffect.SetActive(shield);
         if (Time.timeScale == 1) { playing = true; } else { playing = false; }
 
         if (playing)
@@ -104,7 +102,7 @@ public class CarControl : MonoBehaviour
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
 
-        if (mph < 1 && !currentlyCheckingIfCarIsStopped) {
+        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.startingGame) {
             StartCoroutine(CheckIfCarIsStopped());
         }
 
@@ -164,7 +162,7 @@ public class CarControl : MonoBehaviour
     {
         if (!playerSwitch.DEBUG_MODE && !invincible)
         {
-            if(mph > 41)
+            if(mph > 65 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
             {
                 if (!shield) {
                     int trueCurrentIndex = playerSwitch.currentIndex;
@@ -244,7 +242,7 @@ public class CarControl : MonoBehaviour
     private IEnumerator CheckIfCarIsStopped() {
         currentlyCheckingIfCarIsStopped = true;
         Debug.Log("Checking to see if car is stopped");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         if (mph < 1) {
             Debug.Log("Car is stopped! Resetting position");
             ResetCarPosition();
