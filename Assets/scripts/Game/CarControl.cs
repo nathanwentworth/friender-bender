@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using InControl;
+using System;
 
 public class CarControl : MonoBehaviour
 {
@@ -10,14 +11,13 @@ public class CarControl : MonoBehaviour
     public float maxSteeringAngle; // maximum steer angle the wheel can have
     public float maxBrakingTorque; //how fast should you brake
     public float controllerDeadzone = 0.15f;
-
-    public GameObject[] spawnPoints;
+    
     public GameObject shieldEffect;
 
     [Header("Data References")]
-    public PlayerSwitching playerSwitch;
-    public HUDManager hudManager;
-    public AudioManager audioManager;
+    private PlayerSwitching playerSwitch;
+    private HUDManager hudManager;
+    private AudioManager audioManager;
 
     private Vector2 x_Input;
     public int turningMultiplier;
@@ -40,6 +40,13 @@ public class CarControl : MonoBehaviour
 
     private Vector3 carOriginTrans;
     private bool currentlyCheckingIfCarIsStopped;
+
+    private void Awake()
+    {
+        playerSwitch = GameObject.Find("GameSystem").GetComponent<PlayerSwitching>();
+        hudManager = GameObject.Find("canvas-hud").GetComponent<HUDManager>();
+        audioManager = GameObject.Find("AudioManagerObj [Level1]").GetComponent<AudioManager>();
+    }
 
     private void Start()
     {
@@ -102,7 +109,7 @@ public class CarControl : MonoBehaviour
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
 
-        if (mph < 1 && !currentlyCheckingIfCarIsStopped) {
+        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.startingGame) {
             StartCoroutine(CheckIfCarIsStopped());
         }
 
@@ -228,11 +235,11 @@ public class CarControl : MonoBehaviour
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;
-        for (int i = 0; i < spawnPoints.Length; i++) {
-            float d = Vector3.Distance(spawnPoints[i].transform.position, carPos.position);
+        for (int i = 0; i < playerSwitch.spawnPoints.Length; i++) {
+            float d = Vector3.Distance(playerSwitch.spawnPoints[i].transform.position, carPos.position);
             if (d < minD) {
                 minD = d;
-                closestSpawn = spawnPoints[i].transform;
+                closestSpawn = playerSwitch.spawnPoints[i].transform;
             }
         }
         transform.position = closestSpawn.transform.position;
@@ -242,7 +249,7 @@ public class CarControl : MonoBehaviour
     private IEnumerator CheckIfCarIsStopped() {
         currentlyCheckingIfCarIsStopped = true;
         Debug.Log("Checking to see if car is stopped");
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1.5f);
         if (mph < 1) {
             Debug.Log("Car is stopped! Resetting position");
             ResetCarPosition();

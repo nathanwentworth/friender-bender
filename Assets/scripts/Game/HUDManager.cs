@@ -15,7 +15,7 @@ public class HUDManager : MonoBehaviour
     public Image timerBar;
     public Text timer;
     public Gradient timerGradient;
-    public Text currentPlayerText;
+    private Text currentPlayerText;
     public Image[] livesDisplay;
     public Sprite livesDisplayInactive;
     public Sprite livesDisplayActive;
@@ -50,6 +50,7 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
+        currentPlayerText = GameObject.Find("player").GetComponent<Text>();
         notificationText.text = "";
         StartCoroutine(Process());
         UpdateLivesDisplay();
@@ -78,7 +79,8 @@ public class HUDManager : MonoBehaviour
         timerBarFillAmount = (0.5f + (0.5f * (playerSwitch.timer / playerSwitch.turnTime)));
         timerBar.fillAmount = timerBarFillAmount;
         timerBar.color = timerGradient.Evaluate (playerSwitch.timer / playerSwitch.turnTime);
-        currentPlayerText.text = "P" + (playerSwitch.currentIndex + 1);
+
+        currentPlayerText.text = DataManager.GetPlayerIdentifier(playerSwitch.currentIndex);
     }
 
     public void Pause() {
@@ -143,10 +145,9 @@ public class HUDManager : MonoBehaviour
     public void DisplayOverlayText(string text) {
         overlayPanel.SetActive(true);
         overlayText.text = text;
-        StartCoroutine(DisplayPostGameMenu());
     }
 
-    IEnumerator DisplayPostGameMenu() {
+    public IEnumerator DisplayPostGameMenu() {
         yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
     }

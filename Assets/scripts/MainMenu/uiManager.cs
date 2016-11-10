@@ -14,10 +14,16 @@ public class uiManager : MonoBehaviour
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
 
+    public GameObject canvasLoad;
+    public Image loadingBar;
+    private AsyncOperation sync;
+
     [Header("Controller Add Screen")]
     public Image[] controllerIcons;
     public Sprite controllerInactive;
     public Sprite controllerActive;
+    public Text[] nameFields;
+    public Color32 inactiveColor;
 
     [Header("Mode Selection")]
     public string[] modeDescriptions;
@@ -163,9 +169,12 @@ public class uiManager : MonoBehaviour
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
-          controllerIcons[i].sprite = controllerActive;
+          // controllerIcons[i].sprite = controllerActive;
+          controllerIcons[i].color = DataManager.Colors[i];
         } else {
-          controllerIcons[i].sprite = controllerInactive;
+          // controllerIcons[i].sprite = controllerInactive;
+          controllerIcons[i].color = inactiveColor;
+          nameFields[i].text = "";
         }
       }
     }
@@ -173,7 +182,8 @@ public class uiManager : MonoBehaviour
     // public function to load scenes by string name
     public void LoadScene(string levelName)
     {
-        SceneManager.LoadScene(levelName);
+        // SceneManager.LoadScene(levelName);
+        StartCoroutine(LoadingScreen(levelName));
     }
 
     // quits the game!!!!!!!!
@@ -275,22 +285,23 @@ public class uiManager : MonoBehaviour
     public void SetCar(int car)
     {
         selectedCar = car;
+        DataManager.CarIndex = selectedCar;
         Debug.Log(selectedCar);
         switch (car)
         {
-            case 1:
+            case 0:
                 Debug.Log("Selected Gremlin");
                 break;
-            case 2:
+            case 1:
                 Debug.Log("Selected Banana");
                 break;
-            case 3:
+            case 2:
                 Debug.Log("Selected Big Wheel");
                 break;
-            case 4:
+            case 3:
                 Debug.Log("Selected Verminator");
                 break;
-            case 5:
+            case 4:
                 Debug.Log("Selected AE86");
                 break;
         }
@@ -298,13 +309,26 @@ public class uiManager : MonoBehaviour
 
     public void RandCar()
     {
-        int randVal = Random.Range(1, 6);
+        int randVal = Random.Range(1, 5);
         SetCar(randVal);
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {
         audioSource.PlayOneShot(sound);
         yield return null;
+    }
+
+    IEnumerator LoadingScreen(string scene)
+    {
+        canvasLoad.SetActive(true);
+        yield return new WaitForSeconds(4.5f);
+        sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        // sync.allowSceneActivation = false;
+        // startAnimation = true;
+        while (!sync.isDone) {
+            loadingBar.fillAmount = sync.progress;
+            yield return null;
+        }
     }
 
 }

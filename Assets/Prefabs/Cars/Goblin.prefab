@@ -251,7 +251,7 @@ GameObject:
   - 4: {fileID: 4000013694480858}
   m_Layer: 0
   m_Name: Spawn
-  m_TagString: Untagged
+  m_TagString: Spawn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1221,29 +1221,7 @@ MonoBehaviour:
   maxSteeringAngle: 12
   maxBrakingTorque: 3000
   controllerDeadzone: 0.15
-  spawnPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   shieldEffect: {fileID: 1000012896528328}
-  playerSwitch: {fileID: 0}
-  hudManager: {fileID: 0}
-  audioManager: {fileID: 0}
   turningMultiplier: 0
   currentIndex: 0
   shield: 0
