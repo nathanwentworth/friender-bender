@@ -16,7 +16,7 @@ public class HUDManager : MonoBehaviour
     public Text timer;
     public Gradient timerGradient;
     private Text currentPlayerText;
-    public Image[] livesDisplay;
+    public Image[] livesDisplay = new Image[3];
     public Sprite livesDisplayInactive;
     public Sprite livesDisplayActive;
     public Text[] powerupText;
@@ -50,6 +50,10 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
+        for (int i = 0; i < livesDisplay.Length; i++)
+        {
+            livesDisplay[i] = GameObject.Find("heart-" + i.ToString()).GetComponent<Image>();
+        }
         currentPlayerText = GameObject.Find("player").GetComponent<Text>();
         notificationText.text = "";
         StartCoroutine(Process());
