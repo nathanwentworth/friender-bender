@@ -169,9 +169,10 @@ public class PlayerSwitching : MonoBehaviour
             {
                 if (isOut[i] == false)
                 {
-
-                    hudManager.DisplayOverlayText(DataManager.GetPlayerIdentifier(i) + " WINS!");
-                    StartCoroutine(hudManager.DisplayPostGameMenu());
+                    string gameover = DataManager.GetPlayerIdentifier(i) + " WINS!";
+                    StartCoroutine(hudManager.DisplayOverlayText(gameover));
+                    hudManager.EnqueueWait(1f);
+                    hudManager.EnqueueAction(hudManager.DisplayPostGameMenu());
                     Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }

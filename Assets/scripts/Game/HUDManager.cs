@@ -80,7 +80,7 @@ public class HUDManager : MonoBehaviour
         else if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { Controller = DataManager.PlayerList[currentIndex].Controller; }
         else { Controller = DataManager.PlayerList[0].Controller; }
 
-        if (Controller.Command.WasPressed)
+        if (Controller.Command.WasPressed && !playerSwitch.playerWin)
         {
             Pause();
         }

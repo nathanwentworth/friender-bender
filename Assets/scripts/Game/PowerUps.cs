@@ -212,6 +212,7 @@ public class PowerUps : MonoBehaviour {
     {
         GameObject i = Instantiate(objects[0]);
         i.transform.position = spawn.position;
+        i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
         yield return null;
     }
 
