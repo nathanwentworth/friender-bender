@@ -169,13 +169,18 @@ public class HUDManager : MonoBehaviour
         yield return null;
     }
 
-    public void DisplayOverlayText(string text) {
-        overlayPanel.SetActive(true);
+    public IEnumerator DisplayOverlayText(string text) {
+        if (overlayPanel.activeSelf) {
+            overlayPanel.SetActive(false);
+        } else {
+            overlayPanel.SetActive(true);
+        }
         overlayText.text = text;
+        yield return null;
     }
 
     public IEnumerator DisplayPostGameMenu() {
-        yield return new WaitForSeconds(3);
         gameOverPanel.SetActive(true);
+        yield return null;
     }
 }

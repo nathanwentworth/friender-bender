@@ -154,8 +154,9 @@ public class PlayerSwitching : MonoBehaviour
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             // StartCoroutine(Notifications(notifText1, notifText2));
-            hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
-            hudManager.EnqueueWait(2f);
+            StartCoroutine(hudManager.DisplayOverlayText(notifText1));
+            hudManager.EnqueueWait(1f);
+            hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
