@@ -16,6 +16,9 @@ public class uiManager : MonoBehaviour
 
     public GameObject canvasLoad;
     public Image loadingBar;
+    public Gradient backgroundGradientColors;
+    public Image backgroundGradient;
+
     private AsyncOperation sync;
 
     [Header("Controller Add Screen")]
@@ -32,8 +35,8 @@ public class uiManager : MonoBehaviour
     [Header("Car/Track Selection")]
     public GameObject[] containers;
     public GameObject rotatingModel;
-    public Mesh[] carModels;
-    public Mesh[] trackModels;
+    public GameObject[] carModels;
+    public GameObject[] trackModels;
 
     [Header("Options")]
     public Text turnTimeDisplayText;
@@ -49,6 +52,7 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         DataManager.Load();
         DataManager.LivesCount = numberOfLives;
         Debug.Log(DataManager.CurrentGameMode);
@@ -57,6 +61,7 @@ public class uiManager : MonoBehaviour
             audioSource = GetComponent<AudioSource>();
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
+        StartCoroutine(BackgroundGradient());
     }
 
     private void Update()
@@ -83,7 +88,7 @@ public class uiManager : MonoBehaviour
             Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);
         }
 
-        if (menuIndex != 1 && inputDevice.Action2.WasPressed)
+        if (menuIndex != 1 && menuIndex != 7 && inputDevice.Action2.WasPressed)
         {
             int backIndex = menuIndex - 1;
             switch (backIndex)
@@ -115,6 +120,9 @@ public class uiManager : MonoBehaviour
             }
             CanvasDisplay(backIndex);
         }
+        else if (menuIndex != 5) {
+            rotatingModel.SetActive(false);
+        }
         else if (menuIndex == 2) {
           DisplayModeDescriptions();
         }
@@ -134,9 +142,13 @@ public class uiManager : MonoBehaviour
         else if (menuIndex == 5) {
             SetPlayerLives();
             RotateModel(carModels);
+            rotatingModel.SetActive(true);
         }
         else if (menuIndex == 6) {
-          RotateModel(trackModels);
+          // RotateModel(trackModels);
+        }
+        else if (menuIndex == 7) {
+
         }
     }
 
@@ -254,22 +266,23 @@ public class uiManager : MonoBehaviour
     // for the car/track selection screens
     // rotates a model being loaded in as a mesh from an array
     // todo: add material switching later
-    private void RotateModel(Mesh[] models)
+    private void RotateModel(GameObject[] models)
     {
-      Mesh activeMesh;
       int buttonNum;
+      GameObject car;
       if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
+      for (int i = 0; i < models.Length; i++) {
+        models[i].SetActive(false);
+      }
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
       if (buttonNumSuccess) {
-        activeMesh = models[buttonNum];
+        car = models[buttonNum];
       } else {
-        activeMesh = models[random.Next(0, 4)];
+        car = models[random.Next(0, 4)];
       }
-      
-      rotatingModel.GetComponent<MeshFilter>().sharedMesh = activeMesh;
-      rotatingModel.SetActive(true);
+      car.SetActive(true);
     }
 
     // for the "set game mode" panel
@@ -318,10 +331,23 @@ public class uiManager : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator LoadingScreen(string scene)
+    private IEnumerator BackgroundGradient() {
+        float timer = 0;
+        while (true) {
+            timer += .001f;
+            if (timer >= 1) timer = 0;
+            backgroundGradient.color = backgroundGradientColors.Evaluate (timer);
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator LoadingScreen(string scene)
     {
+        Debug.Log("asdfasdfsadf");
         canvasLoad.SetActive(true);
         yield return new WaitForSeconds(4.5f);
+        Debug.Log("Loading start");
         sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
         // sync.allowSceneActivation = false;
         // startAnimation = true;

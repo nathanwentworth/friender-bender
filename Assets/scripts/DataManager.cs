@@ -162,7 +162,7 @@ public static class DataManager
             if (PlayerList[index].PlayerName != "" && PlayerList[index].PlayerName != null) {
                 return PlayerList[index].PlayerName;
             } else {
-                int name = PlayerList[index].PlayerNumber + 1;
+                int name = PlayerList[index].PlayerNumber;
                 return "P" + name;
             }            
         } else {

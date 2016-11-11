@@ -72,7 +72,7 @@ public class PowerUps : MonoBehaviour {
             Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
         }
         else {
-            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin) 
+            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin && !hud.Paused)
             {
                 PlayerData player;
                 if (DataManager.CurrentGameMode == DataManager.GameMode.Party)

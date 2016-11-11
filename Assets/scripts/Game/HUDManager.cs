@@ -20,6 +20,7 @@ public class HUDManager : MonoBehaviour
     public Sprite livesDisplayInactive;
     public Sprite livesDisplayActive;
     public Text[] powerupText;
+    public GameObject[] powerupContainers;
 
     [Header("Pause")]
 
@@ -44,6 +45,15 @@ public class HUDManager : MonoBehaviour
     private float maxSpeed = 150;
     private int[] players;
     private int currentIndex;
+    
+    private bool paused;
+    public bool Paused
+    {
+        get { return paused; }
+        set { paused = value; }
+    }
+
+
 
     Queue<IEnumerator> notifications = new Queue<IEnumerator>();
 
@@ -58,6 +68,8 @@ public class HUDManager : MonoBehaviour
         notificationText.text = "";
         StartCoroutine(Process());
         UpdateLivesDisplay();
+        PowerupSizeSet();
+        paused = false;
     }
 
     void Update()
@@ -91,9 +103,11 @@ public class HUDManager : MonoBehaviour
         if (pauseCanvas.activeSelf) {
             Time.timeScale = 1;
             pauseCanvas.SetActive(false);
+            paused = false;
         } else {
             Time.timeScale = 0;
             pauseCanvas.SetActive(true);
+            paused = true;
         }
     }
 
@@ -111,8 +125,10 @@ public class HUDManager : MonoBehaviour
         for (int i = 0; i < DataManager.LivesCount; i++) {
             if (i < DataManager.PlayerList[trueCurrentIndex].Lives) {
                 livesDisplay[i].sprite = livesDisplayActive;
+                livesDisplay[i].color = DataManager.Colors[trueCurrentIndex];
             } else {
                 livesDisplay[i].sprite = livesDisplayInactive;
+                livesDisplay[i].color = Color.white;
             }
         }
     }
@@ -129,7 +145,14 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player - 1].text = player + ": " + powerup;
+        powerupText[player - 1].text = player + ":   " + powerup;
+    }
+
+    private void PowerupSizeSet() {
+        for (int i = DataManager.TotalPlayers - 1; i >= 0; i--) {
+            powerupContainers[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(16, 64 + ((DataManager.TotalPlayers - 1 - i) * 96));
+            powerupContainers[i].SetActive(true);
+        }
     }
 
     public void EnqueueWait(float aWaitTime) {
