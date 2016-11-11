@@ -11,7 +11,7 @@ Based on an idea from [Cool Games Inc. Episode 26, Sabotage Rally](https://sound
 
 Joey Canney - 3D Modeling, Music
 
-Adam Chop - 3D Modeling, Level Designer, Assembler
+[Adam Chop](http://adamchop.co.nf) - 3D Modeling, Level Designer, Assembler
 
 [Delton Hulbert](http://deltonhulbert.com) - 3D Modeling, Animation, UI Art, Music
 
