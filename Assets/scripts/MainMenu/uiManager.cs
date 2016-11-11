@@ -126,9 +126,6 @@ public class uiManager : MonoBehaviour
             }
             CanvasDisplay(backIndex);
         }
-        else if (menuIndex != 5) {
-            rotatingModel.SetActive(false);
-        }
         else if (menuIndex == 2) {
           DisplayModeDescriptions();
         }
@@ -155,6 +152,9 @@ public class uiManager : MonoBehaviour
         }
         else if (menuIndex == 7) {
 
+        }
+        if (menuIndex != 5) {
+            rotatingModel.SetActive(false);
         }
     }
 
@@ -295,7 +295,7 @@ public class uiManager : MonoBehaviour
     // displays a short description of each game mode when highlighting a button
     private void DisplayModeDescriptions() {
       int mode = -1;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; print ("null"); }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];
