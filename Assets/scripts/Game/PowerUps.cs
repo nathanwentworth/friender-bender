@@ -210,8 +210,11 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator RandomLargeObject()
     {
+        float mph = carControl.MPH;
+        float dist = mph / 150f;
         GameObject i = Instantiate(objects[0]);
-        i.transform.position = spawn.position;
+        // car.transform.position + (car.transform.forward + (30f * dist)) + (Vector3.up * 7),
+        i.transform.position = car.transform.position + (car.transform.forward * (30f * dist)) + (Vector3.up * 7);
         i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
         yield return null;
     }

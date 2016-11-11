@@ -25,6 +25,13 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
+
+    public float MPH
+    {
+        get { return mph; }
+    }
+
+
     private bool grounded;
     //Making this public for Powerup Reference
     [HideInInspector]
