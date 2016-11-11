@@ -42,6 +42,7 @@ public class uiManager : MonoBehaviour
     public Text turnTimeDisplayText;
     public Slider turnTimeSlider;
     public int numberOfLives = 3;
+    public GameObject creditsPanel;
 
     [Header("Sounds")]
     public AudioClip submitSound;
@@ -94,7 +95,12 @@ public class uiManager : MonoBehaviour
             switch (backIndex)
             {
                 case -1:
-                    backIndex = 1;
+                    if (creditsPanel.activeSelf) {
+                        DisplayCredits();
+                        backIndex = 0;
+                    } else {
+                        backIndex = 1;
+                    }
                     break;
                 case 2:
                     if (DataManager.TotalPlayers == 0)
@@ -324,6 +330,14 @@ public class uiManager : MonoBehaviour
     {
         int randVal = Random.Range(1, 5);
         SetCar(randVal);
+    }
+
+    public void DisplayCredits() {
+        if (creditsPanel.activeSelf) {
+            creditsPanel.SetActive(false);
+        } else {
+            creditsPanel.SetActive(true);
+        }
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {
