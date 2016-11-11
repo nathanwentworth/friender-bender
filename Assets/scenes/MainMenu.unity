@@ -442,7 +442,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "CONCEPT\n\tCool Games Inc.: @coolgamesinc\n\tNick Robinson: @babylonian\n\tGriffin
-    McElroy: @griffinmcelroy\n\tTWITTER PERSON\nART BOYS\n\tDelton Hulbert: deltonhulbert.com\n\tDakota
+    McElroy: @griffinmcelroy\n\tCian: @SeshohoCian\nART BOYS\n\tDelton Hulbert: deltonhulbert.com\n\tDakota
     Lyons: @dakotadal\n\tAdam Chop\n\tJoey Canney\nPRODUCER/AUDIO\n\tEthan Thibault:
     ethanthibault.xyz\nCODE BOY/PRODUCER\n\tConnor Botts: connor.games\nCODE BOY/UI\n\tNathan
     Wentworth: nathanwentworth.co"
@@ -6459,9 +6459,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 613781778}
+    m_SelectOnDown: {fileID: 2134747012}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
@@ -12456,9 +12456,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
+    m_Mode: 4
+    m_SelectOnUp: {fileID: 1183121530}
+    m_SelectOnDown: {fileID: 1321505289}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
