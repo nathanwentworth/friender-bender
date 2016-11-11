@@ -221,14 +221,59 @@ public class PowerUps : MonoBehaviour {
         int rand = DataManager.RandomVal(1, values.Length - 1);
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
-        hud.DisplayPowerups(player.PlayerNumber, randomPowerup.ToString());
+        hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));
         Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
     }
 
+    public string GetPowerupName(PowerUpType powerup)
+    {
+        string powerupName = "";
+        switch (powerup)
+        {
+            case PowerUpType.SpeedBoost:
+                powerupName = "BOOST";
+                break;
+            case PowerUpType.SkipTurn:
+                powerupName = "SKIP NEXT PLAYER";
+                break;
+            case PowerUpType.AddSecondsToTurn:
+                powerupName = "+2 SECONDS";
+                break;
+            case PowerUpType.InvertSteering:
+                powerupName = "MIRROR STEERING";
+                break;
+            case PowerUpType.ScreenDistraction:
+                powerupName = "GLITCH";
+                break;
+            case PowerUpType.Shield:
+                powerupName = "SHIELD";
+                break;
+            case PowerUpType.EndTurn:
+                powerupName = "END TURN";
+                break;
+            case PowerUpType.LargeObject:
+                powerupName = "OBSTACLE DROP";
+                break;
+            default:
+                Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
+                break;
+        }
+        return powerupName;
+    }
+
+
     private IEnumerator Cooldown(PlayerData player)
     {
+        float cooldown = powerupCooldownTime;
         Debug.Log("Starting Cooldown for Player " + player.PlayerNumber);
-        yield return new WaitForSeconds(powerupCooldownTime);
+        while (cooldown > 0) {
+            float cooldownDisp = cooldown;
+            cooldownDisp = Mathf.Round(cooldownDisp * 10f) / 10f;
+            hud.DisplayPowerups(player.PlayerNumber, cooldownDisp + "");
+            cooldown -= Time.deltaTime;
+            yield return null;
+        }
+        // yield return new WaitForSeconds(powerupCooldownTime);
         RandomPowerup(player);
     }
 }
