@@ -134,7 +134,7 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
-                CanvasDisplay(5);     
+                CanvasDisplay(5);
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!
@@ -217,6 +217,7 @@ public class uiManager : MonoBehaviour
             lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         } else {
             StartCoroutine(PlayAudio(switchSound));
+            Debug.Log("Switched UI button, played sound");
             lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         }
     }

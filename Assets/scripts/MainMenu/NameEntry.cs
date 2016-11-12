@@ -7,10 +7,11 @@ public class NameEntry : MonoBehaviour {
 
 	private char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
 	private int index;
-	private string playerName;
+	private char[] playerChars;
 	private PlayerData player;
 	private InputDevice controller;
 	private bool acceptInput;
+	private bool nameSaved;
 	private bool textDisplayed;
 	private Color32 playerColor;
 	
@@ -19,13 +20,18 @@ public class NameEntry : MonoBehaviour {
 	public GameObject nameEntry;
 	public PlayerManager playerManager;
 
+	[HideInInspector]
+	public string playerName;
+
 	private void OnEnable() {
 		textDisplayed = false;
 		acceptInput = true;
+		nameSaved = false;
 		playerName = "";
 		nameEntry.GetComponent<Text>().color = defaultColor;
 		playerColor = DataManager.Colors[playerNumber];
 	}
+
 	private void OnDisable() {
 		textDisplayed = false;
 		acceptInput = false;
@@ -41,21 +47,20 @@ public class NameEntry : MonoBehaviour {
 
 		if (controller.Action1.WasPressed) {
 			if (playerName.Length < 3 && textDisplayed) { EnterChar(); }
-			else if (playerName.Length == 3) { SaveName(); }
-		} else if (controller.Action2.WasPressed) {
-			HideText();
-		} else if (controller.Action4.WasPressed) {
-			if (textDisplayed) {
-				HideText();
-			} else {
-				DisplayNameEntry();
-			}
-		} else if (controller.Direction.Y > 0.5 || controller.Direction.Y < -0.5) {
-			if (acceptInput && playerName.Length < 3 && textDisplayed) {
+			else if (playerName.Length < 3 && !textDisplayed) { DisplayNameEntry(); }
+		}
+		else if (controller.Command.WasPressed && playerName.Length > 0) {
+			SaveName();
+		} 
+		else if (controller.Direction.Y > 0.5 || controller.Direction.Y < -0.5) {
+			if (acceptInput && !nameSaved && playerName.Length < 3 && textDisplayed) {
 				ChangeNameEntryChar();
 				acceptInput = false;
 				StartCoroutine("InputSleep");
 			}
+		}
+		else if (controller.Action2.WasPressed) {
+			DeleteChar();
 		}
 	}
 
@@ -70,35 +75,51 @@ public class NameEntry : MonoBehaviour {
 
 	private void DisplayNameEntry() {
 		textDisplayed = true;
-		nameEntry.GetComponent<Text>().text = playerName + letters[index];
+		string lastLetter = "<color=#" + "0000ffff" + ">" + letters[index] + "</color>";
+		Debug.Log(playerName + lastLetter);
+		nameEntry.GetComponent<Text>().text = playerName + lastLetter;
 	}
 
-	private void HideText() {
-		textDisplayed = false;
-		playerName = "";
-		nameEntry.GetComponent<Text>().text = playerName;
-		nameEntry.GetComponent<Text>().color = defaultColor;
-	}
+	// private void HideText() {
+	// 	textDisplayed = false;
+	// 	playerName = "";
+	// 	nameEntry.GetComponent<Text>().text = playerName;
+	// 	nameEntry.GetComponent<Text>().color = defaultColor;
+	// }
 
 	private void EnterChar() {
 		if (!textDisplayed) {
 			textDisplayed = true;
 		} else {
-			playerName = playerName + letters[index];				
+			// char[] tempName = new char[playerChars.Length + 1];
+			// tempName[tempName.Length - 1] = letters[index];
+
+			// for (int i = 0; i < tempName.Length; i++) {
+			// 	playerChars[i] = tempName[i];
+			// 	playerName = playerName + tempName[i];
+			// }
+
+			playerName = playerName + letters[index];
 		}
 		if (playerName.Length < 3) DisplayNameEntry();
 	}
 
-	// private void DeleteChar() {
-	// 	playerName = playerName.Substring(0, playerName.Length - 1);
-	// 	nameEntry.GetComponent<Text>().color = defaultColor;
-	// 	DisplayNameEntry();
-	// }
+	private void DeleteChar() {
+		nameSaved = false;
+		playerName = playerName.Substring(0, playerName.Length - 1);
+		nameEntry.GetComponent<Text>().color = defaultColor;
+		DisplayNameEntry();
+		if (playerName.Length == 0) {
+			textDisplayed = false;
+		}
+	}
 
 	private void SaveName() {
 		DataManager.PlayerList[playerNumber].PlayerName = playerName;
+		nameEntry.GetComponent<Text>().text = playerName;
 		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");
+		nameSaved = true;
 	}
 
 	private IEnumerator InputSleep() {

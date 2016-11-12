@@ -135,7 +135,7 @@ public static class DataManager
         if (PlayerPrefs.HasKey("Party Delay")) {
             partyDelay = PlayerPrefs.GetFloat("Party Delay");            
         } else {
-            partyDelay = 0f;
+            partyDelay = 0.5f;
         }
         if (PlayerPrefs.HasKey("Potato Delay")) {
             potatoDelay = PlayerPrefs.GetFloat("Potato Delay");            
