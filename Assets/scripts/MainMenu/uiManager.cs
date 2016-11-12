@@ -286,7 +286,7 @@ public class uiManager : MonoBehaviour
       if (buttonNumSuccess) {
         car = models[buttonNum];
       } else {
-        car = models[random.Next(0, 4)];
+        car = models[random.Next(0, models.Length)];
       }
       car.SetActive(true);
     }
