@@ -134,7 +134,13 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
-                CanvasDisplay(5);
+                int n = 0;
+                for (int i = 0; i < DataManager.PlayerList.Count; i++) {
+                    if (DataManager.PlayerList[i].PlayerName != null) {
+                        n++;
+                    }
+                }
+                if (n >= DataManager.PlayerList.Count) CanvasDisplay(5);
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!

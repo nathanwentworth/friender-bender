@@ -12,12 +12,13 @@ public class NameEntry : MonoBehaviour {
 	private InputDevice controller;
 	private bool acceptInput;
 	private bool nameSaved;
-	private bool textDisplayed;
+	public bool textDisplayed;
 	private Color32 playerColor;
 	
 	public Color32 defaultColor;
 	public int playerNumber;
 	public GameObject nameEntry;
+	public GameObject readyText;
 	public PlayerManager playerManager;
 
 	[HideInInspector]
@@ -27,15 +28,11 @@ public class NameEntry : MonoBehaviour {
 		textDisplayed = false;
 		acceptInput = true;
 		nameSaved = false;
+		readyText.SetActive(false);
 		playerName = "";
 		nameEntry.GetComponent<Text>().color = defaultColor;
 		playerColor = DataManager.Colors[playerNumber];
-	}
-
-	private void OnDisable() {
-		textDisplayed = false;
-		acceptInput = false;
-		playerName = "";
+		nameEntry.GetComponent<Text>().text = playerName;
 	}
 
 	private void Update() {
@@ -46,8 +43,9 @@ public class NameEntry : MonoBehaviour {
 		}
 
 		if (controller.Action1.WasPressed) {
+			Debug.Log("textDisplayed " + textDisplayed);
 			if (playerName.Length < 3 && textDisplayed) { EnterChar(); }
-			else if (playerName.Length < 3 && !textDisplayed) { DisplayNameEntry(); }
+			else if (!textDisplayed) { DisplayNameEntry(); }
 		}
 		else if (controller.Command.WasPressed && playerName.Length > 0) {
 			SaveName();
@@ -60,7 +58,12 @@ public class NameEntry : MonoBehaviour {
 			}
 		}
 		else if (controller.Action2.WasPressed) {
-			DeleteChar();
+			readyText.SetActive(false);
+			if (playerName.Length == 0) {
+				textDisplayed = false;
+			} else {
+				DeleteChar();				
+			}
 		}
 	}
 
@@ -74,10 +77,18 @@ public class NameEntry : MonoBehaviour {
 	}
 
 	private void DisplayNameEntry() {
-		textDisplayed = true;
+		if (!textDisplayed) {
+			textDisplayed = true;
+		}
 		string lastLetter = "<color=#" + "0000ffff" + ">" + letters[index] + "</color>";
 		Debug.Log(playerName + lastLetter);
-		nameEntry.GetComponent<Text>().text = playerName + lastLetter;
+		if (playerName.Length < 3) {
+			Debug.Log(playerName.Length);
+			nameEntry.GetComponent<Text>().text = playerName + lastLetter;
+		} else {
+			Debug.Log(playerName.Length);
+			nameEntry.GetComponent<Text>().text = playerName;
+		}
 	}
 
 	// private void HideText() {
@@ -91,17 +102,9 @@ public class NameEntry : MonoBehaviour {
 		if (!textDisplayed) {
 			textDisplayed = true;
 		} else {
-			// char[] tempName = new char[playerChars.Length + 1];
-			// tempName[tempName.Length - 1] = letters[index];
-
-			// for (int i = 0; i < tempName.Length; i++) {
-			// 	playerChars[i] = tempName[i];
-			// 	playerName = playerName + tempName[i];
-			// }
-
 			playerName = playerName + letters[index];
 		}
-		if (playerName.Length < 3) DisplayNameEntry();
+		DisplayNameEntry();
 	}
 
 	private void DeleteChar() {
@@ -109,9 +112,6 @@ public class NameEntry : MonoBehaviour {
 		playerName = playerName.Substring(0, playerName.Length - 1);
 		nameEntry.GetComponent<Text>().color = defaultColor;
 		DisplayNameEntry();
-		if (playerName.Length == 0) {
-			textDisplayed = false;
-		}
 	}
 
 	private void SaveName() {
@@ -119,6 +119,7 @@ public class NameEntry : MonoBehaviour {
 		nameEntry.GetComponent<Text>().text = playerName;
 		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");
+		readyText.SetActive(true);
 		nameSaved = true;
 	}
 
@@ -126,7 +127,4 @@ public class NameEntry : MonoBehaviour {
 		yield return new WaitForSeconds(.1f);
 		acceptInput = true;
 	}
- 
-
-
-}
+ }
