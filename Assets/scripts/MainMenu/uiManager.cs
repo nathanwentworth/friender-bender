@@ -295,7 +295,7 @@ public class uiManager : MonoBehaviour
     // displays a short description of each game mode when highlighting a button
     private void DisplayModeDescriptions() {
       int mode = -1;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; print ("null"); }
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { print("null"); return; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];

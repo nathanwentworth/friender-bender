@@ -4,8 +4,8 @@ using System.Collections;
 public class CarSpawn : MonoBehaviour {
 
     public GameObject[] cars;
-
-    void Start()
+    //
+    void Awake()
     {
         PlayerSwitching pSwitch = GameObject.Find("GameSystem").GetComponent<PlayerSwitching>();
         GameObject car = Instantiate(cars[DataManager.CarIndex]);
