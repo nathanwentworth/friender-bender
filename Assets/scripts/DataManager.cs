@@ -26,9 +26,6 @@ public static class DataManager
     private static int[]
         playerArr;
 
-    private static bool
-        randomPlayerOrder;
-
     public enum GameMode
     {
         None,
@@ -111,12 +108,6 @@ public static class DataManager
         set { playerArr = value; }
     }
 
-    public static bool RandomPlayerOrder
-    {
-        get { return randomPlayerOrder; }
-        set { randomPlayerOrder = value; }
-    }
-
     public static void Save() {
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
@@ -124,6 +115,14 @@ public static class DataManager
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
         PlayerPrefs.Save();
         Debug.Log("Saved data");
+    }
+
+    public static void ClearGameData()
+    {
+        PlayerList.Clear();
+        TotalPlayers = 0;
+        CarIndex = 0;
+        CurrentGameMode = GameMode.None;
     }
 
     public static void Load() {

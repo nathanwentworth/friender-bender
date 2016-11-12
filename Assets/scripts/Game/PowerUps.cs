@@ -38,7 +38,6 @@ public class PowerUps : MonoBehaviour {
     private CarControl carControl;
     private bool shieldActive;
 
-
     private GameObject car;
 
     void Start()
@@ -64,20 +63,30 @@ public class PowerUps : MonoBehaviour {
 
     void Update()
     {
-        InputDevice controller = InputManager.ActiveDevice;
-        if (pSwitch.DEBUG_MODE && controller.Action1.WasPressed)
+        if (pSwitch.DEBUG_MODE && InputManager.ActiveDevice.Action1.WasPressed)
         {
             PowerUpType powerup = StartingPowerUp;
             Execute(powerup);
             Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
         }
         else {
-            if (controller.Action1.WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin && !hud.Paused)
+            bool action1WasPressed = false;
+            PlayerData playerThatPressedIt = null;
+            foreach (PlayerData i in DataManager.PlayerList)
+            {
+                if (i.Controller.Action1.WasPressed && i.CurrentPowerUp != PowerUpType.None)
+                {
+                    action1WasPressed = true;
+                    playerThatPressedIt = i;
+                    break;
+                }
+            }
+            if (action1WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin && !hud.Paused)
             {
                 PlayerData player;
                 if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
                 {
-                    player = PlayerWhoPressedButton(controller);
+                    player = playerThatPressedIt;
                 }
                 else {
                     int currentIndex = gameObject.GetComponent<PlayerSwitching>().currentIndex;
@@ -96,19 +105,6 @@ public class PowerUps : MonoBehaviour {
 
             }
         }
-    }
-
-    public PlayerData PlayerWhoPressedButton(InputDevice controller)
-    {
-        foreach (PlayerData player in DataManager.PlayerList)
-        {
-            if(controller == player.Controller)
-            {
-                return player;
-            }
-        }
-        Debug.LogError("Powerup: Could not find player that used powerup");
-        return null;
     }
 
     public void Execute(PowerUpType powerup)
