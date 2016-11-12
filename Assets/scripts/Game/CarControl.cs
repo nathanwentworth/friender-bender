@@ -25,6 +25,13 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
+
+    public float MPH
+    {
+        get { return mph; }
+    }
+
+
     private bool grounded;
     //Making this public for Powerup Reference
     [HideInInspector]
@@ -35,7 +42,6 @@ public class CarControl : MonoBehaviour
     private int trueCurrentIndex;
 
     [Header("Audio Bits")]
-    //public GameObject AudioManagerObj;
     public AudioSource carEngine;
 
     private Vector3 carOriginTrans;
@@ -109,7 +115,7 @@ public class CarControl : MonoBehaviour
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
 
-        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.startingGame) {
+        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.passingController && !playerSwitch.startingGame && !hudManager.Paused && !playerSwitch.playerWin) {
             StartCoroutine(CheckIfCarIsStopped());
         }
 
