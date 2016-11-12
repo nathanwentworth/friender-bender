@@ -5,8 +5,8 @@ public class CarSpawn : MonoBehaviour {
 
     public GameObject[] cars;
 
-	// Use this for initialization
-	void Awake () {
+    void Start()
+    {
         PlayerSwitching pSwitch = GameObject.Find("GameSystem").GetComponent<PlayerSwitching>();
         GameObject car = Instantiate(cars[DataManager.CarIndex]);
         Transform sp = pSwitch.spawnPoints[DataManager.RandomVal(0, pSwitch.spawnPoints.Length - 1)].transform;
