@@ -87,7 +87,8 @@ GameObject:
   - 4: {fileID: 4000012551172236}
   - 33: {fileID: 33000013989405668}
   - 23: {fileID: 23000010089414972}
-  - 64: {fileID: 64000010428277418}
+  - 65: {fileID: 65000014102658040}
+  - 65: {fileID: 65000011502810946}
   m_Layer: 0
   m_Name: banana
   m_TagString: Untagged
@@ -924,7 +925,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013267028416}
   serializedVersion: 2
-  m_Mass: 1600
+  m_Mass: 1200
   m_Drag: 0.5
   m_AngularDrag: 0
   m_UseGravity: 1
@@ -932,8 +933,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!64 &64000010428277418
-MeshCollider:
+--- !u!65 &65000011502810946
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -942,8 +943,20 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Convex: 1
-  m_Mesh: {fileID: 4300000, guid: a69ccc1c8a973ab459b15cabb4564426, type: 3}
+  m_Size: {x: 0.13547148, y: 0.42936182, z: 0.15482533}
+  m_Center: {x: 1.6402555, y: 1.3643544, z: 0.00081116805}
+--- !u!65 &65000014102658040
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010785071122}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.1908379, y: 0.60484815, z: 0.4992221}
+  m_Center: {x: 0.043857582, y: 0.8388736, z: 0.005140036}
 --- !u!82 &82000013669009624
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1237,9 +1250,9 @@ WheelCollider:
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.25
-    m_ExtremumValue: 3.2
-    m_AsymptoteSlip: 2
-    m_AsymptoteValue: 3
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 1.5
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!146 &146000012079035632
@@ -1295,9 +1308,9 @@ WheelCollider:
     m_Stiffness: 1
   m_SidewaysFriction:
     m_ExtremumSlip: 0.25
-    m_ExtremumValue: 3.2
-    m_AsymptoteSlip: 2
-    m_AsymptoteValue: 3
+    m_ExtremumValue: 2
+    m_AsymptoteSlip: 0.8
+    m_AsymptoteValue: 1.5
     m_Stiffness: 1
   m_Enabled: 1
 --- !u!146 &146000013781776868

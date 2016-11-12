@@ -26,6 +26,8 @@ public class CarControl : MonoBehaviour
     private Rigidbody rigid;
     private int mph;
 
+    private Vector3 groundedVelocity;
+
     public float MPH
     {
         get { return mph; }
@@ -121,9 +123,14 @@ public class CarControl : MonoBehaviour
 
         //Changes the pitch of the engine audioSource
         if (grounded) {
-            carEngine.pitch = ((mph * 0.01f) - 0.3f);        
+            carEngine.pitch = ((mph * 0.01f) - 0.3f);
+            groundedVelocity = rigid.velocity;        
         } else {
             carEngine.pitch = ((mph * 0.01f));
+            if (mph > 70)
+            {
+                rigid.velocity = new Vector3(groundedVelocity.x, rigid.velocity.y, groundedVelocity.z);
+            }
         }
 
         foreach (AxleInfo axleInfo in axleInfos)
