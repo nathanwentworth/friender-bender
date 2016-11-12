@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000010977542052}
   - 114: {fileID: 114000010579291326}
   - 114: {fileID: 114000012139818100}
+  - 114: {fileID: 114000010004363950}
   m_Layer: 0
   m_Name: GameSystem
   m_TagString: Untagged
@@ -41,6 +42,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!114 &114000010004363950
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012803449070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c0b15bc696c914195d3b5c6d3284df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cars:
+  - {fileID: 1000010791721470, guid: cccabc30c95c523429bdb6408114171e, type: 2}
+  - {fileID: 1000013267028416, guid: e9982fa238e07444185e9babc37a18c2, type: 2}
 --- !u!114 &114000010579291326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -54,13 +69,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentIndex: 0
   timer: 0
-  passTime: 3
   turnTime: 7
   playerWin: 0
   startingGame: 0
   DEBUG_MODE: 0
   passingController: 0
   InControl: {fileID: 1000013346135206, guid: 39b51b3a815f7584fbf6d2c738f34c7f, type: 2}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   hudManager: {fileID: 0}
 --- !u!114 &114000012139818100
 MonoBehaviour:
@@ -78,6 +113,5 @@ MonoBehaviour:
   cam: {fileID: 0}
   audioManager: {fileID: 0}
   objects:
-  - {fileID: 1000014210681748, guid: e8923b7209ecb894ebcf053f6518ca30, type: 2}
-  spawn: {fileID: 0}
-  StartingPowerUp: 5
+  - {fileID: 1000011749309372, guid: ca8a0c037aa3ba044881a9857fe173cd, type: 2}
+  StartingPowerUp: 0
