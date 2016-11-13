@@ -7,7 +7,11 @@ public class PlayerManager : MonoBehaviour
 
     const int maxPlayers = 4;
     List<PlayerData> PlayerList = new List<PlayerData>(maxPlayers);
-    public uiManager manager;
+
+    [SerializeField]
+    private uiManager manager;
+    [SerializeField]
+    private NameEntry[] nameEntry;
 
     private void OnEnable()
     {
@@ -33,13 +37,21 @@ public class PlayerManager : MonoBehaviour
         if (LeaveButtonWasPressedOnDevice(inputDevice) && PlayerUsingDevice(inputDevice) != null && DataManager.TotalPlayers > 0)
         {
             PlayerData player = PlayerUsingDevice(inputDevice);
-            PlayerList.Remove(player);
-            UpdateDataManager();
-            manager.DisplayPlayerControllers();
-            Debug.Log("Removed Device: " + inputDevice + " who was Player " + player.PlayerNumber);
-            for(int i = 0; i < DataManager.TotalPlayers; i++)
-            {
-                DataManager.PlayerList[i].PlayerNumber = i + 1;
+            if (nameEntry[player.PlayerNumber - 1].PlayerName.Length == 0) {
+                // nameEntry[player.PlayerNumber - 1].Reset();
+                for (int i = 0; i < DataManager.TotalPlayers; i++) {
+                    nameEntry[i].PlayerName = "";
+                    nameEntry[i].Reset();
+                    Debug.Log("RESET");
+                }
+                PlayerList.Remove(player);
+                UpdateDataManager();
+                manager.DisplayPlayerControllers();
+                Debug.Log("Removed Device: " + inputDevice + " who was Player " + player.PlayerNumber);
+                for(int i = 0; i < DataManager.TotalPlayers; i++)
+                {
+                    DataManager.PlayerList[i].PlayerNumber = i + 1;
+                }                
             }
         }
     }

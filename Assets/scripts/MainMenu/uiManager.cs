@@ -13,6 +13,7 @@ public class uiManager : MonoBehaviour
     private int menuIndex;
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
+    private bool allPlayersReady;
 
     public GameObject canvasLoad;
     public Image loadingBar;
@@ -64,6 +65,7 @@ public class uiManager : MonoBehaviour
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         StartCoroutine(BackgroundGradient());
+        allPlayersReady = false;
     }
 
     private void Update()
@@ -112,14 +114,13 @@ public class uiManager : MonoBehaviour
                 case 3:
                     backIndex--;
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
-                    DataManager.PlayerList.Clear();
-                    DataManager.TotalPlayers = 0;
                     break;
                 case 4:
                     rotatingModel.SetActive(false);
                     if (gameMode == 0)
                     {
                         backIndex--;
+                        DataManager.ClearGameData();
                     }
                     break;
                 default:
@@ -135,7 +136,18 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
-                CanvasDisplay(5);     
+                int n = 0;
+                for (int i = 0; i < DataManager.PlayerList.Count; i++) {
+                    if (DataManager.PlayerList[i].PlayerName != null) {
+                        n++;
+                    }
+                }
+                if (allPlayersReady) {
+                    CanvasDisplay(5);
+                }                
+                if (n >= DataManager.PlayerList.Count) {
+                    allPlayersReady = true;
+                }
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!
@@ -188,8 +200,12 @@ public class uiManager : MonoBehaviour
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
-          // controllerIcons[i].sprite = controllerActive;
-          controllerIcons[i].color = DataManager.Colors[i];
+            if (DataManager.PlayerList[i] != null) {
+                controllerIcons[i].color = DataManager.Colors[i];
+            } else {
+                controllerIcons[i].color = inactiveColor;
+                nameFields[i].text = "";
+            }
         } else {
           // controllerIcons[i].sprite = controllerInactive;
           controllerIcons[i].color = inactiveColor;
@@ -218,6 +234,7 @@ public class uiManager : MonoBehaviour
             lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         } else {
             StartCoroutine(PlayAudio(switchSound));
+            Debug.Log("Switched UI button, played sound");
             lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         }
     }
