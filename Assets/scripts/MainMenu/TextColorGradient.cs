@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class TextColorGradient : MonoBehaviour {
 
-	public Gradient gradient;
+	[SerializeField]
+	private Gradient gradient;
 
 	private void OnEnable() {
 		StartCoroutine("ColorCycle");

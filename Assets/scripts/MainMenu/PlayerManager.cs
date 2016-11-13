@@ -7,8 +7,11 @@ public class PlayerManager : MonoBehaviour
 
     const int maxPlayers = 4;
     List<PlayerData> PlayerList = new List<PlayerData>(maxPlayers);
-    public uiManager manager;
-    public NameEntry[] nameEntry;
+
+    [SerializeField]
+    private uiManager manager;
+    [SerializeField]
+    private NameEntry[] nameEntry;
 
     private void OnEnable()
     {
@@ -34,23 +37,21 @@ public class PlayerManager : MonoBehaviour
         if (LeaveButtonWasPressedOnDevice(inputDevice) && PlayerUsingDevice(inputDevice) != null && DataManager.TotalPlayers > 0)
         {
             PlayerData player = PlayerUsingDevice(inputDevice);
-            if (nameEntry[player.PlayerNumber - 1].playerName.Length == 0) {
-                nameEntry[player.PlayerNumber - 1].textDisplayed = false;
+            if (nameEntry[player.PlayerNumber - 1].PlayerName.Length == 0) {
+                // nameEntry[player.PlayerNumber - 1].Reset();
                 for (int i = 0; i < DataManager.TotalPlayers; i++) {
-                    nameEntry[i].playerName = "";
-                    nameEntry[i].DisplayNameEntry();
+                    nameEntry[i].PlayerName = "";
+                    nameEntry[i].Reset();
+                    Debug.Log("RESET");
                 }
                 PlayerList.Remove(player);
                 UpdateDataManager();
                 manager.DisplayPlayerControllers();
                 Debug.Log("Removed Device: " + inputDevice + " who was Player " + player.PlayerNumber);
-                Debug.Log("Removed name: " + nameEntry[player.PlayerNumber - 1].playerName);
                 for(int i = 0; i < DataManager.TotalPlayers; i++)
                 {
                     DataManager.PlayerList[i].PlayerNumber = i + 1;
                 }                
-            } else {
-                Debug.Log ("Sorry, name is still being entered: " + nameEntry[player.PlayerNumber - 1].playerName);
             }
         }
     }
