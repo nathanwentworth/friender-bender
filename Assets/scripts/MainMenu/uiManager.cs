@@ -13,6 +13,7 @@ public class uiManager : MonoBehaviour
     private int menuIndex;
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
+    private bool allPlayersReady;
 
     public GameObject canvasLoad;
     public Image loadingBar;
@@ -63,6 +64,7 @@ public class uiManager : MonoBehaviour
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         StartCoroutine(BackgroundGradient());
+        allPlayersReady = false;
     }
 
     private void Update()
@@ -139,7 +141,12 @@ public class uiManager : MonoBehaviour
                         n++;
                     }
                 }
-                if (n >= DataManager.PlayerList.Count) CanvasDisplay(5);
+                if (allPlayersReady) {
+                    CanvasDisplay(5);
+                }                
+                if (n >= DataManager.PlayerList.Count) {
+                    allPlayersReady = true;
+                }
             }
             else if (inputDevice.Action1.WasPressed) {
                 // flash controller when a is pressed again!
