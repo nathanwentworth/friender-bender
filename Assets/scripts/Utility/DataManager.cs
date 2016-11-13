@@ -14,6 +14,9 @@ public static class DataManager
         car,
         livesCount;
 
+    private static bool
+        isTrekkieTraxOn;
+
     private static GameMode
         currentGameMode;
 
@@ -78,6 +81,12 @@ public static class DataManager
         set { livesCount = value; }
     }
 
+    public static bool IsTrekkieTraxOn
+    {
+        get { return isTrekkieTraxOn; }
+        set { isTrekkieTraxOn = value; }
+    }
+
     public static float TurnTime
     {
         get { return turnTime; }
@@ -109,10 +118,13 @@ public static class DataManager
     }
 
     public static void Save() {
+        int trekkieInt = isTrekkieTraxOn ? 1 : 0;
+
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
+        PlayerPrefs.SetInt("Trekkie Trax Toggle", trekkieInt);
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
@@ -145,6 +157,15 @@ public static class DataManager
             powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");            
         } else {
             powerupCooldownTime = 7f;
+        }
+        if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
+            if (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) {
+                isTrekkieTraxOn = true;
+            } else {
+                isTrekkieTraxOn = false;
+            }
+        } else {
+            isTrekkieTraxOn = false;
         }
         
         Debug.Log("Loaded data");

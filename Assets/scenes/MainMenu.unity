@@ -2559,15 +2559,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acab3739ac8504931b8a7b979d0ea455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDisplayed: 0
   defaultColor:
     serializedVersion: 2
     rgba: 4278190080
-  playerNumber: 0
   nameEntry: {fileID: 408313311}
   readyText: {fileID: 709113027}
   playerManager: {fileID: 1920170740}
-  playerName: 
+  playerNumber: 0
 --- !u!1 &315572098
 GameObject:
   m_ObjectHideFlags: 0
@@ -6421,15 +6419,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acab3739ac8504931b8a7b979d0ea455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDisplayed: 0
   defaultColor:
     serializedVersion: 2
     rgba: 4278190080
-  playerNumber: 2
   nameEntry: {fileID: 1741253807}
   readyText: {fileID: 223303460}
   playerManager: {fileID: 1920170740}
-  playerName: 
+  playerNumber: 2
 --- !u!1 &839863627
 GameObject:
   m_ObjectHideFlags: 0
@@ -9329,15 +9325,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acab3739ac8504931b8a7b979d0ea455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDisplayed: 0
   defaultColor:
     serializedVersion: 2
     rgba: 4278190080
-  playerNumber: 3
   nameEntry: {fileID: 432126820}
   readyText: {fileID: 937560253}
   playerManager: {fileID: 1920170740}
-  playerName: 
+  playerNumber: 3
 --- !u!1 &1228452408
 GameObject:
   m_ObjectHideFlags: 0
@@ -9873,6 +9867,7 @@ MonoBehaviour:
   partyDelayText: {fileID: 1881434122}
   powerupCooldownSlider: {fileID: 613781778}
   powerupCooldownText: {fileID: 49246045}
+  trekkieTraxToggle: {fileID: 1183121530}
   textSaved: {fileID: 44497626}
 --- !u!1 &1276199229
 GameObject:
@@ -11082,15 +11077,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acab3739ac8504931b8a7b979d0ea455, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textDisplayed: 0
   defaultColor:
     serializedVersion: 2
     rgba: 4278190080
-  playerNumber: 1
   nameEntry: {fileID: 730062755}
   readyText: {fileID: 1014113437}
   playerManager: {fileID: 1920170740}
-  playerName: 
+  playerNumber: 1
 --- !u!1 &1383493645
 GameObject:
   m_ObjectHideFlags: 0

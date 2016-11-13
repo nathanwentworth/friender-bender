@@ -53,7 +53,7 @@ GameObject:
   - 4: {fileID: 4000010860781258}
   - 82: {fileID: 82000014166185520}
   m_Layer: 0
-  m_Name: Temp_Music
+  m_Name: Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,7 +222,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -296,7 +296,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -318,11 +318,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243000011806434412, guid: f6e83001269ba1b429419d724cd8e114,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 048a2d181bff102489036b5bb1492266, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -403,6 +403,13 @@ MonoBehaviour:
   randomLargeObject: {fileID: 8300000, guid: 6f07e06a3605c4fa081747f2f2296823, type: 3}
   speedBoost: {fileID: 8300000, guid: 21dfbf58c45b34ad4b14edec17b0118b, type: 3}
   distraction: {fileID: 8300000, guid: 64abb79fd23314c5d86deb412766222f, type: 3}
+  trekkieTrax:
+  - {fileID: 8300000, guid: b264cdf3d080847e9b5eb4e4fa1d18e5, type: 3}
+  - {fileID: 8300000, guid: 8693023c155fb4d9291e935a2a742578, type: 3}
+  mainPlaylist:
+  - {fileID: 8300000, guid: 8be953679ad8e43dd9419e1423487707, type: 3}
+  - {fileID: 8300000, guid: 048a2d181bff102489036b5bb1492266, type: 3}
+  music: {fileID: 82000014166185520}
 --- !u!167 &167000012204838516
 AudioReverbZone:
   m_ObjectHideFlags: 1
