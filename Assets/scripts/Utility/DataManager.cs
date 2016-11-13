@@ -8,7 +8,6 @@ public static class DataManager
     public static List<PlayerData> PlayerList = new List<PlayerData>();
 
     private static int
-        currentIndex,
         totalPlayers,
         currentMPH,
         car,
@@ -25,9 +24,6 @@ public static class DataManager
         potatoDelay,
         partyDelay,
         powerupCooldownTime;
-
-    private static int[]
-        playerArr;
 
     public enum GameMode
     {
@@ -60,11 +56,6 @@ public static class DataManager
         set { currentGameMode = value; }
     }
 
-    public static int CurrentIndex
-    {
-        get { return currentIndex; }
-        set { currentIndex = value; }
-    }
     public static int TotalPlayers
     {
         get { return totalPlayers; }
@@ -109,12 +100,6 @@ public static class DataManager
     {
         get { return powerupCooldownTime; }
         set { powerupCooldownTime = value; }
-    }
-
-    public static int[] PlayerArr
-    {
-        get { return playerArr; }
-        set { playerArr = value; }
     }
 
     public static void Save() {
