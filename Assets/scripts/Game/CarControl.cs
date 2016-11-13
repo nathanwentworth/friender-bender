@@ -26,6 +26,8 @@ public class CarControl : MonoBehaviour
     private Rigidbody rigid;
     private int mph;
 
+    private Vector3 groundedVelocity;
+
     public float MPH
     {
         get { return mph; }
@@ -121,9 +123,14 @@ public class CarControl : MonoBehaviour
 
         //Changes the pitch of the engine audioSource
         if (grounded) {
-            carEngine.pitch = ((mph * 0.01f) - 0.3f);        
+            carEngine.pitch = ((mph * 0.01f) - 0.3f);
+            groundedVelocity = rigid.velocity;        
         } else {
             carEngine.pitch = ((mph * 0.01f));
+            if (mph > 70)
+            {
+                rigid.velocity = new Vector3(groundedVelocity.x, rigid.velocity.y, groundedVelocity.z);
+            }
         }
 
         foreach (AxleInfo axleInfo in axleInfos)
@@ -175,8 +182,9 @@ public class CarControl : MonoBehaviour
     {
         if (!playerSwitch.DEBUG_MODE && !invincible)
         {
-            if(mph > 65 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
+            if(mph > 50 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
             {
+                Debug.Log("Current Shield Status: " + shield);
                 if (!shield) {
                     int trueCurrentIndex = playerSwitch.currentIndex;
                     DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
@@ -184,13 +192,14 @@ public class CarControl : MonoBehaviour
                     // play high impact impact sound
                     StartCoroutine(audioManager.Impact(true));
                     hudManager.UpdateLivesDisplay();
-                    StartCoroutine(DamageCooldown());
+                    StartCoroutine(DamageCooldown(true));
                     if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
                     {
                         playerSwitch.RemovePlayer();
                     }
                 } else {
                     shield = false;
+                    StartCoroutine(DamageCooldown(false));
                 }
             } else {
                 // play low speed impact sound
@@ -199,15 +208,21 @@ public class CarControl : MonoBehaviour
         }
     }
 
-    IEnumerator DamageCooldown()
+    IEnumerator DamageCooldown(bool blink)
     {
         Debug.Log("Currently Invincible.");
         invincible = true;
-        StartCoroutine("BlinkEffect");
+        if (blink)
+        {
+            StartCoroutine("BlinkEffect");
+        }
         yield return new WaitForSeconds(1.5f);
         invincible = false;
         Debug.Log("No Longer Invincible.");
-        StopCoroutine("BlinkEffect");
+        if (blink)
+        {
+            StopCoroutine("BlinkEffect");
+        }
     }
 
     IEnumerator BlinkEffect()
