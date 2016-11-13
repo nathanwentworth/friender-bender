@@ -76,7 +76,7 @@ public class NameEntry : MonoBehaviour {
 		DisplayNameEntry();
 	}
 
-	private void DisplayNameEntry() {
+	public void DisplayNameEntry() {
 		if (!textDisplayed) {
 			textDisplayed = true;
 		}

@@ -36,6 +36,10 @@ public class PlayerManager : MonoBehaviour
             PlayerData player = PlayerUsingDevice(inputDevice);
             if (nameEntry[player.PlayerNumber - 1].playerName.Length == 0) {
                 nameEntry[player.PlayerNumber - 1].textDisplayed = false;
+                for (int i = 0; i < DataManager.TotalPlayers; i++) {
+                    nameEntry[i].playerName = "";
+                    nameEntry[i].DisplayNameEntry();
+                }
                 PlayerList.Remove(player);
                 UpdateDataManager();
                 manager.DisplayPlayerControllers();

@@ -192,8 +192,12 @@ public class uiManager : MonoBehaviour
     public void DisplayPlayerControllers() {
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
-          // controllerIcons[i].sprite = controllerActive;
-          controllerIcons[i].color = DataManager.Colors[i];
+            if (DataManager.PlayerList[i] != null) {
+                controllerIcons[i].color = DataManager.Colors[i];
+            } else {
+                controllerIcons[i].color = inactiveColor;
+                nameFields[i].text = "";
+            }
         } else {
           // controllerIcons[i].sprite = controllerInactive;
           controllerIcons[i].color = inactiveColor;
