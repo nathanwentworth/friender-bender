@@ -111,14 +111,13 @@ public class uiManager : MonoBehaviour
                 case 3:
                     backIndex--;
                     Debug.Log("Clearing Player List and setting Total Players to 0...");
-                    DataManager.PlayerList.Clear();
-                    DataManager.TotalPlayers = 0;
                     break;
                 case 4:
                     rotatingModel.SetActive(false);
                     if (gameMode == 0)
                     {
                         backIndex--;
+                        DataManager.ClearGameData();
                     }
                     break;
                 default:
