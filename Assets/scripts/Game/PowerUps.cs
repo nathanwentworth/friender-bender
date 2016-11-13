@@ -63,6 +63,7 @@ public class PowerUps : MonoBehaviour {
 
     void Update()
     {
+        //Debug Mode
         if (pSwitch.DEBUG_MODE && InputManager.ActiveDevice.Action1.WasPressed)
         {
             PowerUpType powerup = StartingPowerUp;
@@ -70,17 +71,32 @@ public class PowerUps : MonoBehaviour {
             Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
         }
         else {
+            //Check if there was powerup input
             bool action1WasPressed = false;
             PlayerData playerThatPressedIt = null;
-            foreach (PlayerData i in DataManager.PlayerList)
+            if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
             {
+                foreach (PlayerData i in DataManager.PlayerList)
+                {
+                    Debug.Log(i.Controller.Name);
+                    if (i.Controller.Action1.WasPressed && i.CurrentPowerUp != PowerUpType.None)
+                    {
+                        action1WasPressed = true;
+                        playerThatPressedIt = i;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                PlayerData i = DataManager.PlayerList[0];
                 if (i.Controller.Action1.WasPressed && i.CurrentPowerUp != PowerUpType.None)
                 {
                     action1WasPressed = true;
                     playerThatPressedIt = i;
-                    break;
                 }
             }
+            //Execute if there was any input
             if (action1WasPressed && !pSwitch.passingController && !pSwitch.startingGame && !pSwitch.playerWin && !hud.Paused)
             {
                 PlayerData player;
