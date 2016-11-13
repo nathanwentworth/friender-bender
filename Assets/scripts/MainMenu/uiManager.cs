@@ -56,6 +56,7 @@ public class uiManager : MonoBehaviour
     {
         Time.timeScale = 1;
         DataManager.Load();
+        DataManager.ClearGameData();
         DataManager.LivesCount = numberOfLives;
         Debug.Log(DataManager.CurrentGameMode);
         menuIndex = GetCurrentMenuIndex();

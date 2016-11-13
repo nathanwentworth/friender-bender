@@ -56,6 +56,7 @@ MonoBehaviour:
   cars:
   - {fileID: 1000010791721470, guid: cccabc30c95c523429bdb6408114171e, type: 2}
   - {fileID: 1000013267028416, guid: e9982fa238e07444185e9babc37a18c2, type: 2}
+  - {fileID: 1000013356194364, guid: 9ab965adaa2897242986a1f51f917375, type: 2}
 --- !u!114 &114000010579291326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -114,4 +115,4 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   objects:
   - {fileID: 1000011749309372, guid: ca8a0c037aa3ba044881a9857fe173cd, type: 2}
-  StartingPowerUp: 0
+  StartingPowerUp: 6
