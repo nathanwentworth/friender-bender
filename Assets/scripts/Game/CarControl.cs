@@ -252,7 +252,7 @@ public class CarControl : MonoBehaviour
         }
     }
 
-    private void ResetCarPosition() {
+    public void ResetCarPosition() {
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;
