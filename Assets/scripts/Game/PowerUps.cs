@@ -173,7 +173,7 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator SkipTurn()
     {
         pSwitch.SkipPlayer();
-        string skippedText = "PLAYER " + (pSwitch.NextPlayer() + 1) + " SKIPPED";
+        string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer() + 1) + " SKIPPED";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }
@@ -190,7 +190,7 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator InvertSteering()
     {
         carControl.turningMultiplier = -1;
-        string timerText = "TURNING REVERSED";
+        string timerText = "TURNING MIRRORED";
         hud.EnqueueAction(hud.DisplayNotificationText(timerText));
         yield return new WaitForSeconds(3f);
         carControl.turningMultiplier = 1;
@@ -238,7 +238,6 @@ public class PowerUps : MonoBehaviour {
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));
-        Debug.Log("Player " + player.PlayerNumber.ToString() + " was given Powerup: " + randomPowerup.ToString());
     }
 
     public string GetPowerupName(PowerUpType powerup)
@@ -259,7 +258,7 @@ public class PowerUps : MonoBehaviour {
                 powerupName = "MIRROR STEERING";
                 break;
             case PowerUpType.ScreenDistraction:
-                powerupName = "GLITCH";
+                powerupName = "CAMERA GLITCH";
                 break;
             case PowerUpType.Shield:
                 powerupName = "SHIELD";
@@ -281,7 +280,6 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator Cooldown(PlayerData player)
     {
         float cooldown = powerupCooldownTime;
-        Debug.Log("Starting Cooldown for Player " + player.PlayerNumber);
         while (cooldown > 0) {
             float cooldownDisp = cooldown;
             cooldownDisp = Mathf.Round(cooldownDisp * 10f) / 10f;

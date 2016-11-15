@@ -14,6 +14,7 @@ public class uiManager : MonoBehaviour
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
     private bool allPlayersReady;
+    private bool randCarSwitch;
 
     public GameObject canvasLoad;
     public Image loadingBar;
@@ -34,10 +35,16 @@ public class uiManager : MonoBehaviour
     public Text modeDescriptionText;
 
     [Header("Car/Track Selection")]
-    public GameObject[] containers;
-    public GameObject rotatingModel;
-    public GameObject[] carModels;
-    public GameObject[] trackModels;
+    [SerializeField]
+    private GameObject[] containers;
+    [SerializeField]
+    private GameObject rotatingModel;
+    [SerializeField]
+    private GameObject[] carModels;
+    [SerializeField]
+    private GameObject[] trackModels;
+    [SerializeField]
+    private GameObject questionMark;
 
     [Header("Options")]
     public Text turnTimeDisplayText;
@@ -54,6 +61,7 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
+        randCarSwitch = true;
         Time.timeScale = 1;
         DataManager.Load();
         DataManager.ClearGameData();
@@ -157,7 +165,7 @@ public class uiManager : MonoBehaviour
         }
         else if (menuIndex == 5) {
             SetPlayerLives();
-            RotateModel(carModels);
+            StartCoroutine(RotateModel(carModels));
             rotatingModel.SetActive(true);
         }
         else if (menuIndex == 6) {
@@ -290,23 +298,24 @@ public class uiManager : MonoBehaviour
     // for the car/track selection screens
     // rotates a model being loaded in as a mesh from an array
     // todo: add material switching later
-    private void RotateModel(GameObject[] models)
+    private IEnumerator RotateModel(GameObject[] models)
     {
       int buttonNum;
       GameObject car;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { yield return null; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
-      for (int i = 0; i < models.Length; i++) {
-        models[i].SetActive(false);
-      }
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
-      if (buttonNumSuccess) {
-        car = models[buttonNum];
-      } else {
-        car = models[random.Next(0, models.Length)];
-      }
-      car.SetActive(true);
+        for (int i = 0; i < models.Length; i++) {
+            models[i].SetActive(false);
+        }
+        if (buttonNumSuccess) {
+          car = models[buttonNum];
+        } else {
+            car = questionMark;
+        }
+        car.SetActive(true);
+        yield return null;
     }
 
     // for the "set game mode" panel
@@ -356,6 +365,11 @@ public class uiManager : MonoBehaviour
         } else {
             creditsPanel.SetActive(true);
         }
+    }
+
+    private IEnumerator RandCarWait() {
+        yield return new WaitForSeconds(0.1f);
+        randCarSwitch = true;
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {

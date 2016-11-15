@@ -1755,10 +1755,10 @@ RectTransform:
   - {fileID: 1847226817}
   m_Father: {fileID: 356346347}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 315.98218, y: -321.98212}
+  m_SizeDelta: {x: 551.96436, y: 174.65474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247111017
 MonoBehaviour:
@@ -2048,10 +2048,10 @@ RectTransform:
   - {fileID: 2058980491}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 5
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -783.36224}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &282056821
 MonoBehaviour:
@@ -2242,7 +2242,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &298478580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2799,10 +2799,10 @@ RectTransform:
   - {fileID: 251430315}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -80.30566}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &357251189
 MonoBehaviour:
@@ -3185,7 +3185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &403807622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4707,10 +4707,10 @@ RectTransform:
   - {fileID: 1277407966}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -502.1396}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &574744428
 MonoBehaviour:
@@ -5294,10 +5294,10 @@ RectTransform:
   - {fileID: 189584469}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 1
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -220.91696}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &647698658
 MonoBehaviour:
@@ -5620,10 +5620,10 @@ RectTransform:
   - {fileID: 2112689862}
   m_Father: {fileID: 356346347}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 315.98218, y: -127.32737}
+  m_SizeDelta: {x: 551.96436, y: 174.65474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &680827211
 MonoBehaviour:
@@ -6526,10 +6526,10 @@ RectTransform:
   - {fileID: 1083598412}
   m_Father: {fileID: 356346347}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 315.98218, y: -516.63684}
+  m_SizeDelta: {x: 551.96436, y: 174.65474}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &864863263
 MonoBehaviour:
@@ -10176,11 +10176,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "MUSIC:\n\tBatsu & in the blue shirt - With (Cola Splash Remix)\n\tFoxsky
-    - Puppy Parade\n\tGlacci & Deon Custom - Zaffre\n\tFoxsky - My Friend The Yellowtail
-    Feat. NEGITORO (Original Mix)\n\tElevation - Misty Road 7am\n\tShintaro & Masayoshi
-    Iimori - Chopper\n\tKAN TAKAHIKO - NRG (Masayoshi Iimori Remix)\n\tAMUNOA - Bright
-    (Sushi Killer Remix)\n\tSnail's House - Kirara\n\tLolica Tonica - Make me Feel"
+  m_Text: "MUSIC:\n\tBatsu & in the blue shirt - With (Cola Splash Remix)\n\tGlacci
+    & Deon Custom - Zaffre\n\tFoxsky - My Friend The Yellowtail Feat. NEGITORO (Original
+    Mix)\n\tElevation - Misty Road 7am\n\tAMUNOA - Bright (Sushi Killer Remix)\n\tSnail's
+    House - Kirara\n\tLolica Tonica - Make me Feel\n\tKAN TAKAHIKO - NRG\n\tCola Splash
+    - Cola Splash"
 --- !u!222 &1290138033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11753,10 +11753,10 @@ RectTransform:
   - {fileID: 1698283232}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 2
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -361.5283}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1512579224
 MonoBehaviour:
@@ -15513,6 +15513,7 @@ MonoBehaviour:
   - {fileID: 644297298}
   - {fileID: 42529709}
   trackModels: []
+  questionMark: {fileID: 0}
   turnTimeDisplayText: {fileID: 1663094148}
   turnTimeSlider: {fileID: 1321505289}
   numberOfLives: 3
@@ -16603,7 +16604,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Random
+  m_Text: RANDOM
 --- !u!222 &2058980493
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16656,10 +16657,10 @@ RectTransform:
   - {fileID: 1005554192}
   m_Father: {fileID: 2026418427}
   m_RootOrder: 4
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 287.88928, y: -642.7509}
-  m_SizeDelta: {x: 535.77856, y: 120.61131}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2059971796
 MonoBehaviour:

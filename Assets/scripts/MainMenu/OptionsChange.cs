@@ -52,7 +52,7 @@ public class OptionsChange : MonoBehaviour {
 			PotatoDelayChange(potatoDelaySlider.value, potatoDelayText); 
 		});
 		partyDelaySlider.onValueChanged.AddListener(delegate{
-			PartyDelayChange(partyDelaySlider.value, partyDelayText); 
+			PartyDelayChange(partyDelaySlider.value, partyDelayText);
 		});
 		powerupCooldownSlider.onValueChanged.AddListener(delegate{
 			PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText); 
