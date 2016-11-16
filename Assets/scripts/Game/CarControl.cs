@@ -13,6 +13,7 @@ public class CarControl : MonoBehaviour
     public float controllerDeadzone = 0.15f;
     
     public GameObject shieldEffect;
+    public GameObject teleportEffect;
 
     [Header("Data References")]
     private PlayerSwitching playerSwitch;
