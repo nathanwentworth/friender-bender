@@ -404,11 +404,19 @@ MonoBehaviour:
   speedBoost: {fileID: 8300000, guid: 21dfbf58c45b34ad4b14edec17b0118b, type: 3}
   distraction: {fileID: 8300000, guid: 64abb79fd23314c5d86deb412766222f, type: 3}
   trekkieTrax:
+  - {fileID: 8300000, guid: 3addb1c000f274c6593cd00216fcb25d, type: 3}
+  - {fileID: 8300000, guid: 8c1aa63110f9b4e1c9f466080b9637d6, type: 3}
+  - {fileID: 8300000, guid: 7e19c4c33054e45738b75081e4716d23, type: 3}
+  - {fileID: 8300000, guid: 8e4fbaa9152264a56bd899457aacb9d7, type: 3}
+  - {fileID: 8300000, guid: 6bbb243cd3dd24a6c97903db9915a313, type: 3}
+  - {fileID: 8300000, guid: a3f6df02077e34f9d927f74d51d1c189, type: 3}
+  - {fileID: 8300000, guid: bc8cf4923b0b24728b968911a6b4a871, type: 3}
+  - {fileID: 8300000, guid: b6f0b114225254e05bd193cc3cc8bff3, type: 3}
+  - {fileID: 8300000, guid: e61e5c367b35e4a2594fdd1960cb041f, type: 3}
+  mainPlaylist:
+  - {fileID: 8300000, guid: 048a2d181bff102489036b5bb1492266, type: 3}
   - {fileID: 8300000, guid: b264cdf3d080847e9b5eb4e4fa1d18e5, type: 3}
   - {fileID: 8300000, guid: 8693023c155fb4d9291e935a2a742578, type: 3}
-  mainPlaylist:
-  - {fileID: 8300000, guid: 8be953679ad8e43dd9419e1423487707, type: 3}
-  - {fileID: 8300000, guid: 048a2d181bff102489036b5bb1492266, type: 3}
   music: {fileID: 82000014166185520}
 --- !u!167 &167000012204838516
 AudioReverbZone:

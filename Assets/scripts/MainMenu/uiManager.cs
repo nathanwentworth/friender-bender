@@ -17,9 +17,14 @@ public class uiManager : MonoBehaviour
     private bool randCarSwitch;
 
     public GameObject canvasLoad;
-    public Image loadingBar;
-    public Gradient backgroundGradientColors;
-    public Image backgroundGradient;
+    [SerializeField]
+    private Image loadingBar;
+    [SerializeField]
+    private Text loadingText;
+    [SerializeField]
+    private Gradient backgroundGradientColors;
+    [SerializeField]
+    private Image backgroundGradient;
 
     private AsyncOperation sync;
 
@@ -142,23 +147,23 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
+
+                if (allPlayersReady) {
+                    CanvasDisplay(5);
+                }                
+
+            }
+            else if (inputDevice.Action1.WasPressed) {
                 int n = 0;
                 for (int i = 0; i < DataManager.PlayerList.Count; i++) {
                     if (DataManager.PlayerList[i].PlayerName != null) {
                         n++;
                     }
                 }
-                if (allPlayersReady) {
-                    CanvasDisplay(5);
-                }                
+
                 if (n >= DataManager.PlayerList.Count) {
                     allPlayersReady = true;
                 }
-            }
-            else if (inputDevice.Action1.WasPressed) {
-                // flash controller when a is pressed again!
-                // do this later lol :^)
-                // controllerIcons[i].gameObject.transform.x = 1;
             }
         }
         else if (menuIndex == 5) {
@@ -395,10 +400,22 @@ public class uiManager : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         Debug.Log("Loading start");
         sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        // sync.allowSceneActivation = false;
+        sync.allowSceneActivation = false;
         // startAnimation = true;
         while (!sync.isDone) {
-            loadingBar.fillAmount = sync.progress;
+            float progress = sync.progress / 0.9f;
+
+            loadingBar.fillAmount = progress;
+            Debug.Log(sync.progress);
+
+            InputDevice inputDevice = InputManager.ActiveDevice;
+            if (sync.progress >= 0.89f) {
+                loadingText.text = "PRESS A TO CONTINUE";
+                if (inputDevice.Action1.WasPressed) {
+                    sync.allowSceneActivation = true;
+                    yield return null;
+                }
+            }
             yield return null;
         }
     }

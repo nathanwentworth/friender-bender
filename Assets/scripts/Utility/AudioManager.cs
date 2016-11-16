@@ -105,4 +105,8 @@ public class AudioManager : MonoBehaviour
         yield return null;
     }
 
+    public void SetMusicVolume(float volume) {
+        music.volume = volume;
+    }
+
 }

@@ -27,7 +27,7 @@ public class OptionsChange : MonoBehaviour {
 	private Toggle trekkieTraxToggle;
 
 	[SerializeField]
-	private Text textSaved;
+	private Dropdown resolutionDropdown;
 
   // options menu function
   // when called, sets new length of turn time, changes text display,
@@ -38,6 +38,14 @@ public class OptionsChange : MonoBehaviour {
 	// add a listener to the slider for value changes
 	void OnEnable() {
 		DataManager.Load();
+
+		resolutionDropdown.options.Clear();
+
+		for (int i = 0; i < Screen.resolutions.Length; i++) {
+      resolutionDropdown.options.Add(new Dropdown.OptionData(Screen.resolutions[i].ToString()));
+    }
+
+    resolutionDropdown.RefreshShownValue();
 		
 		turnTimeSlider.value = DataManager.TurnTime;
 		potatoDelaySlider.value = DataManager.PotatoDelay;
@@ -101,6 +109,10 @@ public class OptionsChange : MonoBehaviour {
 
 	public void TrekkieTraxToggleChange (bool check) {
 		DataManager.IsTrekkieTraxOn = check;
+	}
+
+	public void FullscreenToggle (bool check) {
+		DataManager.IsFullscreenOn = check;
 	}
 
 	// when the menu is navigated away from
