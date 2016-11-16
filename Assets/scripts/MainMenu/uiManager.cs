@@ -43,8 +43,6 @@ public class uiManager : MonoBehaviour
     private GameObject[] carModels;
     [SerializeField]
     private GameObject[] trackModels;
-    [SerializeField]
-    private GameObject questionMark;
 
     [Header("Options")]
     public Text turnTimeDisplayText;
@@ -209,13 +207,15 @@ public class uiManager : MonoBehaviour
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
             if (DataManager.PlayerList[i] != null) {
+                controllerIcons[i].sprite = controllerActive;
                 controllerIcons[i].color = DataManager.Colors[i];
             } else {
+                controllerIcons[i].sprite = controllerInactive;
                 controllerIcons[i].color = inactiveColor;
                 nameFields[i].text = "";
             }
         } else {
-          // controllerIcons[i].sprite = controllerInactive;
+          controllerIcons[i].sprite = controllerInactive;
           controllerIcons[i].color = inactiveColor;
           nameFields[i].text = "";
         }
@@ -310,9 +310,9 @@ public class uiManager : MonoBehaviour
             models[i].SetActive(false);
         }
         if (buttonNumSuccess) {
-          car = models[buttonNum];
+            car = models[buttonNum];
         } else {
-            car = questionMark;
+            car = models[models.Length - 1];
         }
         car.SetActive(true);
         yield return null;

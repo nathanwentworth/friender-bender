@@ -84,10 +84,18 @@ public class NameEntry : MonoBehaviour {
 	}
 
 	private void ChangeNameEntryChar() {
-		if (controller.Direction.Y > 0.5 && index > 0) {
-			index--;
-		} else if (controller.Direction.Y < -0.5 && index < letters.Length - 1) {
-			index++;
+		if (controller.Direction.Y > 0.5) {
+			if (index > 0) {
+				index--;
+			} else {
+				index = letters.Length - 1;
+			}
+		} else if (controller.Direction.Y < -0.5) {
+			if (index < letters.Length - 1) {
+				index++;
+			} else {
+				index = 0;
+			}
 		}
 		DisplayNameEntry();
 	}
@@ -96,7 +104,8 @@ public class NameEntry : MonoBehaviour {
 		if (!textDisplayed) {
 			textDisplayed = true;
 		}
-		string lastLetter = (playerName.Length < 3) ? "<color=#" + "0000ffff" + ">" + letters[index] + "</color>" : "";
+		
+		string lastLetter = (playerName.Length < 3) ? "<color=#" + ColorToHex(playerColor) + ">" + letters[index] + "</color>" : "";
 		nameEntry.GetComponent<Text>().text = playerName + lastLetter;
 	}
 
@@ -127,4 +136,8 @@ public class NameEntry : MonoBehaviour {
 		yield return new WaitForSeconds(.1f);
 		acceptInput = true;
 	}
- }
+	private string ColorToHex(Color32 color) {
+		string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+		return hex;
+	}
+}
