@@ -3,19 +3,31 @@ using UnityEngine.UI;
 
 public class OptionsChange : MonoBehaviour {
 
-	public Slider turnTimeSlider;
-	public Text turnTimeText;
+	[SerializeField]
+	private Slider turnTimeSlider;
+	[SerializeField]
+	private Text turnTimeText;
 
-	public Slider potatoDelaySlider;
-	public Text potatoDelayText;
+	[SerializeField]
+	private Slider potatoDelaySlider;
+	[SerializeField]
+	private Text potatoDelayText;
 
-	public Slider partyDelaySlider;
-	public Text partyDelayText;
+	[SerializeField]
+	private Slider partyDelaySlider;
+	[SerializeField]
+	private Text partyDelayText;
 
-	public Slider powerupCooldownSlider;
-	public Text powerupCooldownText;
+	[SerializeField]
+	private Slider powerupCooldownSlider;
+	[SerializeField]
+	private Text powerupCooldownText;
 
-	public Text textSaved;
+	[SerializeField]
+	private Toggle trekkieTraxToggle;
+
+	[SerializeField]
+	private Dropdown resolutionDropdown;
 
   // options menu function
   // when called, sets new length of turn time, changes text display,
@@ -26,20 +38,42 @@ public class OptionsChange : MonoBehaviour {
 	// add a listener to the slider for value changes
 	void OnEnable() {
 		DataManager.Load();
+
+		resolutionDropdown.options.Clear();
+
+		for (int i = 0; i < Screen.resolutions.Length; i++) {
+      resolutionDropdown.options.Add(new Dropdown.OptionData(Screen.resolutions[i].ToString()));
+    }
+
+    resolutionDropdown.RefreshShownValue();
+		
 		turnTimeSlider.value = DataManager.TurnTime;
 		potatoDelaySlider.value = DataManager.PotatoDelay;
 		partyDelaySlider.value = DataManager.PartyDelay;
 		powerupCooldownSlider.value = DataManager.PowerupCooldownTime;
+		trekkieTraxToggle.isOn = DataManager.IsTrekkieTraxOn;
 
-		turnTimeSlider.onValueChanged.AddListener(delegate{ TurnTimeChange(turnTimeSlider.value, turnTimeText); });
-		potatoDelaySlider.onValueChanged.AddListener(delegate{ PotatoDelayChange(potatoDelaySlider.value, potatoDelayText); });
-		partyDelaySlider.onValueChanged.AddListener(delegate{ PartyDelayChange(partyDelaySlider.value, partyDelayText); });
-		powerupCooldownSlider.onValueChanged.AddListener(delegate{ PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText); });
+		turnTimeSlider.onValueChanged.AddListener(delegate{
+			TurnTimeChange(turnTimeSlider.value, turnTimeText); 
+		});
+		potatoDelaySlider.onValueChanged.AddListener(delegate{
+			PotatoDelayChange(potatoDelaySlider.value, potatoDelayText); 
+		});
+		partyDelaySlider.onValueChanged.AddListener(delegate{
+			PartyDelayChange(partyDelaySlider.value, partyDelayText);
+		});
+		powerupCooldownSlider.onValueChanged.AddListener(delegate{
+			PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText); 
+		});
+		trekkieTraxToggle.onValueChanged.AddListener(delegate{
+			TrekkieTraxToggleChange(trekkieTraxToggle.isOn); 
+		});
 
 		TurnTimeChange(turnTimeSlider.value, turnTimeText);
 		PotatoDelayChange(potatoDelaySlider.value, potatoDelayText);
 		PartyDelayChange(partyDelaySlider.value, partyDelayText);
 		PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText);
+		TrekkieTraxToggleChange(trekkieTraxToggle.isOn);
 	}
 
 	// when slider is changed
@@ -71,6 +105,14 @@ public class OptionsChange : MonoBehaviour {
 		DataManager.PowerupCooldownTime = val;
 		dispText.text = val + "s";
 		DataManager.Save();
+	}
+
+	public void TrekkieTraxToggleChange (bool check) {
+		DataManager.IsTrekkieTraxOn = check;
+	}
+
+	public void FullscreenToggle (bool check) {
+		DataManager.IsFullscreenOn = check;
 	}
 
 	// when the menu is navigated away from

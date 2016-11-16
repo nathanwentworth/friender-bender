@@ -73,12 +73,6 @@ public class CarControl : MonoBehaviour
 
         if (playing)
         {
-            if (Input.GetKeyDown(KeyCode.Space) && mph < 2 && !playerSwitch.playerWin)
-            {
-                transform.rotation = Quaternion.identity;
-                rigid.velocity = Vector3.zero;
-                transform.position = carOriginTrans;
-            }
             trueCurrentIndex = playerSwitch.currentIndex;
             if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = trueCurrentIndex; }
             else { currentIndex = 0; }

@@ -4,19 +4,72 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
+
+    private static System.Random rng = new System.Random();
+    private int playlistIndex;
+
     [Header("Impact Audio Source on Car")]
-    public AudioSource impactSource;
-    public AudioSource powerupSource;
+    [SerializeField]
+    private AudioSource impactSource;
+    [SerializeField]
+    private AudioSource powerupSource;
 
     [Header("Low-Speed Impact Sounds")]
-    public AudioClip[] lowSpeedImpacts;
-    public AudioClip highSpeedImpact;
+    [SerializeField]
+    private AudioClip[] lowSpeedImpacts;
+    [SerializeField]
+    private AudioClip highSpeedImpact;
 
     [Header("Powerups")]
-    public AudioClip randomLargeObject;
-    public AudioClip speedBoost;
-    public AudioClip distraction;
-    public AudioClip teleport;
+
+    [SerializeField]
+    private AudioClip randomLargeObject;
+    [SerializeField]
+    private AudioClip speedBoost;
+    [SerializeField]
+    private AudioClip distraction;
+    [SerializeField]
+    private AudioClip teleport;
+
+    [Header("Music")]
+    [SerializeField]
+    private AudioClip[] trekkieTrax;
+    [SerializeField]
+    private AudioClip[] mainPlaylist;
+    [SerializeField]
+    private AudioSource music;
+    private AudioClip[] playlist;
+
+    private void Awake() {
+        StartCoroutine(ShuffleMusic());
+        playlistIndex = -1;
+    }
+
+    private void Update() {
+        if (!music.isPlaying) {
+            if (playlistIndex == playlist.Length - 1) {
+                playlistIndex = 0;
+            } else {
+                playlistIndex++;
+            }
+            music.clip = playlist[playlistIndex];
+            music.Play();
+        }
+    }
+
+    private IEnumerator ShuffleMusic() {
+        playlist = DataManager.IsTrekkieTraxOn ? trekkieTrax : mainPlaylist;
+
+        int n = playlist.Length;
+        while (n > 1) {
+            n--;
+            int k = rng.Next(n + 1);
+            AudioClip value = playlist[k];
+            playlist[k] = playlist[n];
+            playlist[n] = value;
+        }
+        yield return null;
+    }
 
     public IEnumerator Impact(bool highSpeed)
     {
@@ -55,6 +108,10 @@ public class AudioManager : MonoBehaviour
                 break;
         }
         yield return null;
+    }
+
+    public void SetMusicVolume(float volume) {
+        music.volume = volume;
     }
 
 }

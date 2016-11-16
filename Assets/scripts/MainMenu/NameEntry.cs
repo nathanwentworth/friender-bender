@@ -26,33 +26,22 @@ public class NameEntry : MonoBehaviour {
 	[SerializeField]
 	private int playerNumber;
 
-	private bool textDisplayed;
-
-	public bool TextDisplayed {
-		get { return textDisplayed; }
-		set { textDisplayed = value; }
-	}
-
-	private string playerName;
-
-	public string PlayerName {
-		get { return playerName; }
-		set { playerName = value; }
-	}
+	public bool TextDisplayed { get; set; }
+	public string PlayerName { get; set; }
 
 	private void OnEnable() {
 		Reset();
 	}
 
 	public void Reset() {
-		textDisplayed = false;
+		TextDisplayed = false;
 		acceptInput = true;
 		nameSaved = false;
 		readyText.SetActive(false);
-		playerName = "";
+		PlayerName = "";
 		nameEntry.GetComponent<Text>().color = defaultColor;
 		playerColor = DataManager.Colors[playerNumber];
-		nameEntry.GetComponent<Text>().text = playerName;
+		nameEntry.GetComponent<Text>().text = PlayerName;
 	}
 
 	private void Update() {
@@ -63,45 +52,55 @@ public class NameEntry : MonoBehaviour {
 		}
 
 		if (controller.Action1.WasPressed) {
-			if (playerName.Length < 3 && textDisplayed) { EnterChar(); }
-			else if (!textDisplayed) { DisplayNameEntry(); }
+			if (PlayerName.Length < 3 && TextDisplayed) { EnterChar(); }
+			else if (!TextDisplayed) { DisplayNameEntry(); }
+			else if (PlayerName.Length > 0) { SaveName(); }
 		}
-		else if (controller.Command.WasPressed && playerName.Length > 0) {
-			SaveName();
-		} 
+		// else if (controller.Command.WasPressed && PlayerName.Length > 0) {
+			
+		// } 
 		else if (controller.Direction.Y > 0.5 || controller.Direction.Y < -0.5) {
-			if (acceptInput && !nameSaved && playerName.Length < 3 && textDisplayed) {
+			if (acceptInput && !nameSaved && PlayerName.Length < 3 && TextDisplayed) {
 				ChangeNameEntryChar();
 				acceptInput = false;
 				StartCoroutine("InputSleep");
 			}
 		}
 		else if (controller.Action2.WasPressed) {
-			if (playerName.Length > 0) {
+			if (PlayerName.Length > 0) {
 				DeleteChar();
 			}
 		}
 	}
 
 	private void ChangeNameEntryChar() {
-		if (controller.Direction.Y > 0.5 && index > 0) {
-			index--;
-		} else if (controller.Direction.Y < -0.5 && index < letters.Length - 1) {
-			index++;
+		if (controller.Direction.Y > 0.5) {
+			if (index > 0) {
+				index--;
+			} else {
+				index = letters.Length - 1;
+			}
+		} else if (controller.Direction.Y < -0.5) {
+			if (index < letters.Length - 1) {
+				index++;
+			} else {
+				index = 0;
+			}
 		}
 		DisplayNameEntry();
 	}
 
 	public void DisplayNameEntry() {
-		if (!textDisplayed) {
-			textDisplayed = true;
+		if (!TextDisplayed) {
+			TextDisplayed = true;
 		}
-		string lastLetter = (playerName.Length < 3) ? "<color=#" + "0000ffff" + ">" + letters[index] + "</color>" : "";
-		nameEntry.GetComponent<Text>().text = playerName + lastLetter;
+		
+		string lastLetter = (PlayerName.Length < 3) ? "<color=#" + ColorToHex(playerColor) + ">" + letters[index] + "</color>" : "";
+		nameEntry.GetComponent<Text>().text = PlayerName + lastLetter;
 	}
 
 	private void EnterChar() {
-		playerName = playerName + letters[index];
+		PlayerName = PlayerName + letters[index];
 
 		DisplayNameEntry();
 	}
@@ -109,14 +108,14 @@ public class NameEntry : MonoBehaviour {
 	private void DeleteChar() {
 		nameSaved = false;
 		readyText.SetActive(false);
-		playerName = playerName.Substring(0, playerName.Length - 1);
+		PlayerName = PlayerName.Substring(0, PlayerName.Length - 1);
 		nameEntry.GetComponent<Text>().color = defaultColor;
 		DisplayNameEntry();
 	}
 
 	private void SaveName() {
-		DataManager.PlayerList[playerNumber].PlayerName = playerName;
-		nameEntry.GetComponent<Text>().text = playerName;
+		DataManager.PlayerList[playerNumber].PlayerName = PlayerName;
+		nameEntry.GetComponent<Text>().text = PlayerName;
 		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");
 		readyText.SetActive(true);
@@ -127,4 +126,8 @@ public class NameEntry : MonoBehaviour {
 		yield return new WaitForSeconds(.1f);
 		acceptInput = true;
 	}
- }
+	private string ColorToHex(Color32 color) {
+		string hex = color.r.ToString("X2") + color.g.ToString("X2") + color.b.ToString("X2");
+		return hex;
+	}
+}
