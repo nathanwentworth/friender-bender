@@ -10,8 +10,7 @@ public static class DataManager
     private static int
         totalPlayers,
         currentMPH,
-        car,
-        livesCount;
+        car;
 
     private static GameMode
         currentGameMode;
@@ -63,11 +62,13 @@ public static class DataManager
         get { return currentMPH; }
         set { currentMPH = value; }
     }
-    public static int LivesCount
-    {
-        get { return livesCount; }
-        set { livesCount = value; }
-    }
+    public static int LivesCount { get; set; }
+
+    public static int ScreenResolution { get; set; }
+
+    public static bool IsTrekkieTraxOn { get; set; }
+
+    public static bool IsFullscreenOn { get; set; }
 
     public static float TurnTime
     {
@@ -94,10 +95,15 @@ public static class DataManager
     }
 
     public static void Save() {
+        int trekkieInt = IsTrekkieTraxOn ? 1 : 0;
+        int fullscreenInt = IsFullscreenOn ? 1 : 0;
+
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
+        PlayerPrefs.SetInt("Trekkie Trax Toggle", trekkieInt);
+        PlayerPrefs.SetInt("Fullscreen Toggle", fullscreenInt);
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
@@ -131,7 +137,35 @@ public static class DataManager
         } else {
             powerupCooldownTime = 7f;
         }
+
+        if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
+            if (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) {
+                IsTrekkieTraxOn = true;
+            } else {
+                IsTrekkieTraxOn = false;
+            }
+        } else {
+            IsTrekkieTraxOn = true;
+        }
+
+        if (PlayerPrefs.HasKey("Fullscreen Toggle")) {
+            if (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) {
+                IsFullscreenOn = true;
+            } else {
+                IsFullscreenOn = false;
+            }
+        } else {
+            IsFullscreenOn = false;
+        }
         
+
+        Screen.fullScreen = IsFullscreenOn;
+        Screen.SetResolution(
+            Screen.resolutions[ScreenResolution].width,
+            Screen.resolutions[ScreenResolution].height,
+            IsFullscreenOn,
+            Screen.resolutions[ScreenResolution].refreshRate
+        );
         Debug.Log("Loaded data");
     }
 

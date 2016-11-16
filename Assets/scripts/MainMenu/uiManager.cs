@@ -14,11 +14,17 @@ public class uiManager : MonoBehaviour
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
     private bool allPlayersReady;
+    private bool randCarSwitch;
 
     public GameObject canvasLoad;
-    public Image loadingBar;
-    public Gradient backgroundGradientColors;
-    public Image backgroundGradient;
+    [SerializeField]
+    private Image loadingBar;
+    [SerializeField]
+    private Text loadingText;
+    [SerializeField]
+    private Gradient backgroundGradientColors;
+    [SerializeField]
+    private Image backgroundGradient;
 
     private AsyncOperation sync;
 
@@ -34,10 +40,14 @@ public class uiManager : MonoBehaviour
     public Text modeDescriptionText;
 
     [Header("Car/Track Selection")]
-    public GameObject[] containers;
-    public GameObject rotatingModel;
-    public GameObject[] carModels;
-    public GameObject[] trackModels;
+    [SerializeField]
+    private GameObject[] containers;
+    [SerializeField]
+    private GameObject rotatingModel;
+    [SerializeField]
+    private GameObject[] carModels;
+    [SerializeField]
+    private GameObject[] trackModels;
 
     [Header("Options")]
     public Text turnTimeDisplayText;
@@ -54,6 +64,7 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
+        randCarSwitch = true;
         Time.timeScale = 1;
         DataManager.Load();
         DataManager.ClearGameData();
@@ -136,28 +147,28 @@ public class uiManager : MonoBehaviour
             if (inputDevice.Command.WasPressed && DataManager.TotalPlayers > 1) {
                 // If the start button is pressed in the player select screen
                 // go to the next menu!
+
+                if (allPlayersReady) {
+                    CanvasDisplay(5);
+                }                
+
+            }
+            else if (inputDevice.Action1.WasPressed) {
                 int n = 0;
                 for (int i = 0; i < DataManager.PlayerList.Count; i++) {
                     if (DataManager.PlayerList[i].PlayerName != null) {
                         n++;
                     }
                 }
-                if (allPlayersReady) {
-                    CanvasDisplay(5);
-                }                
+
                 if (n >= DataManager.PlayerList.Count) {
                     allPlayersReady = true;
                 }
             }
-            else if (inputDevice.Action1.WasPressed) {
-                // flash controller when a is pressed again!
-                // do this later lol :^)
-                // controllerIcons[i].gameObject.transform.x = 1;
-            }
         }
         else if (menuIndex == 5) {
             SetPlayerLives();
-            RotateModel(carModels);
+            StartCoroutine(RotateModel(carModels));
             rotatingModel.SetActive(true);
         }
         else if (menuIndex == 6) {
@@ -201,13 +212,15 @@ public class uiManager : MonoBehaviour
       for (int i = 0; i < 4; i++) {
         if (i < DataManager.TotalPlayers) {
             if (DataManager.PlayerList[i] != null) {
+                controllerIcons[i].sprite = controllerActive;
                 controllerIcons[i].color = DataManager.Colors[i];
             } else {
+                controllerIcons[i].sprite = controllerInactive;
                 controllerIcons[i].color = inactiveColor;
                 nameFields[i].text = "";
             }
         } else {
-          // controllerIcons[i].sprite = controllerInactive;
+          controllerIcons[i].sprite = controllerInactive;
           controllerIcons[i].color = inactiveColor;
           nameFields[i].text = "";
         }
@@ -290,23 +303,24 @@ public class uiManager : MonoBehaviour
     // for the car/track selection screens
     // rotates a model being loaded in as a mesh from an array
     // todo: add material switching later
-    private void RotateModel(GameObject[] models)
+    private IEnumerator RotateModel(GameObject[] models)
     {
       int buttonNum;
       GameObject car;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { yield return null; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
-      for (int i = 0; i < models.Length; i++) {
-        models[i].SetActive(false);
-      }
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
       bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
-      if (buttonNumSuccess) {
-        car = models[buttonNum];
-      } else {
-        car = models[random.Next(0, models.Length)];
-      }
-      car.SetActive(true);
+        for (int i = 0; i < models.Length; i++) {
+            models[i].SetActive(false);
+        }
+        if (buttonNumSuccess) {
+            car = models[buttonNum];
+        } else {
+            car = models[models.Length - 1];
+        }
+        car.SetActive(true);
+        yield return null;
     }
 
     // for the "set game mode" panel
@@ -358,6 +372,11 @@ public class uiManager : MonoBehaviour
         }
     }
 
+    private IEnumerator RandCarWait() {
+        yield return new WaitForSeconds(0.1f);
+        randCarSwitch = true;
+    }
+
     private IEnumerator PlayAudio(AudioClip sound) {
         audioSource.PlayOneShot(sound);
         yield return null;
@@ -381,10 +400,22 @@ public class uiManager : MonoBehaviour
         yield return new WaitForSeconds(4.5f);
         Debug.Log("Loading start");
         sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
-        // sync.allowSceneActivation = false;
+        sync.allowSceneActivation = false;
         // startAnimation = true;
         while (!sync.isDone) {
-            loadingBar.fillAmount = sync.progress;
+            float progress = sync.progress / 0.9f;
+
+            loadingBar.fillAmount = progress;
+            Debug.Log(sync.progress);
+
+            InputDevice inputDevice = InputManager.ActiveDevice;
+            if (sync.progress >= 0.89f) {
+                loadingText.text = "PRESS A TO CONTINUE";
+                if (inputDevice.Action1.WasPressed) {
+                    sync.allowSceneActivation = true;
+                    yield return null;
+                }
+            }
             yield return null;
         }
     }
