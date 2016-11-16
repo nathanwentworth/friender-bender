@@ -1112,7 +1112,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243000013329193636, guid: f6e83001269ba1b429419d724cd8e114,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 54e263cdbb6483749be04100216f815c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4ec1a2671ba76994db13a70b51be7237, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1202,6 +1202,7 @@ MonoBehaviour:
   maxBrakingTorque: 120000
   controllerDeadzone: 0.15
   shieldEffect: {fileID: 1000014172832982}
+  teleportEffect: {fileID: 0}
   turningMultiplier: 0
   currentIndex: 0
   shield: 0

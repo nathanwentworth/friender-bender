@@ -16,6 +16,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip randomLargeObject;
     public AudioClip speedBoost;
     public AudioClip distraction;
+    public AudioClip teleport;
 
     public IEnumerator Impact(bool highSpeed)
     {
@@ -45,6 +46,9 @@ public class AudioManager : MonoBehaviour
             case "distraction":
                 Debug.Log("Playing distraction");
                 powerupSource.PlayOneShot(distraction);
+                break;
+            case "teleport":
+                powerupSource.PlayOneShot(teleport);
                 break;
             default:
                 Debug.LogError("No sound for this powerup yet :^)");

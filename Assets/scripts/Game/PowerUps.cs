@@ -291,6 +291,7 @@ public class PowerUps : MonoBehaviour {
     IEnumerator Teleport()
     {
         carControl.teleportEffect.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(audioManager.PowerupSounds("teleport"));
         yield return new WaitForSeconds(1.2f);
         carControl.teleportEffect.GetComponent<ParticleSystem>().Stop();
         Transform sp = pSwitch.spawnPoints[DataManager.RandomVal(0, pSwitch.spawnPoints.Length - 1)].transform;
