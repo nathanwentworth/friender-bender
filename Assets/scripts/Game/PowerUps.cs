@@ -15,7 +15,9 @@ public class PowerUps : MonoBehaviour {
         ScreenDistraction,
         Shield,
         EndTurn,
-        LargeObject
+        LargeObject,
+        Teleport,
+        LandMine
     }
 
     public float powerupCooldownTime;
@@ -64,11 +66,14 @@ public class PowerUps : MonoBehaviour {
     void Update()
     {
         //Debug Mode
-        if (pSwitch.DEBUG_MODE && InputManager.ActiveDevice.Action1.WasPressed)
+        if (pSwitch.DEBUG_MODE)
         {
-            PowerUpType powerup = StartingPowerUp;
-            Execute(powerup);
-            Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
+            if (InputManager.ActiveDevice.Action1.WasPressed)
+            {
+                PowerUpType powerup = StartingPowerUp;
+                Execute(powerup);
+                Debug.Log("DEBUG MODE: Using Powerup: " + StartingPowerUp);
+            }
         }
         else {
             //Check if there was powerup input
@@ -150,6 +155,9 @@ public class PowerUps : MonoBehaviour {
                 break;
             case PowerUpType.LargeObject:
                 StartCoroutine(RandomLargeObject());
+                break;
+            case PowerUpType.Teleport:
+                StartCoroutine(Teleport());
                 break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
@@ -269,11 +277,25 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.LargeObject:
                 powerupName = "OBSTACLE DROP";
                 break;
+            case PowerUpType.Teleport:
+                powerupName = "Teleport";
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
         }
         return powerupName;
+    }
+
+    IEnumerator Teleport()
+    {
+        carControl.teleportEffect.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(audioManager.PowerupSounds("teleport"));
+        yield return new WaitForSeconds(1.2f);
+        carControl.teleportEffect.GetComponent<ParticleSystem>().Stop();
+        Transform sp = pSwitch.spawnPoints[DataManager.RandomVal(0, pSwitch.spawnPoints.Length - 1)].transform;
+        car.transform.position = sp.position;
+        yield return null;
     }
 
 

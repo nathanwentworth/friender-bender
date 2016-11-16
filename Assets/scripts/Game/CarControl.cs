@@ -13,6 +13,7 @@ public class CarControl : MonoBehaviour
     public float controllerDeadzone = 0.15f;
     
     public GameObject shieldEffect;
+    public GameObject teleportEffect;
 
     [Header("Data References")]
     private PlayerSwitching playerSwitch;
@@ -246,7 +247,7 @@ public class CarControl : MonoBehaviour
         }
     }
 
-    private void ResetCarPosition() {
+    public void ResetCarPosition() {
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;

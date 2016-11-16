@@ -21,12 +21,15 @@ public class AudioManager : MonoBehaviour
     private AudioClip highSpeedImpact;
 
     [Header("Powerups")]
+
     [SerializeField]
     private AudioClip randomLargeObject;
     [SerializeField]
     private AudioClip speedBoost;
     [SerializeField]
     private AudioClip distraction;
+    [SerializeField]
+    private AudioClip teleport;
 
     [Header("Music")]
     [SerializeField]
@@ -68,7 +71,6 @@ public class AudioManager : MonoBehaviour
         yield return null;
     }
 
-
     public IEnumerator Impact(bool highSpeed)
     {
         if (highSpeed)
@@ -97,6 +99,9 @@ public class AudioManager : MonoBehaviour
             case "distraction":
                 Debug.Log("Playing distraction");
                 powerupSource.PlayOneShot(distraction);
+                break;
+            case "teleport":
+                powerupSource.PlayOneShot(teleport);
                 break;
             default:
                 Debug.LogError("No sound for this powerup yet :^)");
