@@ -10,6 +10,8 @@ public class PlayerData {
     private string playerName;
     private int lives;
 
+    public bool deviceDetatched { get; set; }
+
     public InputDevice Controller
     {
         get { return controller; }
