@@ -278,7 +278,7 @@ public class PowerUps : MonoBehaviour {
                 powerupName = "OBSTACLE DROP";
                 break;
             case PowerUpType.Teleport:
-                powerupName = "Teleport";
+                powerupName = "TELEPORT";
                 break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
@@ -287,7 +287,7 @@ public class PowerUps : MonoBehaviour {
         return powerupName;
     }
 
-    IEnumerator Teleport()
+    private IEnumerator Teleport()
     {
         carControl.teleportEffect.GetComponent<ParticleSystem>().Play();
         StartCoroutine(audioManager.PowerupSounds("teleport"));

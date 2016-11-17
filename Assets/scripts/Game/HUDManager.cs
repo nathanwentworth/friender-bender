@@ -145,12 +145,12 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player - 1].text = player + ":   " + powerup;
+        powerupText[player - 1].text = DataManager.PlayerList[player - 1].PlayerName + ":   " + powerup;
     }
 
     private void PowerupSizeSet() {
         for (int i = DataManager.TotalPlayers - 1; i >= 0; i--) {
-            powerupContainers[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(16, 64 + ((DataManager.TotalPlayers - 1 - i) * 96));
+            powerupContainers[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(8, 56 + ((DataManager.TotalPlayers - 1 - i) * 104));
             powerupContainers[i].SetActive(true);
         }
     }
