@@ -152,6 +152,7 @@ public class PlayerSwitching : MonoBehaviour
     {
         isOut[currentIndex] = true;
         remainingPlayers--;
+
         if (remainingPlayers > 1) {
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
@@ -161,9 +162,11 @@ public class PlayerSwitching : MonoBehaviour
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+
+            SwitchPlayer();
         }
 
-        if (remainingPlayers == 1)
+        if (remainingPlayers <= 1)
         {
             playerWin = true;
             for (int i = 0; i < totalPlayers; i++)
@@ -174,14 +177,9 @@ public class PlayerSwitching : MonoBehaviour
                     StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     hudManager.EnqueueWait(1f);
                     hudManager.EnqueueAction(hudManager.DisplayPostGameMenu());
-                    Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }
             }
-        }
-        else
-        {
-            SwitchPlayer();
         }
     }
 
