@@ -157,7 +157,7 @@ public static class DataManager
         if (PlayerPrefs.HasKey("Fullscreen Toggle")) {
             IsFullscreenOn = (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) ? true : false;
         } else {
-            IsFullscreenOn = true;
+            IsFullscreenOn = false;
         }
 
         if (PlayerPrefs.HasKey("Resolution")) {
