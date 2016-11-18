@@ -23,6 +23,8 @@ Joey Canney - 3D Modeling, Music
 
 Concept by [@SeshohoCian](https://twitter.com/SeshohoCian), [Nick Robinson](https://twitter.com/babylonian), [Griffin McElroy](https://twitter.com/griffinmcelroy)
 
+Special thanks to: Jeff Warmouth, Jess Ialacci
+
 ### MUSIC:
 
 [**→→→ Listen on SoundCloud ←←←**](https://soundcloud.com/nathanwentworth/sets/friender-bender)
