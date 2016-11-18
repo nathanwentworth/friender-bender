@@ -29,7 +29,6 @@ public class PowerUps : MonoBehaviour {
     public AudioManager audioManager;
     [Header("LargeObject")]
     public GameObject[] objects;
-    private Transform spawn;
 
     [Header("Starting Powerup")]
     [Tooltip("Select None for a random powerup")]
@@ -44,7 +43,6 @@ public class PowerUps : MonoBehaviour {
 
     void Start()
     {
-        spawn = GameObject.FindGameObjectWithTag("Spawn").transform;
         powerupCooldownTime = DataManager.PowerupCooldownTime;
         car = GameObject.FindGameObjectWithTag("Player");
         carControl = car.GetComponent<CarControl>();
@@ -277,7 +275,7 @@ public class PowerUps : MonoBehaviour {
                 powerupName = "OBSTACLE DROP";
                 break;
             case PowerUpType.Teleport:
-                powerupName = "Teleport";
+                powerupName = "TELEPORT";
                 break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
@@ -286,7 +284,7 @@ public class PowerUps : MonoBehaviour {
         return powerupName;
     }
 
-    IEnumerator Teleport()
+    private IEnumerator Teleport()
     {
         carControl.teleportEffect.GetComponent<ParticleSystem>().Play();
         StartCoroutine(audioManager.PowerupSounds("teleport"));

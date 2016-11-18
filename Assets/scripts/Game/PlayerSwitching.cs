@@ -155,7 +155,6 @@ public class PlayerSwitching : MonoBehaviour
         if (remainingPlayers > 1) {
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
-            // StartCoroutine(Notifications(notifText1, notifText2));
             StartCoroutine(hudManager.DisplayOverlayText(notifText1));
             hudManager.EnqueueWait(1f);
             hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
@@ -184,7 +183,6 @@ public class PlayerSwitching : MonoBehaviour
         {
             SwitchPlayer();
         }
-
     }
 
     private IEnumerator Vibrate(int index)
@@ -198,20 +196,23 @@ public class PlayerSwitching : MonoBehaviour
         startingGame = true;
         Rigidbody carRigid = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         carRigid.constraints = RigidbodyConstraints.FreezeAll;
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText("3"));
-        hudManager.EnqueueWait(1f);
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText("2"));
-        hudManager.EnqueueWait(1f);
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText("1"));
-        hudManager.EnqueueWait(1f);
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText("BEND YOUR FRIENDS!"));
-        hudManager.EnqueueWait(1f);
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
-        yield return new WaitForSeconds(3);
+
+        float countdown = 3f;
+        while (countdown > 0) {
+            countdown -= Time.deltaTime;
+            float roundedTimer = Mathf.Round(countdown);
+            StartCoroutine(hudManager.DisplayOverlayText(roundedTimer + ""));
+            if (roundedTimer == 0) {
+                StartCoroutine(hudManager.DisplayOverlayText("BEND YOUR FRIENDS!"));
+            }
+            Debug.Log(roundedTimer);
+            yield return null;
+        }
         startingGame = false;
         carRigid.constraints = RigidbodyConstraints.None;
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(hudManager.DisplayOverlayText(""));
     }
-
 
     private IEnumerator Sleep(float wait) {
         Time.timeScale = 0.000001f;
@@ -219,11 +220,4 @@ public class PlayerSwitching : MonoBehaviour
         passingController = false;
         Time.timeScale = 1f;
     }
-
-    private IEnumerator Notifications(string notifText1, string notifText2) {
-        StartCoroutine(hudManager.DisplayNotificationText(notifText1));
-        yield return new WaitForSeconds(2);
-        StartCoroutine(hudManager.DisplayNotificationText(notifText2));
-    }
-
 }

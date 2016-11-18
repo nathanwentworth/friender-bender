@@ -3315,7 +3315,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 188.6, y: 126.3}
+  m_SizeDelta: {x: 243.4, y: 126.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &408313313
 MonoBehaviour:
@@ -3511,7 +3511,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 188.6, y: 126.3}
+  m_SizeDelta: {x: 243.4, y: 126.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &432126822
 MonoBehaviour:
@@ -6299,7 +6299,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 188.6, y: 126.3}
+  m_SizeDelta: {x: 243.4, y: 126.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &730062757
 MonoBehaviour:
@@ -13596,7 +13596,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -180}
-  m_SizeDelta: {x: 188.6, y: 126.3}
+  m_SizeDelta: {x: 243.4, y: 126.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1741253809
 MonoBehaviour:
@@ -16005,7 +16005,6 @@ MonoBehaviour:
   trackModels: []
   turnTimeDisplayText: {fileID: 1663094148}
   turnTimeSlider: {fileID: 1321505289}
-  numberOfLives: 3
   creditsPanel: {fileID: 1317182286}
   submitSound: {fileID: 8300000, guid: 02799c96e5c4e45f19814bbc7cdb3880, type: 3}
   cancelSound: {fileID: 8300000, guid: 66d587c6d94a342cfbcb70d031053a65, type: 3}
