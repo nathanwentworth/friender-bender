@@ -29,7 +29,6 @@ public class PowerUps : MonoBehaviour {
     public AudioManager audioManager;
     [Header("LargeObject")]
     public GameObject[] objects;
-    private Transform spawn;
 
     [Header("Starting Powerup")]
     [Tooltip("Select None for a random powerup")]
@@ -44,7 +43,6 @@ public class PowerUps : MonoBehaviour {
 
     void Start()
     {
-        spawn = GameObject.FindGameObjectWithTag("Spawn").transform;
         powerupCooldownTime = DataManager.PowerupCooldownTime;
         car = GameObject.FindGameObjectWithTag("Player");
         carControl = car.GetComponent<CarControl>();

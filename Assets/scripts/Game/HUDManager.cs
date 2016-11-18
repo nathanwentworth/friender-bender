@@ -32,33 +32,26 @@ public class HUDManager : MonoBehaviour
 
     [Header("Overlay")]
 
-    public GameObject overlayPanel;
-    public Text overlayText;
-    public GameObject gameOverPanel;
+    [SerializeField]
+    private GameObject overlayPanel;
+    [SerializeField]
+    private Text overlayText;
+    [SerializeField]
+    private GameObject gameOverPanel;
 
     [Header("References")]
 
     public PlayerSwitching playerSwitch;
 
-    private float speedometerBarFillAmount;
-    private float timerBarFillAmount;
-    private float maxSpeed = 150;
+    private float maxSpeed = 175;
     private int[] players;
     private int currentIndex;
     
-    private bool paused;
-    public bool Paused
-    {
-        get { return paused; }
-        set { paused = value; }
-    }
-
-
+    public bool Paused { get; set; }
 
     Queue<IEnumerator> notifications = new Queue<IEnumerator>();
 
-
-    void Start()
+    private void Start()
     {
         for (int i = 0; i < livesDisplay.Length; i++)
         {
@@ -66,13 +59,14 @@ public class HUDManager : MonoBehaviour
         }
         currentPlayerText = GameObject.Find("player").GetComponent<Text>();
         notificationText.text = "";
+        overlayText.text = "";
         StartCoroutine(Process());
         UpdateLivesDisplay();
         PowerupSizeSet();
-        paused = false;
+        Paused = false;
     }
 
-    void Update()
+    private void Update()
     {
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
@@ -84,16 +78,13 @@ public class HUDManager : MonoBehaviour
         {
             Pause();
         }
-        // if (!playerSwitch.DEBUG_MODE)
-        // {
-            float MPH = DataManager.CurrentMPH;
-            MPHDisplay.text = MPH + "";
-            speedometerBarFillAmount = (MPH / maxSpeed) * 0.75f;
-            speedometerBar.fillAmount = speedometerBarFillAmount;
-        // }
+
+        float MPH = DataManager.CurrentMPH;
+        MPHDisplay.text = MPH + "";
+        speedometerBar.fillAmount = (MPH / maxSpeed) * 0.75f;
+
         timer.text = string.Format("{0:F1}", playerSwitch.timer);
-        timerBarFillAmount = (0.5f + (0.5f * (playerSwitch.timer / playerSwitch.turnTime)));
-        timerBar.fillAmount = timerBarFillAmount;
+        timerBar.fillAmount = (0.5f + (0.5f * (playerSwitch.timer / playerSwitch.turnTime)));
         timerBar.color = timerGradient.Evaluate (playerSwitch.timer / playerSwitch.turnTime);
 
         currentPlayerText.text = DataManager.GetPlayerIdentifier(playerSwitch.currentIndex);
@@ -103,11 +94,11 @@ public class HUDManager : MonoBehaviour
         if (pauseCanvas.activeSelf) {
             Time.timeScale = 1;
             pauseCanvas.SetActive(false);
-            paused = false;
+            Paused = false;
         } else {
             Time.timeScale = 0;
             pauseCanvas.SetActive(true);
-            paused = true;
+            Paused = true;
         }
     }
 
@@ -120,7 +111,6 @@ public class HUDManager : MonoBehaviour
     }
 
     public void UpdateLivesDisplay() {
-        Debug.Log("updating lives display");
         int trueCurrentIndex = playerSwitch.currentIndex;
         for (int i = 0; i < DataManager.LivesCount; i++) {
             if (i < DataManager.PlayerList[trueCurrentIndex].Lives) {
@@ -145,7 +135,7 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player - 1].text = DataManager.PlayerList[player - 1].PlayerName + ":   " + powerup;
+        powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ":   " + powerup;
     }
 
     private void PowerupSizeSet() {
@@ -170,11 +160,6 @@ public class HUDManager : MonoBehaviour
     }
 
     public IEnumerator DisplayOverlayText(string text) {
-        if (overlayPanel.activeSelf) {
-            overlayPanel.SetActive(false);
-        } else {
-            overlayPanel.SetActive(true);
-        }
         overlayText.text = text;
         yield return null;
     }

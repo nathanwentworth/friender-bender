@@ -47,7 +47,6 @@ public class CarControl : MonoBehaviour
     [Header("Audio Bits")]
     public AudioSource carEngine;
 
-    private Vector3 carOriginTrans;
     private bool currentlyCheckingIfCarIsStopped;
 
     private void Awake()
@@ -63,7 +62,6 @@ public class CarControl : MonoBehaviour
         shield = false;
         currentlyCheckingIfCarIsStopped = false;
         rigid = GetComponent<Rigidbody>();
-        carOriginTrans = transform.position;
     }
 
     private void Update()

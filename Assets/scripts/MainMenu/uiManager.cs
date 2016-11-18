@@ -8,15 +8,14 @@ using InControl;
 public class uiManager : MonoBehaviour
 {
 
-    private int selectedCar;
     private int gameMode = 0;
     private int menuIndex;
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
     private bool allPlayersReady;
-    private bool randCarSwitch;
 
-    public GameObject canvasLoad;
+    [SerializeField]
+    private GameObject canvasLoad;
     [SerializeField]
     private Image loadingBar;
     [SerializeField]
@@ -29,15 +28,22 @@ public class uiManager : MonoBehaviour
     private AsyncOperation sync;
 
     [Header("Controller Add Screen")]
-    public Image[] controllerIcons;
-    public Sprite controllerInactive;
-    public Sprite controllerActive;
-    public Text[] nameFields;
-    public Color32 inactiveColor;
+    [SerializeField]
+    private Image[] controllerIcons;
+    [SerializeField]
+    private Sprite controllerInactive;
+    [SerializeField]
+    private Sprite controllerActive;
+    [SerializeField]
+    private Text[] nameFields;
+    [SerializeField]
+    private Color32 inactiveColor;
 
     [Header("Mode Selection")]
-    public string[] modeDescriptions;
-    public Text modeDescriptionText;
+    [SerializeField]
+    private string[] modeDescriptions;
+    [SerializeField]
+    private Text modeDescriptionText;
 
     [Header("Car/Track Selection")]
     [SerializeField]
@@ -50,10 +56,12 @@ public class uiManager : MonoBehaviour
     private GameObject[] trackModels;
 
     [Header("Options")]
-    public Text turnTimeDisplayText;
-    public Slider turnTimeSlider;
-    public int numberOfLives = 3;
-    public GameObject creditsPanel;
+    [SerializeField]
+    private Text turnTimeDisplayText;
+    [SerializeField]
+    private Slider turnTimeSlider;
+    [SerializeField]
+    private GameObject creditsPanel;
 
     [Header("Sounds")]
     public AudioClip submitSound;
@@ -64,12 +72,10 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
-        randCarSwitch = true;
         Time.timeScale = 1;
         DataManager.Load();
         DataManager.ClearGameData();
-        DataManager.LivesCount = numberOfLives;
-        Debug.Log(DataManager.CurrentGameMode);
+        DataManager.LivesCount = 3;
         menuIndex = GetCurrentMenuIndex();
         if (GetComponent<AudioSource>() != null) {
             audioSource = GetComponent<AudioSource>();
@@ -83,64 +89,19 @@ public class uiManager : MonoBehaviour
     {
         InputDevice inputDevice = InputManager.ActiveDevice;
 
-        // if (inputDevice.Action1.WasPressed) {
-        //     if (GetComponent<EventSystem>().currentSelectedGameObject == null || GetComponent<EventSystem>().currentSelectedGameObject.GetComponent<Button>() == null) {
-        //         return;
-        //     } else {
-                
-        //     }
-        // }
-
         CheckIfHighlightedButtonIsChanged();
 
-        if(menuIndex == 2 && inputDevice.Action1.WasPressed && DataManager.TotalPlayers == 0)
+        if (menuIndex == 2)
         {
-            PlayerData player = new PlayerData();
-            player.Controller = inputDevice;
-            player.PlayerNumber = DataManager.PlayerList.Count + 1;
-            DataManager.PlayerList.Add(player);
-            DataManager.TotalPlayers = DataManager.PlayerList.Count;
-            Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);
-        }
-
-        if (menuIndex != 1 && menuIndex != 7 && inputDevice.Action2.WasPressed)
-        {
-            int backIndex = menuIndex - 1;
-            switch (backIndex)
-            {
-                case -1:
-                    if (creditsPanel.activeSelf) {
-                        DisplayCredits();
-                        backIndex = 0;
-                    } else {
-                        backIndex = 1;
-                    }
-                    break;
-                case 2:
-                    if (DataManager.TotalPlayers == 0)
-                    {
-                        break;
-                    }
-                    return;
-                case 3:
-                    backIndex--;
-                    Debug.Log("Clearing Player List and setting Total Players to 0...");
-                    break;
-                case 4:
-                    rotatingModel.SetActive(false);
-                    if (gameMode == 0)
-                    {
-                        backIndex--;
-                        DataManager.ClearGameData();
-                    }
-                    break;
-                default:
-                    break;
+            DisplayModeDescriptions();
+            if (inputDevice.Action1.WasPressed && DataManager.TotalPlayers == 0) {
+                PlayerData player = new PlayerData();
+                player.Controller = inputDevice;
+                player.PlayerNumber = DataManager.PlayerList.Count + 1;
+                DataManager.PlayerList.Add(player);
+                DataManager.TotalPlayers = DataManager.PlayerList.Count;
+                Debug.Log("Added Device: " + inputDevice + " as Player " + player.PlayerNumber);                
             }
-            CanvasDisplay(backIndex);
-        }
-        else if (menuIndex == 2) {
-          DisplayModeDescriptions();
         }
         else if (menuIndex == 3)
         {
@@ -174,24 +135,58 @@ public class uiManager : MonoBehaviour
         else if (menuIndex == 6) {
           // RotateModel(trackModels);
         }
-        else if (menuIndex == 7) {
 
-        }
         if (menuIndex != 5) {
             rotatingModel.SetActive(false);
+        }
+
+        if (menuIndex != 1 && menuIndex != 7 && inputDevice.Action2.WasPressed)
+        {
+            int backIndex = menuIndex - 1;
+            switch (backIndex)
+            {
+                case -1:
+                    if (creditsPanel.activeSelf) {
+                        DisplayCredits();
+                        backIndex = 0;
+                    } else {
+                        backIndex = 1;
+                    }
+                    break;
+                case 2:
+                    if (DataManager.TotalPlayers == 0)
+                    {
+                        break;
+                    }
+                    return;
+                case 3:
+                    backIndex--;
+                    break;
+                case 4:
+                    if (gameMode == 0)
+                    {
+                        backIndex--;
+                        DataManager.ClearGameData();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            CanvasDisplay(backIndex);
+        }
+
+    }
+
+    private void SetPlayerLives()
+    {
+        foreach(PlayerData player in DataManager.PlayerList)
+        {
+            player.Lives = DataManager.LivesCount;
         }
     }
 
     // checks which panel is currently active, each loaded into an array
     // 0 is options, 1 is main menu, everything goes from there
-    private void SetPlayerLives()
-    {
-        foreach(PlayerData player in DataManager.PlayerList)
-        {
-            player.Lives = numberOfLives;
-        }
-    }
-
     private int GetCurrentMenuIndex()
     {
         for (int i = 0; i < containers.Length; i++)
@@ -230,11 +225,10 @@ public class uiManager : MonoBehaviour
     // public function to load scenes by string name
     public void LoadScene(string levelName)
     {
-        // SceneManager.LoadScene(levelName);
         StartCoroutine(LoadingScreen(levelName));
     }
 
-    // quits the game!!!!!!!!
+    // quits the game
     public void QuitGame()
     {
         Application.Quit();
@@ -270,24 +264,13 @@ public class uiManager : MonoBehaviour
 
     public void SetGameMode(int mode)
     {
-        gameMode = mode;
-        if (mode == 0)
-        {
-            Debug.Log("Selected Party mode!");
-            DataManager.CurrentGameMode = DataManager.GameMode.Party;
-        }
-        else if (mode == 1)
-        {
-            Debug.Log("Selected Hot Potato mode!");
-            DataManager.CurrentGameMode = DataManager.GameMode.HotPotato;
-        }
+        DataManager.CurrentGameMode = (mode == 0) ? DataManager.GameMode.Party : DataManager.GameMode.HotPotato;
     }
 
     // for potato mode
     // sets number of players based on the button pressed
     public void SelectNumberOfPlayers(int players)
     {
-        Debug.Log(players + " total players");
         DataManager.TotalPlayers = players;
         for(int i = DataManager.PlayerList.Count; i < players; i++)
         {
@@ -295,7 +278,6 @@ public class uiManager : MonoBehaviour
             player.PlayerNumber = DataManager.PlayerList.Count + 1;
             DataManager.PlayerList.Add(player);
             DataManager.TotalPlayers = DataManager.PlayerList.Count;
-            Debug.Log("Added Device: null as Player " + player.PlayerNumber);
         }
         CanvasDisplay(5);
     }
@@ -327,54 +309,26 @@ public class uiManager : MonoBehaviour
     // displays a short description of each game mode when highlighting a button
     private void DisplayModeDescriptions() {
       int mode = -1;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { print("null"); return; }
+      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { return; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       mode = (buttonName == "btn-party") ? 0 : 1;
       modeDescriptionText.text = modeDescriptions[mode];
     }
 
-    public void SetCar(int car)
+    public void SetCar(int selectedCar)
     {
-        selectedCar = car;
         DataManager.CarIndex = selectedCar;
-        Debug.Log(selectedCar);
-        switch (car)
-        {
-            case 0:
-                Debug.Log("Selected Gremlin");
-                break;
-            case 1:
-                Debug.Log("Selected Banana");
-                break;
-            case 2:
-                Debug.Log("Selected Big Wheel");
-                break;
-            case 3:
-                Debug.Log("Selected Verminator");
-                break;
-            case 4:
-                Debug.Log("Selected AE86");
-                break;
-        }
     }
 
     public void RandCar()
     {
-        int randVal = Random.Range(1, 5);
+        int randVal = random.Next(0, 3);
         SetCar(randVal);
     }
 
     public void DisplayCredits() {
-        if (creditsPanel.activeSelf) {
-            creditsPanel.SetActive(false);
-        } else {
-            creditsPanel.SetActive(true);
-        }
-    }
-
-    private IEnumerator RandCarWait() {
-        yield return new WaitForSeconds(0.1f);
-        randCarSwitch = true;
+        bool active = (creditsPanel.activeSelf) ? false : true;
+        creditsPanel.SetActive(active);
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {
@@ -388,26 +342,20 @@ public class uiManager : MonoBehaviour
             timer += .001f;
             if (timer >= 1) timer = 0;
             backgroundGradient.color = backgroundGradientColors.Evaluate (timer);
-
             yield return null;
         }
     }
 
     private IEnumerator LoadingScreen(string scene)
     {
-        Debug.Log("asdfasdfsadf");
         canvasLoad.SetActive(true);
         yield return new WaitForSeconds(4.5f);
-        Debug.Log("Loading start");
         sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
         sync.allowSceneActivation = false;
         // startAnimation = true;
         while (!sync.isDone) {
             float progress = sync.progress / 0.9f;
-
             loadingBar.fillAmount = progress;
-            Debug.Log(sync.progress);
-
             InputDevice inputDevice = InputManager.ActiveDevice;
             if (sync.progress >= 0.89f) {
                 loadingText.text = "PRESS A TO CONTINUE";
