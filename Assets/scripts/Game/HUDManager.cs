@@ -74,6 +74,8 @@ public class HUDManager : MonoBehaviour
         deviceDetatched = true;
         PlayerData player = PlayerUsingDevice(controller);
         Debug.Log(player.PlayerName + " disconnected.");
+        string disconnectMessage = DataManager.GetPlayerIdentifier(player.PlayerNumber -1) + " DISCONNECTED";
+        StartCoroutine(DisplayOverlayText(disconnectMessage));
         player.deviceDetatched = deviceDetatched;
         Time.timeScale = 0;
     }
@@ -91,6 +93,7 @@ public class HUDManager : MonoBehaviour
                     item.deviceDetatched = deviceDetatched;
                     Time.timeScale = 1;
                     Debug.Log(item.PlayerName + " reconnected.");
+                    StartCoroutine(DisplayOverlayText(""));
                     break;
                 }
             }
