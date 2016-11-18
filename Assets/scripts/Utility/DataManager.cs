@@ -104,6 +104,16 @@ public static class DataManager
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
         PlayerPrefs.SetInt("Trekkie Trax Toggle", trekkieInt);
         PlayerPrefs.SetInt("Fullscreen Toggle", fullscreenInt);
+        PlayerPrefs.SetInt("Resolution", ScreenResolution);
+
+        Screen.fullScreen = IsFullscreenOn;
+        Screen.SetResolution(
+            Screen.resolutions[ScreenResolution].width,
+            Screen.resolutions[ScreenResolution].height,
+            IsFullscreenOn,
+            Screen.resolutions[ScreenResolution].refreshRate
+        );
+
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
@@ -118,44 +128,42 @@ public static class DataManager
 
     public static void Load() {
         if (PlayerPrefs.HasKey("Turn Time")) {
-            turnTime = PlayerPrefs.GetFloat("Turn Time");            
+            turnTime = PlayerPrefs.GetFloat("Turn Time");
         } else {
             turnTime = 7f;
         }
         if (PlayerPrefs.HasKey("Party Delay")) {
-            partyDelay = PlayerPrefs.GetFloat("Party Delay");            
+            partyDelay = PlayerPrefs.GetFloat("Party Delay");
         } else {
             partyDelay = 0f;
         }
         if (PlayerPrefs.HasKey("Potato Delay")) {
-            potatoDelay = PlayerPrefs.GetFloat("Potato Delay");            
+            potatoDelay = PlayerPrefs.GetFloat("Potato Delay");
         } else {
             potatoDelay = 3f;
         }
         if (PlayerPrefs.HasKey("Powerup Cooldown")) {
-            powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");            
+            powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");
         } else {
             powerupCooldownTime = 7f;
         }
 
         if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
-            if (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) {
-                IsTrekkieTraxOn = true;
-            } else {
-                IsTrekkieTraxOn = false;
-            }
+            IsTrekkieTraxOn = (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) ? true : false;
         } else {
             IsTrekkieTraxOn = true;
         }
 
         if (PlayerPrefs.HasKey("Fullscreen Toggle")) {
-            if (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) {
-                IsFullscreenOn = true;
-            } else {
-                IsFullscreenOn = false;
-            }
+            IsFullscreenOn = (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) ? true : false;
         } else {
-            IsFullscreenOn = false;
+            IsFullscreenOn = true;
+        }
+
+        if (PlayerPrefs.HasKey("Resolution")) {
+            ScreenResolution = PlayerPrefs.GetInt("Resolution");
+        } else {
+            ScreenResolution = Screen.resolutions.Length - 1;
         }
         
 

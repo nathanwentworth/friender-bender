@@ -27,6 +27,9 @@ public class OptionsChange : MonoBehaviour {
 	private Toggle trekkieTraxToggle;
 
 	[SerializeField]
+	private Toggle fullscreenToggle;
+
+	[SerializeField]
 	private Dropdown resolutionDropdown;
 
   // options menu function
@@ -52,6 +55,9 @@ public class OptionsChange : MonoBehaviour {
 		partyDelaySlider.value = DataManager.PartyDelay;
 		powerupCooldownSlider.value = DataManager.PowerupCooldownTime;
 		trekkieTraxToggle.isOn = DataManager.IsTrekkieTraxOn;
+		fullscreenToggle.isOn = DataManager.IsFullscreenOn;
+		resolutionDropdown.value = DataManager.ScreenResolution;
+
 
 		turnTimeSlider.onValueChanged.AddListener(delegate{
 			TurnTimeChange(turnTimeSlider.value, turnTimeText); 
@@ -68,12 +74,20 @@ public class OptionsChange : MonoBehaviour {
 		trekkieTraxToggle.onValueChanged.AddListener(delegate{
 			TrekkieTraxToggleChange(trekkieTraxToggle.isOn); 
 		});
+		fullscreenToggle.onValueChanged.AddListener(delegate{
+			FullscreenToggleChange(fullscreenToggle.isOn); 
+		});
+		resolutionDropdown.onValueChanged.AddListener(delegate{
+			ScreenResolutionChange(resolutionDropdown.value); 
+		});
 
 		TurnTimeChange(turnTimeSlider.value, turnTimeText);
 		PotatoDelayChange(potatoDelaySlider.value, potatoDelayText);
 		PartyDelayChange(partyDelaySlider.value, partyDelayText);
 		PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText);
 		TrekkieTraxToggleChange(trekkieTraxToggle.isOn);
+		FullscreenToggleChange(fullscreenToggle.isOn);
+		ScreenResolutionChange(resolutionDropdown.value);
 	}
 
 	// when slider is changed
@@ -111,8 +125,19 @@ public class OptionsChange : MonoBehaviour {
 		DataManager.IsTrekkieTraxOn = check;
 	}
 
-	public void FullscreenToggle (bool check) {
+	public void FullscreenToggleChange (bool check) {
 		DataManager.IsFullscreenOn = check;
+		Screen.fullScreen = DataManager.IsFullscreenOn;
+	}
+
+	public void ScreenResolutionChange(int val) {
+		DataManager.ScreenResolution = val;
+		Screen.SetResolution(
+			Screen.resolutions[resolutionDropdown.value].width,
+			Screen.resolutions[resolutionDropdown.value].height, 
+			DataManager.IsFullscreenOn, 
+			Screen.resolutions[resolutionDropdown.value].refreshRate
+		);
 	}
 
 	// when the menu is navigated away from
