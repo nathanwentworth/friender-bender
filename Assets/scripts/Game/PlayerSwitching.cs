@@ -59,6 +59,7 @@ public class PlayerSwitching : MonoBehaviour
         {
             StartCoroutine(StartingCountdown());
         }
+        StartCoroutine(Vibrate(currentIndex));
     }
 
     private void Update()
@@ -121,6 +122,7 @@ public class PlayerSwitching : MonoBehaviour
         hudManager.UpdateLivesDisplay();
         timer = turnTime;
         GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>().shield = false;
+        StartCoroutine(Vibrate(currentIndex));
     }
 
     public int NextPlayer()
@@ -185,7 +187,12 @@ public class PlayerSwitching : MonoBehaviour
 
     }
 
-
+    private IEnumerator Vibrate(int index)
+    {
+        DataManager.PlayerList[index].Controller.Vibrate(100f);
+        yield return new WaitForSeconds(0.25f);
+        DataManager.PlayerList[index].Controller.StopVibration();
+    }
 
     private IEnumerator StartingCountdown() {
         startingGame = true;

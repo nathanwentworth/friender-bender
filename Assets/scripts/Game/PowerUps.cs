@@ -83,7 +83,6 @@ public class PowerUps : MonoBehaviour {
             {
                 foreach (PlayerData i in DataManager.PlayerList)
                 {
-                    Debug.Log(i.Controller.Name);
                     if (i.Controller.Action1.WasPressed && i.CurrentPowerUp != PowerUpType.None)
                     {
                         action1WasPressed = true;

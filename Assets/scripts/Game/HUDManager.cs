@@ -45,6 +45,7 @@ public class HUDManager : MonoBehaviour
     private float maxSpeed = 150;
     private int[] players;
     private int currentIndex;
+    private bool deviceDetatched;
     
     private bool paused;
     public bool Paused
@@ -60,6 +61,8 @@ public class HUDManager : MonoBehaviour
 
     void Start()
     {
+        InputManager.OnDeviceDetached += OnDeviceDetached;
+        InputManager.OnDeviceAttached += OnDeviceReattached;
         for (int i = 0; i < livesDisplay.Length; i++)
         {
             livesDisplay[i] = GameObject.Find("heart-" + i.ToString()).GetComponent<Image>();
@@ -70,6 +73,46 @@ public class HUDManager : MonoBehaviour
         UpdateLivesDisplay();
         PowerupSizeSet();
         paused = false;
+    }
+
+    private void OnDeviceDetached(InputDevice controller)
+    {
+        deviceDetatched = true;
+        PlayerData player = PlayerUsingDevice(controller);
+        Debug.Log(player.PlayerName + " disconnected.");
+        player.deviceDetatched = deviceDetatched;
+        Time.timeScale = 0;
+    }
+
+    private void OnDeviceReattached(InputDevice controller)
+    {
+        if (deviceDetatched)
+        {
+            foreach(PlayerData item in DataManager.PlayerList)
+            {
+                if (item.deviceDetatched)
+                {
+                    item.Controller = controller;
+                    deviceDetatched = false;
+                    item.deviceDetatched = deviceDetatched;
+                    Time.timeScale = 1;
+                    Debug.Log(item.PlayerName + " reconnected.");
+                    break;
+                }
+            }
+        }
+    }
+
+    public PlayerData PlayerUsingDevice(InputDevice controller)
+    {
+        foreach (PlayerData item in DataManager.PlayerList)
+        {
+            if (controller == item.Controller)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 
     void Update()
