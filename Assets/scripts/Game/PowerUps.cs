@@ -29,6 +29,8 @@ public class PowerUps : MonoBehaviour {
     public AudioManager audioManager;
     [Header("LargeObject")]
     public GameObject[] objects;
+    [Header("LandMine")]
+    public GameObject mineObject;
 
     [Header("Starting Powerup")]
     [Tooltip("Select None for a random powerup")]
@@ -156,6 +158,9 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Teleport:
                 StartCoroutine(Teleport());
                 break;
+            case PowerUpType.LandMine:
+                StartCoroutine(LandMine());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -277,6 +282,9 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Teleport:
                 powerupName = "TELEPORT";
                 break;
+            case PowerUpType.LandMine:
+                powerupName = "LANDMINE";
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -292,6 +300,14 @@ public class PowerUps : MonoBehaviour {
         carControl.teleportEffect.GetComponent<ParticleSystem>().Stop();
         Transform sp = pSwitch.spawnPoints[DataManager.RandomVal(0, pSwitch.spawnPoints.Length - 1)].transform;
         car.transform.position = sp.position;
+        yield return null;
+    }
+
+    private IEnumerator LandMine()
+    {
+        GameObject landMine = Instantiate(mineObject);
+        landMine.transform.rotation = car.transform.rotation;
+        landMine.transform.position = car.transform.position + ((-car.transform.forward * 1.5f) + (Vector3.up * 0.5f));
         yield return null;
     }
 

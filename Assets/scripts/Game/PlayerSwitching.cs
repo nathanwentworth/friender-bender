@@ -58,8 +58,9 @@ public class PlayerSwitching : MonoBehaviour
         if (!DEBUG_MODE)
         {
             StartCoroutine(StartingCountdown());
+            StartCoroutine(Vibrate(currentIndex));
         }
-        StartCoroutine(Vibrate(currentIndex));
+        
     }
 
     private void Update()
