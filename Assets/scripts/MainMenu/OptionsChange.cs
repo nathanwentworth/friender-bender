@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class OptionsChange : MonoBehaviour {
 
@@ -24,6 +25,15 @@ public class OptionsChange : MonoBehaviour {
 	private Text powerupCooldownText;
 
 	[SerializeField]
+	private Slider musicVolumeSlider;
+
+	[SerializeField]
+	private Slider sfxVolumeSlider;
+
+	[SerializeField]
+	private Toggle uiVolToggle;
+
+	[SerializeField]
 	private Toggle trekkieTraxToggle;
 
 	[SerializeField]
@@ -31,6 +41,9 @@ public class OptionsChange : MonoBehaviour {
 
 	[SerializeField]
 	private Dropdown resolutionDropdown;
+
+	[SerializeField]
+	private AudioMixer mixer;
 
   // options menu function
   // when called, sets new length of turn time, changes text display,
@@ -54,6 +67,9 @@ public class OptionsChange : MonoBehaviour {
 		potatoDelaySlider.value = DataManager.PotatoDelay;
 		partyDelaySlider.value = DataManager.PartyDelay;
 		powerupCooldownSlider.value = DataManager.PowerupCooldownTime;
+		musicVolumeSlider.value = DataManager.DecibelToLinear(DataManager.MusicVolume);
+		sfxVolumeSlider.value = DataManager.DecibelToLinear(DataManager.SfxVolume);
+		uiVolToggle.isOn = (DataManager.UiVolume == 0) ? true : false;
 		trekkieTraxToggle.isOn = DataManager.IsTrekkieTraxOn;
 		fullscreenToggle.isOn = DataManager.IsFullscreenOn;
 		resolutionDropdown.value = DataManager.ScreenResolution;
@@ -71,8 +87,17 @@ public class OptionsChange : MonoBehaviour {
 		powerupCooldownSlider.onValueChanged.AddListener(delegate{
 			PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText); 
 		});
+		musicVolumeSlider.onValueChanged.AddListener(delegate{
+			MusicVolumeChange(musicVolumeSlider.value); 
+		});
+		sfxVolumeSlider.onValueChanged.AddListener(delegate{
+			SfxVolumeChange(sfxVolumeSlider.value); 
+		});
 		trekkieTraxToggle.onValueChanged.AddListener(delegate{
 			TrekkieTraxToggleChange(trekkieTraxToggle.isOn); 
+		});
+		uiVolToggle.onValueChanged.AddListener(delegate{
+			UiVolumeChange(uiVolToggle.isOn); 
 		});
 		fullscreenToggle.onValueChanged.AddListener(delegate{
 			FullscreenToggleChange(fullscreenToggle.isOn); 
@@ -85,6 +110,9 @@ public class OptionsChange : MonoBehaviour {
 		PotatoDelayChange(potatoDelaySlider.value, potatoDelayText);
 		PartyDelayChange(partyDelaySlider.value, partyDelayText);
 		PowerupCooldownChange(powerupCooldownSlider.value, powerupCooldownText);
+		MusicVolumeChange(musicVolumeSlider.value);
+		SfxVolumeChange(sfxVolumeSlider.value);
+		UiVolumeChange(uiVolToggle.isOn);
 		TrekkieTraxToggleChange(trekkieTraxToggle.isOn);
 		FullscreenToggleChange(fullscreenToggle.isOn);
 		ScreenResolutionChange(resolutionDropdown.value);
@@ -121,6 +149,27 @@ public class OptionsChange : MonoBehaviour {
 		DataManager.Save();
 	}
 
+	public void MusicVolumeChange(float val) {
+		val = DataManager.LinearToDecibel(val);
+		mixer.SetFloat("musicVol", val);
+		DataManager.MusicVolume = val;
+		DataManager.Save();
+	}
+
+	public void SfxVolumeChange(float val) {
+		val = DataManager.LinearToDecibel(val);
+		mixer.SetFloat("sfxVol", val);
+		DataManager.SfxVolume = val;
+		DataManager.Save();
+	}
+
+	public void UiVolumeChange(bool check) {
+		float val = (check) ? 0f : -80f;
+		mixer.SetFloat("uiVol", val);
+		DataManager.UiVolume = val;
+		DataManager.Save();
+	}
+
 	public void TrekkieTraxToggleChange (bool check) {
 		DataManager.IsTrekkieTraxOn = check;
 	}
@@ -140,9 +189,21 @@ public class OptionsChange : MonoBehaviour {
 		);
 	}
 
+	public void ResetSettings() {
+		PlayerPrefs.DeleteAll();
+
+		DataManager.Load();
+
+		turnTimeSlider.value = DataManager.TurnTime;
+		potatoDelaySlider.value = DataManager.PotatoDelay;
+		partyDelaySlider.value = DataManager.PartyDelay;
+		powerupCooldownSlider.value = DataManager.PowerupCooldownTime;
+		trekkieTraxToggle.isOn = DataManager.IsTrekkieTraxOn;
+	}
+
 	// when the menu is navigated away from
 	// saves data and removes listener
-	void OnDisable() {
+	private void OnDisable() {
 		DataManager.Save();
 		turnTimeSlider.onValueChanged.RemoveAllListeners();
 	}

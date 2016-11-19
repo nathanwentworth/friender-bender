@@ -70,6 +70,11 @@ public static class DataManager
 
     public static bool IsFullscreenOn { get; set; }
 
+    public static float MusicVolume { get; set; }
+
+    public static float SfxVolume { get; set; }
+    public static float UiVolume { get; set; }
+
     public static float TurnTime
     {
         get { return turnTime; }
@@ -97,11 +102,15 @@ public static class DataManager
     public static void Save() {
         int trekkieInt = IsTrekkieTraxOn ? 1 : 0;
         int fullscreenInt = IsFullscreenOn ? 1 : 0;
+        int uiInt = (UiVolume == 0) ? 1 : 0;
 
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
+        PlayerPrefs.SetFloat("Music Volume", MusicVolume);
+        PlayerPrefs.SetFloat("SFX Volume", SfxVolume);
+        PlayerPrefs.SetInt("UI Toggle", uiInt);
         PlayerPrefs.SetInt("Trekkie Trax Toggle", trekkieInt);
         PlayerPrefs.SetInt("Fullscreen Toggle", fullscreenInt);
         PlayerPrefs.SetInt("Resolution", ScreenResolution);
@@ -135,7 +144,7 @@ public static class DataManager
         if (PlayerPrefs.HasKey("Party Delay")) {
             partyDelay = PlayerPrefs.GetFloat("Party Delay");
         } else {
-            partyDelay = 0f;
+            partyDelay = 0.5f;
         }
         if (PlayerPrefs.HasKey("Potato Delay")) {
             potatoDelay = PlayerPrefs.GetFloat("Potato Delay");
@@ -146,6 +155,22 @@ public static class DataManager
             powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");
         } else {
             powerupCooldownTime = 7f;
+        }
+        if (PlayerPrefs.HasKey("Music Volume")) {
+            MusicVolume = PlayerPrefs.GetFloat("Music Volume");
+        } else {
+            MusicVolume = 1f;
+        }
+        if (PlayerPrefs.HasKey("SFX Volume")) {
+            SfxVolume = PlayerPrefs.GetFloat("SFX Volume");
+        } else {
+            SfxVolume = 1f;
+        }
+
+        if (PlayerPrefs.HasKey("UI Toggle")) {
+            UiVolume = (PlayerPrefs.GetInt("UI Toggle") == 1) ? 0f : -80f;
+        } else {
+            UiVolume = 0f;
         }
 
         if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
@@ -195,5 +220,23 @@ public static class DataManager
             return null;
         }
     }
+
+    public static float LinearToDecibel(float linear) {
+        float dB;
+
+        if (linear != 0)
+            dB = 20.0f * Mathf.Log10(linear);
+        else
+            dB = -144.0f;
+
+        return dB;
+    }
+
+    public static float DecibelToLinear(float dB)
+    {
+        float linear = Mathf.Pow(10.0f, dB/20.0f);
+        return linear;
+    }
+
 
 }
