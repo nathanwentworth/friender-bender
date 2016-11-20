@@ -85,9 +85,9 @@ public class HUDManager : MonoBehaviour
     {
         if (deviceDetatched)
         {
-            foreach(PlayerData item in DataManager.PlayerList)
+            foreach (PlayerData item in DataManager.PlayerList)
             {
-                if (item.deviceDetatched)
+                if (item.deviceDetatched && DataManager.PlayerList.Count == DataManager.TotalPlayers)
                 {
                     item.Controller = controller;
                     deviceDetatched = false;

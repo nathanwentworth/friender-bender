@@ -120,7 +120,6 @@ public class PowerUps : MonoBehaviour {
                 player.CurrentPowerUp = PowerUpType.None;
                 hud.DisplayPowerups(player.PlayerNumber, " ");
                 StartCoroutine(Cooldown(player));
-
             }
         }
     }
@@ -178,7 +177,7 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator SkipTurn()
     {
         pSwitch.SkipPlayer();
-        string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " SKIPPED";
+        string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " UP NEXT";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }
@@ -239,7 +238,9 @@ public class PowerUps : MonoBehaviour {
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
-        int rand = DataManager.RandomVal(1, values.Length - 1);
+        // int rand = DataManager.RandomVal(1, values.Length - 1);
+        // CHANGE LATER
+        int rand = 2;
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));

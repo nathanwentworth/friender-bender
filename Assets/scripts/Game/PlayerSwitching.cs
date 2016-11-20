@@ -7,13 +7,13 @@ public class PlayerSwitching : MonoBehaviour
 
     private int
         totalPlayers,
-        remainingPlayers;
+        remainingPlayers,
+        skipTurn;
     public int
         currentIndex = 0,
         nextIndex;
     public float timer { get; set; }
     public float turnTime { get; set; }
-    private bool skipTurn;
     public bool
         playerWin,
         startingGame,
@@ -102,24 +102,31 @@ public class PlayerSwitching : MonoBehaviour
         timer = turnTime;
         GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>().shield = false;
         StartCoroutine(Vibrate(currentIndex));
-        skipTurn = false;
+        if (skipTurn > 0) skipTurn = 0;
     }
 
     public int NextPlayer()
     {
-        int index = (skipTurn) ? currentIndex + 1 : currentIndex;
-        index++;
-        if (index >= totalPlayers) index = 0;
+        int index = currentIndex + 1;
+        if (index >= totalPlayers) index = index % totalPlayers;
+        int skips = skipTurn;
         for (int i = index; i < totalPlayers; i++)
         {
-            if (!isOut[index]) { return index; }
+            if (!isOut[i] && skips <= 0) { return i; }
+            else if (!isOut[i]) { skips--; }
+            if (i == totalPlayers - 1) { i = -1; }
         }
-        return -1;
+        // for (int i = 0; i < totalPlayers; i++)
+        // {
+        //     if (!isOut[i]) { return i; }
+        // }
+        Debug.LogError("Something went wrong, no one can be switched to.");
+        return index;
     }
 
     public void SkipPlayer()
     {
-        skipTurn = true;
+        skipTurn++;
     }
 
     public void RemovePlayer()
