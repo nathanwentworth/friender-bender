@@ -182,6 +182,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SkipTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("skipTurn"));
         pSwitch.SkipPlayer();
         string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer() + 1) + " SKIPPED";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
@@ -190,6 +191,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator AddSecondsToTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("addTwoSeconds"));
         pSwitch.timer = pSwitch.timer + 2.5f;
         string timerText = "+2 SECONDS";
         Debug.Log("Adding 2 seconds to time");
@@ -208,6 +210,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator EndTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("endTurn"));
         pSwitch.timer = 0;
         yield return null;
     }
@@ -238,6 +241,7 @@ public class PowerUps : MonoBehaviour {
         // car.transform.position + (car.transform.forward + (30f * dist)) + (Vector3.up * 7),
         i.transform.position = car.transform.position + (car.transform.forward * (30f * dist)) + (Vector3.up * 7);
         //i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        StartCoroutine(audioManager.PowerupSounds("randomLargeObject"));
         yield return null;
     }
 
@@ -352,6 +356,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator LandMine()
     {
+        StartCoroutine(audioManager.PowerupSounds("landMine"));
         GameObject landMine = Instantiate(mineObject);
         landMine.transform.rotation = car.transform.rotation;
         landMine.transform.position = car.transform.position + ((-car.transform.forward * 1.5f) + (Vector3.up * 0.5f));

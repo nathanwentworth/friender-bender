@@ -21,6 +21,7 @@ public class LandMine : MonoBehaviour {
     {
         if(other.tag == "Player" && armed)
         {
+            StartCoroutine(GameObject.Find("AudioManagerObj [Level1]").GetComponent<AudioManager>().PowerupSounds("landMineExplode"));
             Debug.Log("Boom");
             GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>().AddExplosionForce(25, transform.position, 10, 0, ForceMode.VelocityChange);
             Destroy(gameObject);
