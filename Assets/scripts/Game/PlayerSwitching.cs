@@ -9,25 +9,21 @@ public class PlayerSwitching : MonoBehaviour
         totalPlayers,
         remainingPlayers;
     public int
-        currentIndex = 0;
-    [HideInInspector]
-    public float
-        timer;
-    public float
-        turnTime;
-    private bool
-        skipTurn;
+        currentIndex = 0,
+        nextIndex;
+    public float timer { get; set; }
+    public float turnTime { get; set; }
+    private bool skipTurn;
     public bool
         playerWin,
         startingGame,
         DEBUG_MODE,
         passingController;
-    private bool[]
-        isOut;
-    public GameObject
-        InControl;
-    public GameObject[]
-        spawnPoints;
+    private bool[] isOut;
+
+    [SerializeField]
+    private GameObject InControl;
+    public GameObject[] spawnPoints;
     public HUDManager hudManager;
 
     private void Awake()
@@ -60,6 +56,7 @@ public class PlayerSwitching : MonoBehaviour
             StartCoroutine(StartingCountdown());
         }
         StartCoroutine(Vibrate(currentIndex));
+        // hudManager.DisplayNextPlayer(currentIndex + 1);
     }
 
     private void Update()
@@ -86,35 +83,17 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        int nextIndex = currentIndex;
-        for (int i = 0; i < totalPlayers; i++)
-        {
-            nextIndex++;
-            if (nextIndex >= totalPlayers)
-            {
-                nextIndex = 0;
-            }
-            if (!isOut[nextIndex] && skipTurn)
-            {
-                skipTurn = false;
-            }
-            else if(!isOut[nextIndex] && !skipTurn)
-            {
-                break;
-            }
-        }
         // set the current index from the next index var
-        currentIndex = nextIndex;
+        currentIndex = NextPlayer();
 
-        string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
+        string notif = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
 
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notif));
         hudManager.EnqueueWait(2f);
         hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
-            // passingController = true;
             StartCoroutine(Sleep(DataManager.PotatoDelay));
         } else {
             StartCoroutine(Sleep(DataManager.PartyDelay));
@@ -123,22 +102,17 @@ public class PlayerSwitching : MonoBehaviour
         timer = turnTime;
         GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>().shield = false;
         StartCoroutine(Vibrate(currentIndex));
+        skipTurn = false;
     }
 
     public int NextPlayer()
     {
-        int nextIndex = currentIndex;
-        for (int i = 0; i < totalPlayers; i++)
+        int index = (skipTurn) ? currentIndex + 1 : currentIndex;
+        index++;
+        if (index >= totalPlayers) index = 0;
+        for (int i = index; i < totalPlayers; i++)
         {
-            nextIndex++;
-            if (nextIndex >= totalPlayers)
-            {
-                nextIndex = 0;
-            }
-            if (!isOut[nextIndex])
-            {
-                return nextIndex;
-            }
+            if (!isOut[index]) { return index; }
         }
         return -1;
     }

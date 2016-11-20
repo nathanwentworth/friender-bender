@@ -21,6 +21,7 @@ public class HUDManager : MonoBehaviour
     public Sprite livesDisplayActive;
     public Text[] powerupText;
     public GameObject[] powerupContainers;
+    public Text nextPlayerText;
 
     [Header("Pause")]
 
@@ -134,6 +135,8 @@ public class HUDManager : MonoBehaviour
         timerBar.color = timerGradient.Evaluate (playerSwitch.timer / playerSwitch.turnTime);
 
         currentPlayerText.text = DataManager.GetPlayerIdentifier(playerSwitch.currentIndex);
+
+        nextPlayerText.text = "NEXT: " + DataManager.GetPlayerIdentifier(playerSwitch.NextPlayer());
     }
 
     public void Pause() {
@@ -168,6 +171,10 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
+
+    // public void DisplayNextPlayer(int index) {
+    //     nextPlayerText.text = "NEXT: " + DataManager.GetPlayerIdentifier(index);
+    // }
 
     private IEnumerator Process() {
         while (true) {
