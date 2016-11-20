@@ -234,20 +234,67 @@ public class PowerUps : MonoBehaviour {
     {
         float mph = carControl.MPH;
         float dist = mph / 150f;
-        GameObject i = Instantiate(objects[0]);
+        GameObject i = Instantiate(objects[(int)UnityEngine.Random.Range(0, objects.Length)]);
         // car.transform.position + (car.transform.forward + (30f * dist)) + (Vector3.up * 7),
         i.transform.position = car.transform.position + (car.transform.forward * (30f * dist)) + (Vector3.up * 7);
-        i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        //i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
         yield return null;
     }
 
     private void RandomPowerup(PlayerData player)
     {
-        Array values = Enum.GetValues(typeof(PowerUpType));
-        int rand = DataManager.RandomVal(1, values.Length - 1);
-        PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
-        player.CurrentPowerUp = randomPowerup;
-        hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));
+        float rand = UnityEngine.Random.Range(0.00f, 100.00f);
+        Debug.Log(rand);
+        if(IsNumBetweenValues(rand, 0, 14.17f))
+        {
+            player.CurrentPowerUp = PowerUpType.SpeedBoost;
+        }
+        else if(IsNumBetweenValues(rand, 14.18f, 21.18f))
+        {
+            player.CurrentPowerUp = PowerUpType.SkipTurn;
+        }
+        else if(IsNumBetweenValues(rand, 21.19f, 32.02f))
+        {
+            player.CurrentPowerUp = PowerUpType.AddSecondsToTurn;
+        }
+        else if(IsNumBetweenValues(rand, 32.03f, 41.70f))
+        {
+            player.CurrentPowerUp = PowerUpType.InvertSteering;
+        }
+        else if(IsNumBetweenValues(rand, 41.71f, 55.38f))
+        {
+            player.CurrentPowerUp = PowerUpType.ScreenDistraction;
+        }
+        else if (IsNumBetweenValues(rand, 55.39f, 67.39f))
+        {
+            player.CurrentPowerUp = PowerUpType.Shield;
+        }
+        else if (IsNumBetweenValues(rand, 67.40f, 72.40f))
+        {
+            player.CurrentPowerUp = PowerUpType.EndTurn;
+        }
+        else if (IsNumBetweenValues(rand, 72.41f, 84.58f))
+        {
+            player.CurrentPowerUp = PowerUpType.LargeObject;
+        }
+        else if (IsNumBetweenValues(rand, 84.59f, 90.42f))
+        {
+            player.CurrentPowerUp = PowerUpType.Teleport;
+        }
+        else if (IsNumBetweenValues(rand, 90.43f, 100))
+        {
+            player.CurrentPowerUp = PowerUpType.LandMine;
+        }
+        hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(player.CurrentPowerUp));
+    }
+
+    private bool IsNumBetweenValues(float value, float min, float max)
+    {
+        if(value >= min && value <= max)
+        {
+            return true;
+        }
+        return false;
     }
 
     public string GetPowerupName(PowerUpType powerup)
