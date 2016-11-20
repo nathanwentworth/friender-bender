@@ -3,7 +3,8 @@ using System.Collections;
 using InControl;
 using System;
 
-public class PowerUps : MonoBehaviour {
+public class PowerUps : MonoBehaviour
+{
 
     public enum PowerUpType
     {
@@ -50,7 +51,7 @@ public class PowerUps : MonoBehaviour {
         carControl = car.GetComponent<CarControl>();
         pSwitch = gameObject.GetComponent<PlayerSwitching>();
         hud = pSwitch.hudManager;
-        foreach(PlayerData player in DataManager.PlayerList)
+        foreach (PlayerData player in DataManager.PlayerList)
         {
             player.Lives = DataManager.LivesCount;
             if (StartingPowerUp != PowerUpType.None)
@@ -240,7 +241,10 @@ public class PowerUps : MonoBehaviour {
         GameObject i = Instantiate(objects[(int)UnityEngine.Random.Range(0, objects.Length)]);
         // car.transform.position + (car.transform.forward + (30f * dist)) + (Vector3.up * 7),
         i.transform.position = car.transform.position + (car.transform.forward * (30f * dist)) + (Vector3.up * 7);
-        //i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        foreach (Rigidbody rigid in i.GetComponentsInChildren<Rigidbody>())
+        {
+            rigid.AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        }
         StartCoroutine(audioManager.PowerupSounds("randomLargeObject"));
         yield return null;
     }
@@ -249,23 +253,23 @@ public class PowerUps : MonoBehaviour {
     {
         float rand = UnityEngine.Random.Range(0.00f, 100.00f);
         Debug.Log(rand);
-        if(IsNumBetweenValues(rand, 0, 14.17f))
+        if (IsNumBetweenValues(rand, 0, 14.17f))
         {
             player.CurrentPowerUp = PowerUpType.SpeedBoost;
         }
-        else if(IsNumBetweenValues(rand, 14.18f, 21.18f))
+        else if (IsNumBetweenValues(rand, 14.18f, 21.18f))
         {
             player.CurrentPowerUp = PowerUpType.SkipTurn;
         }
-        else if(IsNumBetweenValues(rand, 21.19f, 32.02f))
+        else if (IsNumBetweenValues(rand, 21.19f, 32.02f))
         {
             player.CurrentPowerUp = PowerUpType.AddSecondsToTurn;
         }
-        else if(IsNumBetweenValues(rand, 32.03f, 41.70f))
+        else if (IsNumBetweenValues(rand, 32.03f, 41.70f))
         {
             player.CurrentPowerUp = PowerUpType.InvertSteering;
         }
-        else if(IsNumBetweenValues(rand, 41.71f, 55.38f))
+        else if (IsNumBetweenValues(rand, 41.71f, 55.38f))
         {
             player.CurrentPowerUp = PowerUpType.ScreenDistraction;
         }
@@ -294,7 +298,7 @@ public class PowerUps : MonoBehaviour {
 
     private bool IsNumBetweenValues(float value, float min, float max)
     {
-        if(value >= min && value <= max)
+        if (value >= min && value <= max)
         {
             return true;
         }
@@ -367,7 +371,8 @@ public class PowerUps : MonoBehaviour {
     private IEnumerator Cooldown(PlayerData player)
     {
         float cooldown = powerupCooldownTime;
-        while (cooldown > 0) {
+        while (cooldown > 0)
+        {
             float cooldownDisp = cooldown;
             cooldownDisp = Mathf.Round(cooldownDisp * 10f) / 10f;
             hud.DisplayPowerups(player.PlayerNumber, cooldownDisp + "");

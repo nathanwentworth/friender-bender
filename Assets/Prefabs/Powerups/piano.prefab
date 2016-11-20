@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000010530468148}
   - 54: {fileID: 54000012648371990}
   - 65: {fileID: 65000011191501654}
+  - 65: {fileID: 65000013112509812}
   m_Layer: 0
   m_Name: pianoRoot
   m_TagString: Untagged
@@ -96,7 +97,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011106112774}
-  m_LocalRotation: {x: -0.685307, y: 0.6881015, z: 0.16828431, w: 0.16897053}
+  m_LocalRotation: {x: -0.6853071, y: 0.68810153, z: 0.16828433, w: 0.16897054}
   m_LocalPosition: {x: -2.8147073, y: 8.350262, z: 7.1659694}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -110,7 +111,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012345704456}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.160984, y: 3.91, z: 90.23}
+  m_LocalPosition: {x: -1.7602034, y: 3.44, z: 101.18489}
   m_LocalScale: {x: 0.026077606, y: 0.02607759, z: 0.02607759}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -172,7 +173,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -1.1625115, y: -0.0000056028366, z: 0.002515316}
+  m_ConnectedAnchor: {x: -1.1625115, y: -0.0000010728836, z: 0.002515316}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -216,8 +217,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 80.550735, y: 181.69724, z: 146.25189}
-  m_Center: {x: 31.089928, y: 22.828745, z: -71.42668}
+  m_Size: {x: 75.5, y: 94.295166, z: 146.25189}
+  m_Center: {x: 31.090836, y: -20.872576, z: -71.42668}
+--- !u!65 &65000013112509812
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010667403194}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 75.5, y: 83.14593, z: 71.91873}
+  m_Center: {x: 30.449324, y: 67.84564, z: -34.26096}
 --- !u!137 &137000012735938762
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
