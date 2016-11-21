@@ -54,7 +54,7 @@ public class PowerUps : MonoBehaviour
         foreach (PlayerData player in DataManager.PlayerList)
         {
             player.Lives = DataManager.LivesCount;
-            if (StartingPowerUp != PowerUpType.None)
+            if (StartingPowerUp != PowerUpType.None && pSwitch.DEBUG_MODE)
             {
                 player.CurrentPowerUp = StartingPowerUp;
             }
