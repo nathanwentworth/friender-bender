@@ -188,7 +188,7 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ":   " + powerup;
+        powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ": " + powerup;
     }
 
     private void PowerupSizeSet() {
