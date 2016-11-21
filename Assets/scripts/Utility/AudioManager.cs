@@ -30,7 +30,16 @@ public class AudioManager : MonoBehaviour
     private AudioClip distraction;
     [SerializeField]
     private AudioClip teleport;
-
+    [SerializeField]
+    private AudioClip addTwoSecconds;
+    [SerializeField]
+    private AudioClip endTurn;
+    [SerializeField]
+    private AudioClip skipTurn;
+    [SerializeField]
+    private AudioClip landMine;
+    [SerializeField]
+    private AudioClip landMineExplode;
     [Header("Music")]
     [SerializeField]
     private AudioClip[] trekkieTrax;
@@ -93,15 +102,30 @@ public class AudioManager : MonoBehaviour
                 Debug.Log("Playing Speedboost");
                 powerupSource.PlayOneShot(speedBoost);
                 break;
-            //   case "randomLargeObject":
-            // powerupSource.PlayOneShot(randomLargeObject);
-            //     break;
+            case "randomLargeObject":
+                powerupSource.PlayOneShot(randomLargeObject);
+                break;
             case "distraction":
                 Debug.Log("Playing distraction");
                 powerupSource.PlayOneShot(distraction);
                 break;
             case "teleport":
                 powerupSource.PlayOneShot(teleport);
+                break;
+            case "addTwoSeconds":
+                powerupSource.PlayOneShot(addTwoSecconds);
+                break;
+            case "endTurn":
+                powerupSource.PlayOneShot(endTurn);
+                break;
+            case "skipTurn":
+                powerupSource.PlayOneShot(skipTurn);
+                break;
+            case "landMine":
+                powerupSource.PlayOneShot(landMine);
+                break;
+            case "landMineExplode":
+                powerupSource.PlayOneShot(landMineExplode);
                 break;
             default:
                 Debug.LogError("No sound for this powerup yet :^)");

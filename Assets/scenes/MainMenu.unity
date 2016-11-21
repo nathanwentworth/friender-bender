@@ -8053,7 +8053,7 @@ MonoBehaviour:
   xInputUpdateRate: 0
   xInputOverrideBufferSize: 0
   xInputBufferSize: 0
-  enableNativeInput: 0
+  enableNativeInput: 1
   nativeInputEnableXInput: 1
   nativeInputPreventSleep: 0
   nativeInputOverrideUpdateRate: 0
@@ -16081,7 +16081,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: b264cdf3d080847e9b5eb4e4fa1d18e5, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a979f9f995ae0824c866109debf939e1, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.613
   m_Pitch: 1
