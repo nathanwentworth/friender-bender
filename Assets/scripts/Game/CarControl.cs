@@ -34,7 +34,6 @@ public class CarControl : MonoBehaviour
         get { return mph; }
     }
 
-
     private bool grounded;
     //Making this public for Powerup Reference
     [HideInInspector]

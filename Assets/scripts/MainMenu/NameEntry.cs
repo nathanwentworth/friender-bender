@@ -5,7 +5,7 @@ using InControl;
 
 public class NameEntry : MonoBehaviour {
 
-	private readonly char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+	private readonly char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ".ToCharArray();
 	
 	private int index;
 	private char[] playerChars;
@@ -120,6 +120,7 @@ public class NameEntry : MonoBehaviour {
 		Debug.Log("Name saved!");
 		readyText.SetActive(true);
 		nameSaved = true;
+        Debug.Log(controller.Name);
 	}
 
 	private IEnumerator InputSleep() {
