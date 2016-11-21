@@ -121,6 +121,7 @@ public class NameEntry : MonoBehaviour {
 		Debug.Log("Name saved!");
 		readyText.SetActive(true);
 		nameSaved = true;
+        Debug.Log(controller.Name);
 	}
 
 	private IEnumerator InputSleep() {

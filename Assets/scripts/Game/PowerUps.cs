@@ -3,7 +3,8 @@ using System.Collections;
 using InControl;
 using System;
 
-public class PowerUps : MonoBehaviour {
+public class PowerUps : MonoBehaviour
+{
 
     public enum PowerUpType
     {
@@ -29,6 +30,8 @@ public class PowerUps : MonoBehaviour {
     public AudioManager audioManager;
     [Header("LargeObject")]
     public GameObject[] objects;
+    [Header("LandMine")]
+    public GameObject mineObject;
 
     [Header("Starting Powerup")]
     [Tooltip("Select None for a random powerup")]
@@ -48,7 +51,7 @@ public class PowerUps : MonoBehaviour {
         carControl = car.GetComponent<CarControl>();
         pSwitch = gameObject.GetComponent<PlayerSwitching>();
         hud = pSwitch.hudManager;
-        foreach(PlayerData player in DataManager.PlayerList)
+        foreach (PlayerData player in DataManager.PlayerList)
         {
             player.Lives = DataManager.LivesCount;
             if (StartingPowerUp != PowerUpType.None)
@@ -155,6 +158,9 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Teleport:
                 StartCoroutine(Teleport());
                 break;
+            case PowerUpType.LandMine:
+                StartCoroutine(LandMine());
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -176,6 +182,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator SkipTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("skipTurn"));
         pSwitch.SkipPlayer();
         string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " UP NEXT";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
@@ -184,6 +191,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator AddSecondsToTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("addTwoSeconds"));
         pSwitch.timer = pSwitch.timer + 2.5f;
         string timerText = "+2 SECONDS";
         Debug.Log("Adding 2 seconds to time");
@@ -202,6 +210,7 @@ public class PowerUps : MonoBehaviour {
 
     private IEnumerator EndTurn()
     {
+        StartCoroutine(audioManager.PowerupSounds("endTurn"));
         pSwitch.timer = 0;
         yield return null;
     }
@@ -228,20 +237,71 @@ public class PowerUps : MonoBehaviour {
     {
         float mph = carControl.MPH;
         float dist = mph / 150f;
-        GameObject i = Instantiate(objects[0]);
+        GameObject i = Instantiate(objects[(int)UnityEngine.Random.Range(0, objects.Length)]);
         // car.transform.position + (car.transform.forward + (30f * dist)) + (Vector3.up * 7),
         i.transform.position = car.transform.position + (car.transform.forward * (30f * dist)) + (Vector3.up * 7);
-        i.GetComponent<Rigidbody>().AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        foreach (Rigidbody rigid in i.GetComponentsInChildren<Rigidbody>())
+        {
+            rigid.AddForce(Vector3.down * 15, ForceMode.VelocityChange);
+        }
+        StartCoroutine(audioManager.PowerupSounds("randomLargeObject"));
         yield return null;
     }
 
     private void RandomPowerup(PlayerData player)
     {
-        Array values = Enum.GetValues(typeof(PowerUpType));
-        int rand = DataManager.RandomVal(1, values.Length - 1);
-        PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
-        player.CurrentPowerUp = randomPowerup;
-        hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));
+        float rand = UnityEngine.Random.Range(0.00f, 100.00f);
+        Debug.Log(rand);
+        if (IsNumBetweenValues(rand, 0, 14.17f))
+        {
+            player.CurrentPowerUp = PowerUpType.SpeedBoost;
+        }
+        else if (IsNumBetweenValues(rand, 14.18f, 21.18f))
+        {
+            player.CurrentPowerUp = PowerUpType.SkipTurn;
+        }
+        else if (IsNumBetweenValues(rand, 21.19f, 32.02f))
+        {
+            player.CurrentPowerUp = PowerUpType.AddSecondsToTurn;
+        }
+        else if (IsNumBetweenValues(rand, 32.03f, 41.70f))
+        {
+            player.CurrentPowerUp = PowerUpType.InvertSteering;
+        }
+        else if (IsNumBetweenValues(rand, 41.71f, 55.38f))
+        {
+            player.CurrentPowerUp = PowerUpType.ScreenDistraction;
+        }
+        else if (IsNumBetweenValues(rand, 55.39f, 67.39f))
+        {
+            player.CurrentPowerUp = PowerUpType.Shield;
+        }
+        else if (IsNumBetweenValues(rand, 67.40f, 72.40f))
+        {
+            player.CurrentPowerUp = PowerUpType.EndTurn;
+        }
+        else if (IsNumBetweenValues(rand, 72.41f, 84.58f))
+        {
+            player.CurrentPowerUp = PowerUpType.LargeObject;
+        }
+        else if (IsNumBetweenValues(rand, 84.59f, 90.42f))
+        {
+            player.CurrentPowerUp = PowerUpType.Teleport;
+        }
+        else if (IsNumBetweenValues(rand, 90.43f, 100))
+        {
+            player.CurrentPowerUp = PowerUpType.LandMine;
+        }
+        hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(player.CurrentPowerUp));
+    }
+
+    private bool IsNumBetweenValues(float value, float min, float max)
+    {
+        if (value >= min && value <= max)
+        {
+            return true;
+        }
+        return false;
     }
 
     public string GetPowerupName(PowerUpType powerup)
@@ -276,6 +336,9 @@ public class PowerUps : MonoBehaviour {
             case PowerUpType.Teleport:
                 powerupName = "TELEPORT";
                 break;
+            case PowerUpType.LandMine:
+                powerupName = "LANDMINE";
+                break;
             default:
                 Debug.LogError("Powerup: Powerup you tried to use doesnt exist.");
                 break;
@@ -294,11 +357,21 @@ public class PowerUps : MonoBehaviour {
         yield return null;
     }
 
+    private IEnumerator LandMine()
+    {
+        StartCoroutine(audioManager.PowerupSounds("landMine"));
+        GameObject landMine = Instantiate(mineObject);
+        landMine.transform.rotation = car.transform.rotation;
+        landMine.transform.position = car.transform.position + ((-car.transform.forward * 1.5f) + (Vector3.up * 0.5f));
+        yield return null;
+    }
+
 
     private IEnumerator Cooldown(PlayerData player)
     {
         float cooldown = powerupCooldownTime;
-        while (cooldown > 0) {
+        while (cooldown > 0)
+        {
             float cooldownDisp = cooldown;
             cooldownDisp = Mathf.Round(cooldownDisp * 10f) / 10f;
             hud.DisplayPowerups(player.PlayerNumber, cooldownDisp + "");
