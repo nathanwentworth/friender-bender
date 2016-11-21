@@ -190,7 +190,11 @@ public static class DataManager
         } else {
             ScreenResolution = Screen.resolutions.Length - 1;
         }
-        
+
+        if (Application.isEditor)
+        {
+            ScreenResolution = 0;
+        }
 
         Screen.fullScreen = IsFullscreenOn;
         Screen.SetResolution(
