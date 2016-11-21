@@ -168,7 +168,8 @@ AudioSource:
   m_GameObject: {fileID: 1000010436741302}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243000010016406450, guid: f6e83001269ba1b429419d724cd8e114,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -242,7 +243,8 @@ AudioSource:
   m_GameObject: {fileID: 1000012106647904}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243000013329193636, guid: f6e83001269ba1b429419d724cd8e114,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -316,7 +318,7 @@ AudioSource:
   m_GameObject: {fileID: 1000011357153772}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 243000011806434412, guid: f6e83001269ba1b429419d724cd8e114,
+  OutputAudioMixerGroup: {fileID: 243000013917224648, guid: f6e83001269ba1b429419d724cd8e114,
     type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
@@ -403,6 +405,12 @@ MonoBehaviour:
   randomLargeObject: {fileID: 8300000, guid: 6f07e06a3605c4fa081747f2f2296823, type: 3}
   speedBoost: {fileID: 8300000, guid: 21dfbf58c45b34ad4b14edec17b0118b, type: 3}
   distraction: {fileID: 8300000, guid: 64abb79fd23314c5d86deb412766222f, type: 3}
+  teleport: {fileID: 8300000, guid: fbeab015ff0331a44a02af03c88f8499, type: 3}
+  addTwoSecconds: {fileID: 8300000, guid: 466bce038f9081d4c934e650e7530ae9, type: 3}
+  endTurn: {fileID: 8300000, guid: 0449fef0e007d7d40865277e6040e6e7, type: 3}
+  skipTurn: {fileID: 8300000, guid: d5ad966a688a5af4a916c1f3bed8f17c, type: 3}
+  landMine: {fileID: 8300000, guid: 8ae066a04b10ef94da19936bce7b9946, type: 3}
+  landMineExplode: {fileID: 8300000, guid: 4ac09a1ad846d064ea6a455a426bfcba, type: 3}
   trekkieTrax:
   - {fileID: 8300000, guid: 3addb1c000f274c6593cd00216fcb25d, type: 3}
   - {fileID: 8300000, guid: 8c1aa63110f9b4e1c9f466080b9637d6, type: 3}
@@ -414,9 +422,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: b6f0b114225254e05bd193cc3cc8bff3, type: 3}
   - {fileID: 8300000, guid: e61e5c367b35e4a2594fdd1960cb041f, type: 3}
   mainPlaylist:
-  - {fileID: 8300000, guid: 048a2d181bff102489036b5bb1492266, type: 3}
-  - {fileID: 8300000, guid: b264cdf3d080847e9b5eb4e4fa1d18e5, type: 3}
-  - {fileID: 8300000, guid: 8693023c155fb4d9291e935a2a742578, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   music: {fileID: 82000014166185520}
 --- !u!167 &167000012204838516
 AudioReverbZone:
