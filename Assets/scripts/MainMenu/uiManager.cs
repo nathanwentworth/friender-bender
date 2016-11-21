@@ -17,8 +17,6 @@ public class uiManager : MonoBehaviour
 
     [Header("Loading")]
     [SerializeField]
-    private GameObject nowLoadingPanel;
-    [SerializeField]
     private GameObject canvasLoad;
     [SerializeField]
     private Image loadingBar;
@@ -88,7 +86,6 @@ public class uiManager : MonoBehaviour
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         StartCoroutine(BackgroundGradient());
-        nowLoadingPanel.SetActive(false);
         allPlayersReady = false;
     }
 
@@ -377,7 +374,6 @@ public class uiManager : MonoBehaviour
             if (sync.progress >= 0.89f) {
                 loadingText.text = "PRESS A TO CONTINUE";
                 if (inputDevice.Action1.WasPressed) {
-                    nowLoadingPanel.SetActive(true);
                     sync.allowSceneActivation = true;
                     yield return null;
                 }
