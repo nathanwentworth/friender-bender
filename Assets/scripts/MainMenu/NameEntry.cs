@@ -5,7 +5,7 @@ using InControl;
 
 public class NameEntry : MonoBehaviour {
 
-	private readonly char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 ".ToCharArray();
+	private readonly char[] letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 +-=*/?!%#~".ToCharArray();
 	
 	private int index;
 	private char[] playerChars;
@@ -54,11 +54,8 @@ public class NameEntry : MonoBehaviour {
 		if (controller.Action1.WasPressed) {
 			if (PlayerName.Length < 3 && TextDisplayed) { EnterChar(); }
 			else if (!TextDisplayed) { DisplayNameEntry(); }
-			else if (PlayerName.Length > 0) { SaveName(); }
+			if (PlayerName.Length > 2) { SaveName(); }
 		}
-		// else if (controller.Command.WasPressed && PlayerName.Length > 0) {
-			
-		// } 
 		else if (controller.Direction.Y > 0.5 || controller.Direction.Y < -0.5) {
 			if (acceptInput && !nameSaved && PlayerName.Length < 3 && TextDisplayed) {
 				ChangeNameEntryChar();
@@ -115,6 +112,10 @@ public class NameEntry : MonoBehaviour {
 
 	private void SaveName() {
 		DataManager.PlayerList[playerNumber].PlayerName = PlayerName;
+		// if (controller.Name == "ps4") {
+		// 	Color led = DataManager.Colors[playerNumber];
+	 //    DataManager.PlayerList[playerNumber].Controller.SetLightColor(led);			
+		// }
 		nameEntry.GetComponent<Text>().text = PlayerName;
 		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");

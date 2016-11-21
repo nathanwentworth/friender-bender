@@ -70,6 +70,11 @@ public static class DataManager
 
     public static bool IsFullscreenOn { get; set; }
 
+    public static float MusicVolume { get; set; }
+
+    public static float SfxVolume { get; set; }
+    public static float UiVolume { get; set; }
+
     public static float TurnTime
     {
         get { return turnTime; }
@@ -97,13 +102,27 @@ public static class DataManager
     public static void Save() {
         int trekkieInt = IsTrekkieTraxOn ? 1 : 0;
         int fullscreenInt = IsFullscreenOn ? 1 : 0;
+        int uiInt = (UiVolume == 0) ? 1 : 0;
 
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
         PlayerPrefs.SetFloat("Powerup Cooldown", powerupCooldownTime);
+        PlayerPrefs.SetFloat("Music Volume", MusicVolume);
+        PlayerPrefs.SetFloat("SFX Volume", SfxVolume);
+        PlayerPrefs.SetInt("UI Toggle", uiInt);
         PlayerPrefs.SetInt("Trekkie Trax Toggle", trekkieInt);
         PlayerPrefs.SetInt("Fullscreen Toggle", fullscreenInt);
+        PlayerPrefs.SetInt("Resolution", ScreenResolution);
+
+        Screen.fullScreen = IsFullscreenOn;
+        Screen.SetResolution(
+            Screen.resolutions[ScreenResolution].width,
+            Screen.resolutions[ScreenResolution].height,
+            IsFullscreenOn,
+            Screen.resolutions[ScreenResolution].refreshRate
+        );
+
         PlayerPrefs.Save();
         Debug.Log("Saved data");
     }
@@ -118,44 +137,58 @@ public static class DataManager
 
     public static void Load() {
         if (PlayerPrefs.HasKey("Turn Time")) {
-            turnTime = PlayerPrefs.GetFloat("Turn Time");            
+            turnTime = PlayerPrefs.GetFloat("Turn Time");
         } else {
             turnTime = 7f;
         }
         if (PlayerPrefs.HasKey("Party Delay")) {
-            partyDelay = PlayerPrefs.GetFloat("Party Delay");            
+            partyDelay = PlayerPrefs.GetFloat("Party Delay");
         } else {
-            partyDelay = 0f;
+            partyDelay = 0.5f;
         }
         if (PlayerPrefs.HasKey("Potato Delay")) {
-            potatoDelay = PlayerPrefs.GetFloat("Potato Delay");            
+            potatoDelay = PlayerPrefs.GetFloat("Potato Delay");
         } else {
             potatoDelay = 3f;
         }
         if (PlayerPrefs.HasKey("Powerup Cooldown")) {
-            powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");            
+            powerupCooldownTime = PlayerPrefs.GetFloat("Powerup Cooldown");
         } else {
             powerupCooldownTime = 7f;
         }
+        if (PlayerPrefs.HasKey("Music Volume")) {
+            MusicVolume = PlayerPrefs.GetFloat("Music Volume");
+        } else {
+            MusicVolume = 1f;
+        }
+        if (PlayerPrefs.HasKey("SFX Volume")) {
+            SfxVolume = PlayerPrefs.GetFloat("SFX Volume");
+        } else {
+            SfxVolume = 1f;
+        }
+
+        if (PlayerPrefs.HasKey("UI Toggle")) {
+            UiVolume = (PlayerPrefs.GetInt("UI Toggle") == 1) ? 0f : -80f;
+        } else {
+            UiVolume = 0f;
+        }
 
         if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
-            if (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) {
-                IsTrekkieTraxOn = true;
-            } else {
-                IsTrekkieTraxOn = false;
-            }
+            IsTrekkieTraxOn = (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) ? true : false;
         } else {
             IsTrekkieTraxOn = true;
         }
 
         if (PlayerPrefs.HasKey("Fullscreen Toggle")) {
-            if (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) {
-                IsFullscreenOn = true;
-            } else {
-                IsFullscreenOn = false;
-            }
+            IsFullscreenOn = (PlayerPrefs.GetInt("Fullscreen Toggle") == 1) ? true : false;
         } else {
-            IsFullscreenOn = false;
+            IsFullscreenOn = true;
+        }
+
+        if (PlayerPrefs.HasKey("Resolution")) {
+            ScreenResolution = PlayerPrefs.GetInt("Resolution");
+        } else {
+            ScreenResolution = Screen.resolutions.Length - 1;
         }
         
 
@@ -187,5 +220,23 @@ public static class DataManager
             return null;
         }
     }
+
+    public static float LinearToDecibel(float linear) {
+        float dB;
+
+        if (linear != 0)
+            dB = 20.0f * Mathf.Log10(linear);
+        else
+            dB = -144.0f;
+
+        return dB;
+    }
+
+    public static float DecibelToLinear(float dB)
+    {
+        float linear = Mathf.Pow(10.0f, dB/20.0f);
+        return linear;
+    }
+
 
 }

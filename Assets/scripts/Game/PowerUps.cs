@@ -118,12 +118,11 @@ public class PowerUps : MonoBehaviour
                 {
                     return;
                 }
-                Debug.Log("Player " + player.PlayerNumber + "is using Powerup: " + powerup.ToString());
+                Debug.Log("Player " + player.PlayerNumber + " is using Powerup: " + powerup.ToString());
                 Execute(powerup);
                 player.CurrentPowerUp = PowerUpType.None;
                 hud.DisplayPowerups(player.PlayerNumber, " ");
                 StartCoroutine(Cooldown(player));
-
             }
         }
     }
@@ -185,7 +184,7 @@ public class PowerUps : MonoBehaviour
     {
         StartCoroutine(audioManager.PowerupSounds("skipTurn"));
         pSwitch.SkipPlayer();
-        string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer() + 1) + " SKIPPED";
+        string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " UP NEXT";
         hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
         yield return null;
     }

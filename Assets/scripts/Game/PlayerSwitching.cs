@@ -7,27 +7,23 @@ public class PlayerSwitching : MonoBehaviour
 
     private int
         totalPlayers,
-        remainingPlayers;
-    public int
-        currentIndex = 0;
-    [HideInInspector]
-    public float
-        timer;
-    public float
-        turnTime;
-    private bool
+        remainingPlayers,
         skipTurn;
+    public int
+        currentIndex = 0,
+        nextIndex;
+    public float timer { get; set; }
+    public float turnTime { get; set; }
     public bool
         playerWin,
         startingGame,
         DEBUG_MODE,
         passingController;
-    private bool[]
-        isOut;
-    public GameObject
-        InControl;
-    public GameObject[]
-        spawnPoints;
+    private bool[] isOut;
+
+    [SerializeField]
+    private GameObject InControl;
+    public GameObject[] spawnPoints;
     public HUDManager hudManager;
 
     private void Awake()
@@ -87,35 +83,17 @@ public class PlayerSwitching : MonoBehaviour
 
     private void SwitchPlayer()
     {
-        int nextIndex = currentIndex;
-        for (int i = 0; i < totalPlayers; i++)
-        {
-            nextIndex++;
-            if (nextIndex >= totalPlayers)
-            {
-                nextIndex = 0;
-            }
-            if (!isOut[nextIndex] && skipTurn)
-            {
-                skipTurn = false;
-            }
-            else if(!isOut[nextIndex] && !skipTurn)
-            {
-                break;
-            }
-        }
         // set the current index from the next index var
-        currentIndex = nextIndex;
+        currentIndex = NextPlayer();
 
-        string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
+        string notif = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
 
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText1));
+        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notif));
         hudManager.EnqueueWait(2f);
         hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
-            // passingController = true;
             StartCoroutine(Sleep(DataManager.PotatoDelay));
         } else {
             StartCoroutine(Sleep(DataManager.PartyDelay));
@@ -124,35 +102,34 @@ public class PlayerSwitching : MonoBehaviour
         timer = turnTime;
         GameObject.FindGameObjectWithTag("Player").GetComponent<CarControl>().shield = false;
         StartCoroutine(Vibrate(currentIndex));
+        if (skipTurn > 0) skipTurn = 0;
     }
 
     public int NextPlayer()
     {
-        int nextIndex = currentIndex;
-        for (int i = 0; i < totalPlayers; i++)
+        int index = currentIndex + 1;
+        if (index >= totalPlayers) index = index % totalPlayers;
+        int skips = skipTurn;
+        for (int i = index; i < totalPlayers; i++)
         {
-            nextIndex++;
-            if (nextIndex >= totalPlayers)
-            {
-                nextIndex = 0;
-            }
-            if (!isOut[nextIndex])
-            {
-                return nextIndex;
-            }
+            if (!isOut[i] && skips <= 0) { return i; }
+            else if (!isOut[i]) { skips--; }
+            if (i == totalPlayers - 1) { i = -1; }
         }
-        return -1;
+        Debug.LogError("Something went wrong, no one can be switched to.");
+        return index;
     }
 
     public void SkipPlayer()
     {
-        skipTurn = true;
+        skipTurn++;
     }
 
     public void RemovePlayer()
     {
         isOut[currentIndex] = true;
         remainingPlayers--;
+
         if (remainingPlayers > 1) {
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
@@ -162,9 +139,11 @@ public class PlayerSwitching : MonoBehaviour
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+
+            SwitchPlayer();
         }
 
-        if (remainingPlayers == 1)
+        if (remainingPlayers <= 1)
         {
             playerWin = true;
             for (int i = 0; i < totalPlayers; i++)
@@ -175,14 +154,9 @@ public class PlayerSwitching : MonoBehaviour
                     StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     hudManager.EnqueueWait(1f);
                     hudManager.EnqueueAction(hudManager.DisplayPostGameMenu());
-                    Debug.Log("Player " + (i + 1) + " wins!");
                     break;
                 }
             }
-        }
-        else
-        {
-            SwitchPlayer();
         }
     }
 

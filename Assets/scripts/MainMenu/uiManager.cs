@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
@@ -14,6 +15,9 @@ public class uiManager : MonoBehaviour
     private GameObject lastSelectedGameObject;
     private bool allPlayersReady;
 
+    [Header("Loading")]
+    [SerializeField]
+    private GameObject nowLoadingPanel;
     [SerializeField]
     private GameObject canvasLoad;
     [SerializeField]
@@ -24,6 +28,8 @@ public class uiManager : MonoBehaviour
     private Gradient backgroundGradientColors;
     [SerializeField]
     private Image backgroundGradient;
+    [SerializeField]
+    private AudioMixer mixer;
 
     private AsyncOperation sync;
 
@@ -82,7 +88,18 @@ public class uiManager : MonoBehaviour
         }
         lastSelectedGameObject = GetComponent<EventSystem>().currentSelectedGameObject;
         StartCoroutine(BackgroundGradient());
+        nowLoadingPanel.SetActive(false);
         allPlayersReady = false;
+    }
+
+    private void Start() {
+        SetAudio();
+    }
+
+    private void SetAudio() {
+        mixer.SetFloat("musicVol", DataManager.MusicVolume);
+        mixer.SetFloat("sfxVol", DataManager.SfxVolume);
+        mixer.SetFloat("uiVol", DataManager.UiVolume);        
     }
 
     private void Update()
@@ -163,7 +180,7 @@ public class uiManager : MonoBehaviour
                     backIndex--;
                     break;
                 case 4:
-                    if (gameMode == 0)
+                    if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
                     {
                         backIndex--;
                         DataManager.ClearGameData();
@@ -349,7 +366,7 @@ public class uiManager : MonoBehaviour
     private IEnumerator LoadingScreen(string scene)
     {
         canvasLoad.SetActive(true);
-        yield return new WaitForSeconds(4.5f);
+        // yield return new WaitForSeconds(4.5f);
         sync = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
         sync.allowSceneActivation = false;
         // startAnimation = true;
@@ -360,6 +377,7 @@ public class uiManager : MonoBehaviour
             if (sync.progress >= 0.89f) {
                 loadingText.text = "PRESS A TO CONTINUE";
                 if (inputDevice.Action1.WasPressed) {
+                    nowLoadingPanel.SetActive(true);
                     sync.allowSceneActivation = true;
                     yield return null;
                 }

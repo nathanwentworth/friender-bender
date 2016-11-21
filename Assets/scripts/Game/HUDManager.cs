@@ -21,6 +21,7 @@ public class HUDManager : MonoBehaviour
     public Sprite livesDisplayActive;
     public Text[] powerupText;
     public GameObject[] powerupContainers;
+    public Text nextPlayerText;
 
     [Header("Pause")]
 
@@ -84,9 +85,9 @@ public class HUDManager : MonoBehaviour
     {
         if (deviceDetatched)
         {
-            foreach(PlayerData item in DataManager.PlayerList)
+            foreach (PlayerData item in DataManager.PlayerList)
             {
-                if (item.deviceDetatched)
+                if (item.deviceDetatched && DataManager.PlayerList.Count == DataManager.TotalPlayers)
                 {
                     item.Controller = controller;
                     deviceDetatched = false;
@@ -134,6 +135,8 @@ public class HUDManager : MonoBehaviour
         timerBar.color = timerGradient.Evaluate (playerSwitch.timer / playerSwitch.turnTime);
 
         currentPlayerText.text = DataManager.GetPlayerIdentifier(playerSwitch.currentIndex);
+
+        nextPlayerText.text = "NEXT: " + DataManager.GetPlayerIdentifier(playerSwitch.NextPlayer());
     }
 
     public void Pause() {
@@ -169,6 +172,10 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    // public void DisplayNextPlayer(int index) {
+    //     nextPlayerText.text = "NEXT: " + DataManager.GetPlayerIdentifier(index);
+    // }
+
     private IEnumerator Process() {
         while (true) {
             if (notifications.Count > 0) {
@@ -181,7 +188,7 @@ public class HUDManager : MonoBehaviour
     }
 
     public void DisplayPowerups(int player, string powerup) {
-        powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ":   " + powerup;
+        powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ": " + powerup;
     }
 
     private void PowerupSizeSet() {
