@@ -56,7 +56,6 @@ public class PlayerSwitching : MonoBehaviour
             StartCoroutine(StartingCountdown());
         }
         StartCoroutine(Vibrate(currentIndex));
-        // hudManager.DisplayNextPlayer(currentIndex + 1);
     }
 
     private void Update()
@@ -116,10 +115,6 @@ public class PlayerSwitching : MonoBehaviour
             else if (!isOut[i]) { skips--; }
             if (i == totalPlayers - 1) { i = -1; }
         }
-        // for (int i = 0; i < totalPlayers; i++)
-        // {
-        //     if (!isOut[i]) { return i; }
-        // }
         Debug.LogError("Something went wrong, no one can be switched to.");
         return index;
     }

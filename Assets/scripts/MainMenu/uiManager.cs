@@ -176,7 +176,7 @@ public class uiManager : MonoBehaviour
                     backIndex--;
                     break;
                 case 4:
-                    if (gameMode == 0)
+                    if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
                     {
                         backIndex--;
                         DataManager.ClearGameData();

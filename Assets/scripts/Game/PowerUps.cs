@@ -238,9 +238,7 @@ public class PowerUps : MonoBehaviour {
     private void RandomPowerup(PlayerData player)
     {
         Array values = Enum.GetValues(typeof(PowerUpType));
-        // int rand = DataManager.RandomVal(1, values.Length - 1);
-        // CHANGE LATER
-        int rand = 2;
+        int rand = DataManager.RandomVal(1, values.Length - 1);
         PowerUpType randomPowerup = (PowerUpType)values.GetValue(rand);
         player.CurrentPowerUp = randomPowerup;
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(randomPowerup));

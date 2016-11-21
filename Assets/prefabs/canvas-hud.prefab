@@ -81,7 +81,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000010884771598
 GameObject:
   m_ObjectHideFlags: 1
@@ -167,7 +167,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000011911562350
 GameObject:
   m_ObjectHideFlags: 1
@@ -184,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000011918717016
 GameObject:
   m_ObjectHideFlags: 1
@@ -303,7 +303,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012790602216
 GameObject:
   m_ObjectHideFlags: 1
@@ -320,7 +320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012844834524
 GameObject:
   m_ObjectHideFlags: 1
@@ -799,10 +799,10 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'AAA:'
+  m_Text: 'WWW:  OBSTACLE DROP'
 --- !u!114 &114000011275741734
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -914,7 +914,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AAA:'
@@ -975,7 +975,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AAA:'
@@ -1488,7 +1488,7 @@ MonoBehaviour:
     m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AAA:'
@@ -1716,7 +1716,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 600, y: 75}
+  m_SizeDelta: {x: 650, y: 75}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224000010594859908
 RectTransform:
@@ -1891,7 +1891,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 600, y: 75}
+  m_SizeDelta: {x: 650, y: 75}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224000011989301762
 RectTransform:
@@ -1948,7 +1948,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 600, y: 75}
+  m_SizeDelta: {x: 650, y: 75}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224000012578605962
 RectTransform:
@@ -2025,7 +2025,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 25, y: 0}
-  m_SizeDelta: {x: 600, y: 75}
+  m_SizeDelta: {x: 650, y: 75}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!224 &224000013052457500
 RectTransform:

@@ -6171,7 +6171,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: each player gets their own controller, lorem ipsum, cool stuff goes here
+  m_Text: 
 --- !u!222 &701631263
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8253,7 +8253,7 @@ MonoBehaviour:
   xInputUpdateRate: 0
   xInputOverrideBufferSize: 0
   xInputBufferSize: 0
-  enableNativeInput: 0
+  enableNativeInput: 1
   nativeInputEnableXInput: 1
   nativeInputPreventSleep: 0
   nativeInputOverrideUpdateRate: 0
