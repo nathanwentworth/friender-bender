@@ -128,6 +128,7 @@ public class PlayerSwitching : MonoBehaviour
     public void RemovePlayer()
     {
         isOut[currentIndex] = true;
+        hudManager.PowerupBackgroundDisable(currentIndex);
         remainingPlayers--;
 
         if (remainingPlayers > 1) {

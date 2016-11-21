@@ -191,6 +191,10 @@ public class HUDManager : MonoBehaviour
         powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ": " + powerup;
     }
 
+    public void PowerupBackgroundDisable(int player) {
+        powerupContainers[player].GetComponent<Image>().color = new Color (0, 0, 0, 1);
+    }
+
     private void PowerupSizeSet() {
         for (int i = DataManager.TotalPlayers - 1; i >= 0; i--) {
             powerupContainers[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(8, 56 + ((DataManager.TotalPlayers - 1 - i) * 104));
