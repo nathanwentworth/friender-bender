@@ -193,17 +193,18 @@ public class PowerUps : MonoBehaviour
     {
         StartCoroutine(audioManager.PowerupSounds("addTwoSeconds"));
         pSwitch.timer = pSwitch.timer + 2.5f;
-        string timerText = "+2 SECONDS";
+        string text = "+2 SECONDS";
         Debug.Log("Adding 2 seconds to time");
-        hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        hud.EnqueueAction(hud.DisplayNotificationText(text));
+        StartCoroutine(hud.TimerTextPop());
         yield return null;
     }
 
     private IEnumerator InvertSteering()
     {
         carControl.turningMultiplier = -1;
-        string timerText = "TURNING MIRRORED";
-        hud.EnqueueAction(hud.DisplayNotificationText(timerText));
+        string text = "TURNING MIRRORED";
+        hud.EnqueueAction(hud.DisplayNotificationText(text));
         yield return new WaitForSeconds(3f);
         carControl.turningMultiplier = 1;
     }

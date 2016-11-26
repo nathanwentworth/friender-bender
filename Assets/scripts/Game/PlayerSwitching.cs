@@ -107,17 +107,21 @@ public class PlayerSwitching : MonoBehaviour
 
     public int NextPlayer()
     {
-        int index = currentIndex + 1;
-        if (index >= totalPlayers) index = index % totalPlayers;
-        int skips = skipTurn;
-        for (int i = index; i < totalPlayers; i++)
-        {
-            if (!isOut[i] && skips <= 0) { return i; }
-            else if (!isOut[i]) { skips--; }
-            if (i == totalPlayers - 1) { i = -1; }
+        if (totalPlayers > 0) {
+            int index = currentIndex + 1;
+            if (index >= totalPlayers) index = index % totalPlayers;
+            int skips = skipTurn;
+            for (int i = index; i < totalPlayers; i++)
+            {
+                if (!isOut[i] && skips <= 0) { return i; }
+                else if (!isOut[i]) { skips--; }
+                if (i == totalPlayers - 1) { i = -1; }
+            }
+            Debug.LogError("Something went wrong, no one can be switched to.");
+            return index;            
+        } else {
+            return -1;
         }
-        Debug.LogError("Something went wrong, no one can be switched to.");
-        return index;
     }
 
     public void SkipPlayer()
