@@ -50,6 +50,8 @@ public class HUDManager : MonoBehaviour
     private bool deviceDetatched;
     
     public bool Paused { get; set; }
+    public float notifTimer { private get; set; }
+    public float overlayTimer { private get; set; }
 
     Queue<IEnumerator> notifications = new Queue<IEnumerator>();
 
@@ -115,6 +117,15 @@ public class HUDManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.F)) {
+            StartCoroutine(DisplayOverlayText("cool"));
+        }
+        if (Input.GetKeyDown(KeyCode.G)) {
+            StartCoroutine(DisplayOverlayText("ahh!"));
+        }
+
+        Debug.Log(overlayTimer);
+
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
         if (playerSwitch.DEBUG_MODE) { Controller = InputManager.ActiveDevice; }
@@ -213,16 +224,38 @@ public class HUDManager : MonoBehaviour
 
     public IEnumerator DisplayNotificationText(string text) {
         notificationText.text = text;
+        float t = notifTimer + 1.5f;
+        while (t > 0) {
+            t = t - Time.deltaTime;
+            yield return null;
+        }
+        notificationText.text = "";
         yield return null;
     }
 
     public IEnumerator DisplayOverlayText(string text) {
         overlayText.text = text;
+        overlayTimer = overlayTimer + 1.5f;
+        while (overlayTimer > 0) {
+            overlayTimer = overlayTimer - Time.deltaTime;
+            yield return null;
+        }
+        overlayText.text = "";
         yield return null;
     }
 
     public IEnumerator DisplayPostGameMenu() {
         gameOverPanel.SetActive(true);
+        yield return null;
+    }
+
+    public IEnumerator TimerTextPop() {
+        float t = 0.5f;
+        while (t > 0) {
+            t = t - Time.deltaTime;
+            timer.fontSize = (int)Mathf.SmoothStep(110, 155, t);
+            yield return null;
+        }
         yield return null;
     }
 }
