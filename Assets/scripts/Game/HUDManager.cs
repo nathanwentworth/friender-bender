@@ -224,23 +224,23 @@ public class HUDManager : MonoBehaviour
 
     public IEnumerator DisplayNotificationText(string text) {
         notificationText.text = text;
-        float t = notifTimer + 1.5f;
-        while (t > 0) {
-            t = t - Time.deltaTime;
-            yield return null;
-        }
-        notificationText.text = "";
+        // float t = notifTimer + 1.5f;
+        // while (t > 0) {
+        //     t = t - Time.deltaTime;
+        //     yield return null;
+        // }
+        // notificationText.text = "";
         yield return null;
     }
 
     public IEnumerator DisplayOverlayText(string text) {
         overlayText.text = text;
-        overlayTimer = overlayTimer + 1.5f;
-        while (overlayTimer > 0) {
-            overlayTimer = overlayTimer - Time.deltaTime;
-            yield return null;
-        }
-        overlayText.text = "";
+        // overlayTimer = overlayTimer + 1.5f;
+        // while (overlayTimer > 0) {
+        //     overlayTimer = overlayTimer - Time.deltaTime;
+        //     yield return null;
+        // }
+        // overlayText.text = "";
         yield return null;
     }
 

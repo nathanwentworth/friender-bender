@@ -159,6 +159,7 @@ public class PlayerSwitching : MonoBehaviour
                     StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     hudManager.EnqueueWait(1f);
                     hudManager.EnqueueAction(hudManager.DisplayPostGameMenu());
+                    StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     break;
                 }
             }

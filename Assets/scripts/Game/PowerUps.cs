@@ -59,7 +59,8 @@ public class PowerUps : MonoBehaviour
                 player.CurrentPowerUp = StartingPowerUp;
             }
             else {
-                RandomPowerup(player);
+                StartCoroutine(Cooldown(player));
+                // RandomPowerup(player);
             }
         }
     }
@@ -185,7 +186,7 @@ public class PowerUps : MonoBehaviour
         StartCoroutine(audioManager.PowerupSounds("skipTurn"));
         pSwitch.SkipPlayer();
         string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " UP NEXT";
-        hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
+        hud.EnqueueAction(hud.DisplayOverlayText(skippedText));
         yield return null;
     }
 
@@ -204,7 +205,7 @@ public class PowerUps : MonoBehaviour
     {
         carControl.turningMultiplier = -1;
         string text = "TURNING MIRRORED";
-        hud.EnqueueAction(hud.DisplayNotificationText(text));
+        hud.EnqueueAction(hud.DisplayOverlayText(text));
         yield return new WaitForSeconds(3f);
         carControl.turningMultiplier = 1;
     }
