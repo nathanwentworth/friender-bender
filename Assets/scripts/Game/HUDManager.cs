@@ -123,6 +123,13 @@ public class HUDManager : MonoBehaviour
             StartCoroutine(DisplayOverlayText("ahh!"));
         }
 
+        if (overlayTimer < 0) {
+            overlayPanel.SetActive(false);
+            overlayTimer = 0;
+        } else {
+            overlayTimer -= Time.deltaTime;
+        }
+
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
         if (playerSwitch.DEBUG_MODE) { Controller = InputManager.ActiveDevice; }
@@ -236,13 +243,9 @@ public class HUDManager : MonoBehaviour
     }
 
     public IEnumerator DisplayOverlayText(string text) {
+        overlayPanel.SetActive(true);
         overlayText.text = text;
-        // overlayTimer = overlayTimer + 1.5f;
-        // while (overlayTimer > 0) {
-        //     overlayTimer = overlayTimer - Time.deltaTime;
-        //     yield return null;
-        // }
-        // overlayText.text = "";
+        overlayTimer += 1.5f;
         yield return null;
     }
 
