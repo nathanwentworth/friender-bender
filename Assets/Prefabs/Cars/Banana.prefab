@@ -568,7 +568,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013267028416}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 17.73, y: -3.77, z: 89.25}
+  m_LocalPosition: {x: 206.41125, y: -1.3136845, z: -91.73879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children:
@@ -957,7 +957,7 @@ Rigidbody:
   m_GameObject: {fileID: 1000013267028416}
   serializedVersion: 2
   m_Mass: 1200
-  m_Drag: 0.425
+  m_Drag: 0.475
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -1281,7 +1281,7 @@ WheelCollider:
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.25
+    m_ExtremumSlip: 0.1
     m_ExtremumValue: 2.5
     m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
@@ -1339,7 +1339,7 @@ WheelCollider:
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.25
+    m_ExtremumSlip: 0.1
     m_ExtremumValue: 2.5
     m_AsymptoteSlip: 2.38
     m_AsymptoteValue: 2
@@ -1380,7 +1380,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013281422366}
-  serializedVersion: 2
+  serializedVersion: 4
   lengthInSec: 1.2
   startDelay:
     scalar: 0
@@ -1418,12 +1418,13 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
-  randomSeed: 1111302376
   looping: 0
   prewarm: 0
   playOnAwake: 0
   moveWithTransform: 1
+  autoRandomSeed: 0
   scalingMode: 1
+  randomSeed: 1111302376
   InitialModule:
     serializedVersion: 2
     enabled: 1
