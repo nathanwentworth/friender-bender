@@ -16,6 +16,7 @@ public class SmoothFollow : MonoBehaviour
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        Debug.Log(target.name);
     }
 
     void FixedUpdate()
