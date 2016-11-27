@@ -86,11 +86,14 @@ public class PlayerSwitching : MonoBehaviour
         // set the current index from the next index var
         currentIndex = NextPlayer();
 
+        hudManager.nextPlayerText.gameObject.GetComponent<Animator>().SetTrigger("NextPlayerChange");
+
         string notif = DataManager.GetPlayerIdentifier(currentIndex) + " IS UP";
 
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText(notif));
-        hudManager.EnqueueWait(2f);
-        hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
+        hudManager.EnqueueAction(hudManager.DisplayOverlayText(notif));
+        hudManager.overlayText.gameObject.GetComponent<Animator>().SetTrigger("OverlayRotate");
+        hudManager.EnqueueWait(1f);
+        hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
@@ -136,6 +139,7 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers--;
 
         if (remainingPlayers > 1) {
+            hudManager.GetComponent<Animator>().SetTrigger("OverlayRotate");
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             StartCoroutine(hudManager.DisplayOverlayText(notifText1));
@@ -159,6 +163,7 @@ public class PlayerSwitching : MonoBehaviour
                     StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     hudManager.EnqueueWait(1f);
                     hudManager.EnqueueAction(hudManager.DisplayPostGameMenu());
+                    StartCoroutine(hudManager.DisplayOverlayText(gameover));
                     break;
                 }
             }
@@ -176,6 +181,7 @@ public class PlayerSwitching : MonoBehaviour
         startingGame = true;
         Rigidbody carRigid = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
         carRigid.constraints = RigidbodyConstraints.FreezeAll;
+        // hudManager.GetComponent<Animator>().SetTrigger("StartAnimations");
 
         float countdown = 3f;
         while (countdown > 0) {

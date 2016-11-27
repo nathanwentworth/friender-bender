@@ -43,6 +43,8 @@ public class PowerUps : MonoBehaviour
     private bool shieldActive;
 
     private GameObject car;
+    [SerializeField]
+    private CameraNoise cameraNoise;
 
     void Start()
     {
@@ -59,7 +61,8 @@ public class PowerUps : MonoBehaviour
                 player.CurrentPowerUp = StartingPowerUp;
             }
             else {
-                RandomPowerup(player);
+                StartCoroutine(Cooldown(player));
+                // RandomPowerup(player);
             }
         }
     }
@@ -170,6 +173,7 @@ public class PowerUps : MonoBehaviour
     private IEnumerator SpeedBoost(GameObject car, int maxForce)
     {
         StartCoroutine(audioManager.PowerupSounds("speedBoost"));
+        StartCoroutine(cameraNoise.ScreenShake(0.3f, 20f));
         int i = 0;
         while (i < 20)
         {
@@ -185,7 +189,7 @@ public class PowerUps : MonoBehaviour
         StartCoroutine(audioManager.PowerupSounds("skipTurn"));
         pSwitch.SkipPlayer();
         string skippedText = DataManager.GetPlayerIdentifier(pSwitch.NextPlayer()) + " UP NEXT";
-        hud.EnqueueAction(hud.DisplayNotificationText(skippedText));
+        hud.EnqueueAction(hud.DisplayOverlayText(skippedText));
         yield return null;
     }
 
@@ -204,7 +208,8 @@ public class PowerUps : MonoBehaviour
     {
         carControl.turningMultiplier = -1;
         string text = "TURNING MIRRORED";
-        hud.EnqueueAction(hud.DisplayNotificationText(text));
+        StartCoroutine(hud.DisplayOverlayText(text));
+        hud.overlayText.transform.GetComponent<Animator>().SetTrigger("OverlayRotate");
         yield return new WaitForSeconds(3f);
         carControl.turningMultiplier = 1;
     }
@@ -212,6 +217,8 @@ public class PowerUps : MonoBehaviour
     private IEnumerator EndTurn()
     {
         StartCoroutine(audioManager.PowerupSounds("endTurn"));
+        StartCoroutine(hud.DisplayOverlayText("TURN ENDED"));
+        hud.overlayText.transform.GetComponent<Animator>().SetTrigger("OverlayRotate");
         pSwitch.timer = 0;
         yield return null;
     }

@@ -19,6 +19,8 @@ public class CarControl : MonoBehaviour
     private PlayerSwitching playerSwitch;
     private HUDManager hudManager;
     private AudioManager audioManager;
+    private CameraNoise cameraNoise;
+
 
     private Vector2 x_Input;
     public int turningMultiplier;
@@ -53,6 +55,7 @@ public class CarControl : MonoBehaviour
         playerSwitch = GameObject.Find("GameSystem").GetComponent<PlayerSwitching>();
         hudManager = GameObject.Find("canvas-hud").GetComponent<HUDManager>();
         audioManager = GameObject.Find("AudioManagerObj [Level1]").GetComponent<AudioManager>();
+        cameraNoise = GameObject.Find("cam-noise").GetComponent<CameraNoise>();
     }
 
     private void Start()
@@ -183,6 +186,7 @@ public class CarControl : MonoBehaviour
                     Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
                     // play high impact impact sound
                     StartCoroutine(audioManager.Impact(true));
+                    StartCoroutine(cameraNoise.ScreenShake(0.5f, 35f));
                     hudManager.UpdateLivesDisplay();
                     StartCoroutine(DamageCooldown(true));
                     if(DataManager.PlayerList[trueCurrentIndex].Lives <= 0)
@@ -196,6 +200,7 @@ public class CarControl : MonoBehaviour
             } else {
                 // play low speed impact sound
                 StartCoroutine(audioManager.Impact(false));
+                StartCoroutine(cameraNoise.ScreenShake(0.18f, 15f));
             }
         }
     }
@@ -271,6 +276,7 @@ public class CarControl : MonoBehaviour
         }
         currentlyCheckingIfCarIsStopped = false;
     }
+
 }
 
 [System.Serializable]
