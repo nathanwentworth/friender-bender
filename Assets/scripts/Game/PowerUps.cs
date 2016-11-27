@@ -205,7 +205,8 @@ public class PowerUps : MonoBehaviour
     {
         carControl.turningMultiplier = -1;
         string text = "TURNING MIRRORED";
-        hud.EnqueueAction(hud.DisplayOverlayText(text));
+        StartCoroutine(hud.DisplayOverlayText(text));
+        hud.overlayText.transform.GetComponent<Animator>().SetTrigger("OverlayRotate");
         yield return new WaitForSeconds(3f);
         carControl.turningMultiplier = 1;
     }
@@ -213,6 +214,8 @@ public class PowerUps : MonoBehaviour
     private IEnumerator EndTurn()
     {
         StartCoroutine(audioManager.PowerupSounds("endTurn"));
+        StartCoroutine(hud.DisplayOverlayText("TURN ENDED"));
+        hud.overlayText.transform.GetComponent<Animator>().SetTrigger("OverlayRotate");
         pSwitch.timer = 0;
         yield return null;
     }

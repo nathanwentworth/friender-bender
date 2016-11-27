@@ -35,8 +35,7 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField]
     private GameObject overlayPanel;
-    [SerializeField]
-    private Text overlayText;
+    public Text overlayText;
     [SerializeField]
     private GameObject gameOverPanel;
 
@@ -123,8 +122,6 @@ public class HUDManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.G)) {
             StartCoroutine(DisplayOverlayText("ahh!"));
         }
-
-        Debug.Log(overlayTimer);
 
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
