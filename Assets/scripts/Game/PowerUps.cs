@@ -43,6 +43,8 @@ public class PowerUps : MonoBehaviour
     private bool shieldActive;
 
     private GameObject car;
+    [SerializeField]
+    private CameraNoise cameraNoise;
 
     void Start()
     {
@@ -171,6 +173,7 @@ public class PowerUps : MonoBehaviour
     private IEnumerator SpeedBoost(GameObject car, int maxForce)
     {
         StartCoroutine(audioManager.PowerupSounds("speedBoost"));
+        StartCoroutine(cameraNoise.ScreenShake(0.3f, 20f));
         int i = 0;
         while (i < 20)
         {

@@ -180,7 +180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9084c9fe9d68a5042a0e301969ba5e0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
   speed: 30
   xOffset: 0
   yOffset: 0
@@ -216,8 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dfa29461c1ae5b4eafc745a20868d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 4000012535925228}
+  obj: {fileID: 4000012535925228}
   noiseStrength: 5
+  shakeSpeed: 0.01
 --- !u!124 &124000010555604010
 Behaviour:
   m_ObjectHideFlags: 1

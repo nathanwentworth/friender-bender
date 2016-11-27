@@ -57,6 +57,7 @@ MonoBehaviour:
   - {fileID: 1000010791721470, guid: cccabc30c95c523429bdb6408114171e, type: 2}
   - {fileID: 1000013267028416, guid: e9982fa238e07444185e9babc37a18c2, type: 2}
   - {fileID: 1000013356194364, guid: 9ab965adaa2897242986a1f51f917375, type: 2}
+  debugCarIndex: 0
 --- !u!114 &114000010579291326
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -69,8 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentIndex: 0
-  timer: 0
-  turnTime: 7
+  nextIndex: 0
   playerWin: 0
   startingGame: 0
   DEBUG_MODE: 0
@@ -115,4 +115,8 @@ MonoBehaviour:
   audioManager: {fileID: 0}
   objects:
   - {fileID: 1000011749309372, guid: ca8a0c037aa3ba044881a9857fe173cd, type: 2}
-  StartingPowerUp: 6
+  - {fileID: 1000012345704456, guid: 819265e7affcb184191c8ec1e5a16c01, type: 2}
+  - {fileID: 1000012961113790, guid: 578b3730696c0fe4ca208ad54f54c694, type: 2}
+  mineObject: {fileID: 1000013435768810, guid: 15da85a6525e7ca46b6fd3e4f407bb2d, type: 2}
+  StartingPowerUp: 0
+  cameraNoise: {fileID: 0}
