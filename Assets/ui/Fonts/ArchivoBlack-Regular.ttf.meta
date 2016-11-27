@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: 9765d5603254e46bdae7626b1b48863d
+timeCreated: 1474584218
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 110
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Archivo Black
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

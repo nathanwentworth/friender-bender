@@ -76,13 +76,14 @@ GameObject:
   - 224: {fileID: 224000012755660850}
   - 222: {fileID: 222000012535680216}
   - 114: {fileID: 114000010041976282}
+  - 95: {fileID: 95000013472248188}
   m_Layer: 5
   m_Name: image-powerup-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000010884771598
 GameObject:
   m_ObjectHideFlags: 1
@@ -179,13 +180,14 @@ GameObject:
   - 224: {fileID: 224000010639826872}
   - 222: {fileID: 222000012086369382}
   - 114: {fileID: 114000013324352846}
+  - 95: {fileID: 95000010488318364}
   m_Layer: 5
   m_Name: image-powerup-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000011918717016
 GameObject:
   m_ObjectHideFlags: 1
@@ -298,13 +300,14 @@ GameObject:
   - 224: {fileID: 224000013668732348}
   - 222: {fileID: 222000012547396976}
   - 114: {fileID: 114000013994754044}
+  - 95: {fileID: 95000010929742716}
   m_Layer: 5
   m_Name: image-powerup-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012790602216
 GameObject:
   m_ObjectHideFlags: 1
@@ -315,13 +318,14 @@ GameObject:
   - 224: {fileID: 224000011060299436}
   - 222: {fileID: 222000010982722152}
   - 114: {fileID: 114000012521940304}
+  - 95: {fileID: 95000010703207864}
   m_Layer: 5
   m_Name: image-powerup-0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000012844834524
 GameObject:
   m_ObjectHideFlags: 1
@@ -485,6 +489,57 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!95 &95000010488318364
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011911562350}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ffd5d876d95214b44b0fbb601712e2e7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95000010703207864
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012790602216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66ee17a30567d49888ea9310d02c9353, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95000010929742716
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012575764104}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 18e8f1447e2cf45fd8fe956a71d484ac, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!95 &95000013240515804
 Animator:
   serializedVersion: 3
@@ -497,6 +552,23 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 92dbd70e7e81442cfab99efbdc9909e8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95000013472248188
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010663952488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a6c46cd55c0fd4531b4469b62cfe8bd3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 

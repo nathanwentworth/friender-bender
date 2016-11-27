@@ -197,6 +197,11 @@ public class HUDManager : MonoBehaviour
 
     public void DisplayPowerups(int player, string powerup) {
         powerupText[player - 1].text = DataManager.GetPlayerIdentifier(player - 1) + ": " + powerup;
+        
+    }
+
+    public void BouncePowerup(int player) {
+        powerupContainers[player - 1].GetComponent<Animator>().SetTrigger("Bounce");
     }
 
     public void PowerupBackgroundDisable(int player) {
