@@ -38,3 +38,4 @@ sysinfo.txt
 *.vscode
 Assets/Scenes/Level1/LightingData.asset.meta
 *.asset
+Assets/Scenes/Level1.meta

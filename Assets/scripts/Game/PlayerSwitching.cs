@@ -172,9 +172,18 @@ public class PlayerSwitching : MonoBehaviour
 
     private IEnumerator Vibrate(int index)
     {
-        DataManager.PlayerList[index].Controller.Vibrate(100f);
-        yield return new WaitForSeconds(0.25f);
-        DataManager.PlayerList[index].Controller.StopVibration();
+        if (DataManager.CurrentGameMode == DataManager.GameMode.Party)
+        {
+            DataManager.PlayerList[index].Controller.Vibrate(100f);
+            yield return new WaitForSeconds(0.25f);
+            DataManager.PlayerList[index].Controller.StopVibration();
+        }
+        else if(DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
+        {
+            DataManager.PlayerList[0].Controller.Vibrate(100f);
+            yield return new WaitForSeconds(0.25f);
+            DataManager.PlayerList[0].Controller.StopVibration();
+        }
     }
 
     private IEnumerator StartingCountdown() {
