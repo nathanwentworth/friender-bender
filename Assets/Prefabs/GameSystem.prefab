@@ -97,6 +97,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   hudManager: {fileID: 0}
 --- !u!114 &114000012139818100
 MonoBehaviour:

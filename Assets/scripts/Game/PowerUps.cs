@@ -301,6 +301,7 @@ public class PowerUps : MonoBehaviour
             player.CurrentPowerUp = PowerUpType.LandMine;
         }
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(player.CurrentPowerUp));
+        hud.BouncePowerup(player.PlayerNumber);
     }
 
     private bool IsNumBetweenValues(float value, float min, float max)
