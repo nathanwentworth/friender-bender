@@ -191,7 +191,6 @@ public class PlayerSwitching : MonoBehaviour
             if (roundedTimer == 0) {
                 StartCoroutine(hudManager.DisplayOverlayText("BEND YOUR FRIENDS!"));
             }
-            Debug.Log(roundedTimer);
             yield return null;
         }
         startingGame = false;
