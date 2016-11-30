@@ -174,7 +174,8 @@ public static class DataManager
         }
 
         if (PlayerPrefs.HasKey("Trekkie Trax Toggle")) {
-            IsTrekkieTraxOn = (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) ? true : false;
+            // IsTrekkieTraxOn = (PlayerPrefs.GetInt("Trekkie Trax Toggle") == 1) ? true : false;
+            IsTrekkieTraxOn = true;
         } else {
             IsTrekkieTraxOn = true;
         }
