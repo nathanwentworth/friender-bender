@@ -421,6 +421,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bc8cf4923b0b24728b968911a6b4a871, type: 3}
   - {fileID: 8300000, guid: b6f0b114225254e05bd193cc3cc8bff3, type: 3}
   - {fileID: 8300000, guid: e61e5c367b35e4a2594fdd1960cb041f, type: 3}
+  - {fileID: 8300000, guid: 93c3b0813ea4bba4f8200b8a9c197ba9, type: 3}
   mainPlaylist:
   - {fileID: 0}
   - {fileID: 0}

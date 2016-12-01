@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 224000012462455486}
   - 222: {fileID: 222000012205026990}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: panel-background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -106,7 +106,7 @@ GameObject:
   - 224: {fileID: 224000013305460072}
   - 222: {fileID: 222000013940055474}
   - 114: {fileID: 114000012641382086}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: heart-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - 223: {fileID: 223000013438194596}
   - 114: {fileID: 114000012535276406}
   - 114: {fileID: 114000011108802076}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: car-hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - 224: {fileID: 224000011901270246}
   - 222: {fileID: 222000013654374140}
   - 114: {fileID: 114000013493112880}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: heart-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 224000013549389752}
   - 222: {fileID: 222000010475146082}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: panel-hearts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -318,7 +318,7 @@ GameObject:
   - 224: {fileID: 224000011637814694}
   - 222: {fileID: 222000013025612620}
   - 114: {fileID: 114000013280635888}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: heart-0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -414,7 +414,7 @@ GameObject:
   - 222: {fileID: 222000014113156242}
   - 114: {fileID: 114000010248775986}
   - 114: {fileID: 114000010549043924}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1380,7 +1380,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013281422366}
-  serializedVersion: 4
+  serializedVersion: 2
   lengthInSec: 1.2
   startDelay:
     scalar: 0
@@ -1418,13 +1418,12 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
+  randomSeed: 1111302376
   looping: 0
   prewarm: 0
   playOnAwake: 0
   moveWithTransform: 1
-  autoRandomSeed: 0
   scalingMode: 1
-  randomSeed: 1111302376
   InitialModule:
     serializedVersion: 2
     enabled: 1

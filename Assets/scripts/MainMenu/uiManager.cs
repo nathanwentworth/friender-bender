@@ -57,7 +57,9 @@ public class uiManager : MonoBehaviour
     [SerializeField]
     private GameObject[] carModels;
     [SerializeField]
-    private GameObject[] trackModels;
+    private Sprite[] trackSprites;
+    [SerializeField]
+    private Image trackPreview;
 
     [Header("Options")]
     [SerializeField]
@@ -148,7 +150,7 @@ public class uiManager : MonoBehaviour
             rotatingModel.SetActive(true);
         }
         else if (menuIndex == 6) {
-          // RotateModel(trackModels);
+            StartCoroutine(LevelPreview());
         }
 
         if (menuIndex != 5) {
@@ -296,7 +298,23 @@ public class uiManager : MonoBehaviour
         }
         CanvasDisplay(5);
     }
-    
+
+    private IEnumerator LevelPreview()
+    {
+        if (GetComponent<EventSystem>().currentSelectedGameObject == null) { yield return null; }
+        string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
+        string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
+        if(buttonNumStr == "0")
+        {
+            trackPreview.sprite = trackSprites[0];
+        }
+        else if(buttonNumStr == "1")
+        {
+            trackPreview.sprite = trackSprites[1];
+        }
+        yield return null;
+    }
+
     // for the car/track selection screens
     // rotates a model being loaded in as a mesh from an array
     // todo: add material switching later
@@ -307,7 +325,7 @@ public class uiManager : MonoBehaviour
       if (GetComponent<EventSystem>().currentSelectedGameObject == null) { yield return null; }
       string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
       string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
-      bool buttonNumSuccess = System.Int32.TryParse(buttonNumStr, out buttonNum);
+      bool buttonNumSuccess = int.TryParse(buttonNumStr, out buttonNum);
         for (int i = 0; i < models.Length; i++) {
             models[i].SetActive(false);
         }

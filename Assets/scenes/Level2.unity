@@ -1454,6 +1454,22 @@ Prefab:
       propertyPath: m_AnchoredPosition.x
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 1000012575764104, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000011911562350, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010663952488, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000012790602216, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f2d0745f43294df5a5a34f19689c95a, type: 2}
   m_IsPrefabParent: 0
@@ -2187,6 +2203,7 @@ GameObject:
   - 33: {fileID: 1285558759}
   - 23: {fileID: 1285558758}
   - 64: {fileID: 1285558757}
+  - 95: {fileID: 1285558760}
   m_Layer: 0
   m_Name: Rotating_death
   m_TagString: Untagged
@@ -2201,7 +2218,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1285558755}
   m_LocalRotation: {x: 0.5, y: -0.5, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: -0, y: 0.042113967, z: 0}
+  m_LocalPosition: {x: -0.1303, y: 0.042113967, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -2259,6 +2276,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1285558755}
   m_Mesh: {fileID: 4300002, guid: 6549db0e8017d44468edb2ba47201a17, type: 3}
+--- !u!95 &1285558760
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1285558755}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b75815733341db2449163484ed86d1cd, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1376442058
 GameObject:
   m_ObjectHideFlags: 0
@@ -2397,7 +2431,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1495873083}
   serializedVersion: 2
-  m_Mass: 2000
+  m_Mass: 2500
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -2649,7 +2683,7 @@ Prefab:
     - target: {fileID: 114000011693019232, guid: fcca6fa39965d4ae7b2128bb17f7de44,
         type: 2}
       propertyPath: _highThreshold
-      value: 0.013
+      value: 0.265
       objectReference: {fileID: 0}
     - target: {fileID: 4000012535925228, guid: fcca6fa39965d4ae7b2128bb17f7de44, type: 2}
       propertyPath: m_LocalPosition.x
@@ -2681,12 +2715,17 @@ Prefab:
     - target: {fileID: 114000011693019232, guid: fcca6fa39965d4ae7b2128bb17f7de44,
         type: 2}
       propertyPath: _depthSensitivity
-      value: 1.71
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000011693019232, guid: fcca6fa39965d4ae7b2128bb17f7de44,
         type: 2}
       propertyPath: _fallOffDepth
       value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011693019232, guid: fcca6fa39965d4ae7b2128bb17f7de44,
+        type: 2}
+      propertyPath: _normalSensitivity
+      value: 0.223
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fcca6fa39965d4ae7b2128bb17f7de44, type: 2}
@@ -3016,7 +3055,7 @@ BoxCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1879296024}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}

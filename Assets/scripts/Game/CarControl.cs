@@ -173,13 +173,16 @@ public class CarControl : MonoBehaviour
         visualWheel.transform.rotation = rotation;
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Respawn")
+        if (other.gameObject.tag == "Respawn")
         {
             ResetCarPosition();
-            return;
         }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
         if (!playerSwitch.DEBUG_MODE && !invincible)
         {
             if(mph > 50 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
