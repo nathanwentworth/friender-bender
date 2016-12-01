@@ -76,6 +76,7 @@ public class uiManager : MonoBehaviour
 
     private void Awake()
     {
+        Cursor.visible = false;
         Time.timeScale = 1;
         DataManager.Load();
         DataManager.ClearGameData();

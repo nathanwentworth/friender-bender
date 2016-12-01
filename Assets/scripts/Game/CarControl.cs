@@ -175,6 +175,11 @@ public class CarControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
+        if(other.gameObject.tag == "Respawn")
+        {
+            ResetCarPosition();
+            return;
+        }
         if (!playerSwitch.DEBUG_MODE && !invincible)
         {
             if(mph > 50 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
@@ -213,7 +218,7 @@ public class CarControl : MonoBehaviour
         {
             StartCoroutine("BlinkEffect");
         }
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
         invincible = false;
         Debug.Log("No Longer Invincible.");
         if (blink)

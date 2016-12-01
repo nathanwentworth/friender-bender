@@ -19,7 +19,7 @@ public class LandMine : MonoBehaviour {
 
 	void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player" && armed)
+        if(other.transform.root.tag == "Player" && armed)
         {
             StartCoroutine(GameObject.Find("AudioManagerObj [Level1]").GetComponent<AudioManager>().PowerupSounds("landMineExplode"));
             Debug.Log("Boom");
