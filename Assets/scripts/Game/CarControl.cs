@@ -112,7 +112,7 @@ public class CarControl : MonoBehaviour
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
 
-        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.passingController && !playerSwitch.startingGame && !hudManager.Paused && !playerSwitch.playerWin) {
+        if (mph < 3 && !currentlyCheckingIfCarIsStopped && !playerSwitch.passingController && !playerSwitch.startingGame && !hudManager.Paused && !playerSwitch.playerWin) {
             StartCoroutine(CheckIfCarIsStopped());
         }
 
@@ -274,13 +274,9 @@ public class CarControl : MonoBehaviour
 
     private IEnumerator CheckIfCarIsStopped() {
         currentlyCheckingIfCarIsStopped = true;
-        Debug.Log("Checking to see if car is stopped");
         yield return new WaitForSeconds(1.5f);
-        if (mph < 1) {
-            Debug.Log("Car is stopped! Resetting position");
+        if (mph < 3) {
             ResetCarPosition();
-        } else {
-            Debug.Log("Car is not stopped, not resetting position");
         }
         currentlyCheckingIfCarIsStopped = false;
     }
