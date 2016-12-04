@@ -129,7 +129,13 @@ public class HUDManager : MonoBehaviour
         } else {
             overlayTimer -= Time.deltaTime;
         }
-        Debug.Log("overlayTimer " + overlayTimer);
+
+        if (!playerSwitch.playerWin && notifTimer < 0) {
+            notificationText.gameObject.SetActive(false);
+            notifTimer = 0;
+        } else {
+            notifTimer -= Time.deltaTime;
+        }
 
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
@@ -233,13 +239,9 @@ public class HUDManager : MonoBehaviour
 
 
     public IEnumerator DisplayNotificationText(string text) {
+        notificationText.gameObject.SetActive(true);
         notificationText.text = text;
-        // float t = notifTimer + 1.5f;
-        // while (t > 0) {
-        //     t = t - Time.deltaTime;
-        //     yield return null;
-        // }
-        // notificationText.text = "";
+        notifTimer = 1f;
         yield return null;
     }
 

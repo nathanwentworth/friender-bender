@@ -92,8 +92,6 @@ public class PlayerSwitching : MonoBehaviour
 
         hudManager.EnqueueAction(hudManager.DisplayOverlayText(notif));
         hudManager.overlayText.gameObject.GetComponent<Animator>().SetTrigger("OverlayRotate");
-        // hudManager.EnqueueWait(1f);
-        // hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
@@ -139,12 +137,11 @@ public class PlayerSwitching : MonoBehaviour
         remainingPlayers--;
 
         if (remainingPlayers > 1) {
-            hudManager.GetComponent<Animator>().SetTrigger("OverlayRotate");
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             StartCoroutine(hudManager.DisplayOverlayText(notifText1));
-            // hudManager.EnqueueWait(1f);
-            // hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
+            hudManager.GetComponent<Animator>().SetTrigger("OverlayRotate");
+            
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
