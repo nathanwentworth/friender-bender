@@ -258,12 +258,14 @@ public class CarControl : MonoBehaviour
     }
 
     public void ResetCarPosition() {
+        int terrainLayer = 1 << 10;
+        terrainLayer = ~terrainLayer;
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;
         for (int i = 0; i < playerSwitch.spawnPoints.Length; i++) {
             float d = Vector3.Distance(playerSwitch.spawnPoints[i].transform.position, carPos.position);
-            if (d < minD) {
+            if (d < minD && !Physics.CheckSphere(playerSwitch.spawnPoints[i].transform.position, 4f, terrainLayer)) {
                 minD = d;
                 closestSpawn = playerSwitch.spawnPoints[i].transform;
             }
