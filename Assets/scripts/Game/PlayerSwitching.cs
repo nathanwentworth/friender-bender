@@ -92,8 +92,8 @@ public class PlayerSwitching : MonoBehaviour
 
         hudManager.EnqueueAction(hudManager.DisplayOverlayText(notif));
         hudManager.overlayText.gameObject.GetComponent<Animator>().SetTrigger("OverlayRotate");
-        hudManager.EnqueueWait(1f);
-        hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
+        // hudManager.EnqueueWait(1f);
+        // hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
 
         if (DataManager.CurrentGameMode == DataManager.GameMode.HotPotato)
         {
@@ -143,8 +143,8 @@ public class PlayerSwitching : MonoBehaviour
             string notifText1 = DataManager.GetPlayerIdentifier(currentIndex) + " ELIMINATED!";
             string notifText2 = "PLAYERS LEFT: " + remainingPlayers;
             StartCoroutine(hudManager.DisplayOverlayText(notifText1));
-            hudManager.EnqueueWait(1f);
-            hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
+            // hudManager.EnqueueWait(1f);
+            // hudManager.EnqueueAction(hudManager.DisplayOverlayText(""));
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(notifText2));
             hudManager.EnqueueWait(2f);
             hudManager.EnqueueAction(hudManager.DisplayNotificationText(""));
@@ -198,6 +198,7 @@ public class PlayerSwitching : MonoBehaviour
             float roundedTimer = Mathf.Round(countdown);
             StartCoroutine(hudManager.DisplayOverlayText(roundedTimer + ""));
             if (roundedTimer == 0) {
+                hudManager.overlayTimer = 0f;
                 StartCoroutine(hudManager.DisplayOverlayText("BEND YOUR FRIENDS!"));
             }
             yield return null;
@@ -205,7 +206,7 @@ public class PlayerSwitching : MonoBehaviour
         startingGame = false;
         carRigid.constraints = RigidbodyConstraints.None;
         yield return new WaitForSeconds(1f);
-        StartCoroutine(hudManager.DisplayOverlayText(""));
+        // StartCoroutine(hudManager.DisplayOverlayText(""));
     }
 
     private IEnumerator Sleep(float wait) {

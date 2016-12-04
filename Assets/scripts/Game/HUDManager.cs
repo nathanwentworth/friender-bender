@@ -123,12 +123,13 @@ public class HUDManager : MonoBehaviour
             StartCoroutine(DisplayOverlayText("ahh!"));
         }
 
-        if (overlayTimer < 0) {
+        if (!playerSwitch.playerWin && overlayTimer < 0) {
             overlayPanel.SetActive(false);
             overlayTimer = 0;
         } else {
             overlayTimer -= Time.deltaTime;
         }
+        Debug.Log("overlayTimer " + overlayTimer);
 
         InputDevice Controller = null;
         currentIndex = playerSwitch.currentIndex;
@@ -245,7 +246,7 @@ public class HUDManager : MonoBehaviour
     public IEnumerator DisplayOverlayText(string text) {
         overlayPanel.SetActive(true);
         overlayText.text = text;
-        overlayTimer += 1.5f;
+        overlayTimer = 1.5f;
         yield return null;
     }
 
