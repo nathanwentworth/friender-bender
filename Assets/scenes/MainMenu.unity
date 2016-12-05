@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44257092, g: 0.4916289, b: 0.5714242, a: 1}
+  m_IndirectSpecularColor: {r: 0.164682, g: 0.20637465, b: 0.28620592, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -17709,8 +17709,7 @@ MonoBehaviour:
   turnTimeSlider: {fileID: 1321505289}
   creditsPanel: {fileID: 1317182286}
   submitSound: {fileID: 8300000, guid: 02799c96e5c4e45f19814bbc7cdb3880, type: 3}
-  cancelSound: {fileID: 8300000, guid: 66d587c6d94a342cfbcb70d031053a65, type: 3}
-  switchSound: {fileID: 8300000, guid: afef434e7b3824a789bb6a040eaf3c5e, type: 3}
+  switchSound: {fileID: 8300000, guid: 98f936dee697ed54792bf907c8b04e53, type: 3}
 --- !u!82 &2009049229
 AudioSource:
   m_ObjectHideFlags: 0

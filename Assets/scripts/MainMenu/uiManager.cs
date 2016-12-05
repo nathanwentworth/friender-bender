@@ -8,8 +8,6 @@ using InControl;
 
 public class uiManager : MonoBehaviour
 {
-
-    private int gameMode = 0;
     private int menuIndex;
     private AudioSource audioSource;
     private GameObject lastSelectedGameObject;
@@ -71,7 +69,6 @@ public class uiManager : MonoBehaviour
 
     [Header("Sounds")]
     public AudioClip submitSound;
-    public AudioClip cancelSound;
     public AudioClip switchSound;
 
     System.Random random = new System.Random();
@@ -272,9 +269,7 @@ public class uiManager : MonoBehaviour
         containers[selectedMenu].SetActive(true);
         if (selectedMenu > menuIndex) {
             StartCoroutine(PlayAudio(submitSound));
-        } else {
-            StartCoroutine(PlayAudio(cancelSound));
-        }
+        } 
         menuIndex = selectedMenu;
         Debug.Log("Current menu index: " + menuIndex);
     }
