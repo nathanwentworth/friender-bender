@@ -322,19 +322,20 @@ public class uiManager : MonoBehaviour
     {
       int buttonNum;
       GameObject car;
-      if (GetComponent<EventSystem>().currentSelectedGameObject == null) { yield return null; }
-      string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
-      string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
-      bool buttonNumSuccess = int.TryParse(buttonNumStr, out buttonNum);
-        for (int i = 0; i < models.Length; i++) {
-            models[i].SetActive(false);
-        }
-        if (buttonNumSuccess) {
-            car = models[buttonNum];
-        } else {
-            car = models[models.Length - 1];
-        }
-        car.SetActive(true);
+      if (GetComponent<EventSystem>().currentSelectedGameObject != null) {
+          string buttonName = GetComponent<EventSystem>().currentSelectedGameObject.transform.name;
+          string buttonNumStr = buttonName.Substring(buttonName.Length - 1, 1);
+          bool buttonNumSuccess = int.TryParse(buttonNumStr, out buttonNum);
+            for (int i = 0; i < models.Length; i++) {
+                models[i].SetActive(false);
+            }
+            if (buttonNumSuccess) {
+                car = models[buttonNum];
+            } else {
+                car = models[models.Length - 1];
+            }
+            car.SetActive(true);
+      }
         yield return null;
     }
 
