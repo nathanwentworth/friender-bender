@@ -15,6 +15,11 @@ public class uiManager : MonoBehaviour
     private GameObject lastSelectedGameObject;
     private bool allPlayersReady;
 
+    [SerializeField]
+    private Image mainImage;
+    [SerializeField]
+    private Sprite[] mainImageArray;
+
     [Header("Loading")]
     [SerializeField]
     private GameObject canvasLoad;
@@ -44,8 +49,7 @@ public class uiManager : MonoBehaviour
     private Color32 inactiveColor;
 
     [Header("Mode Selection")]
-    [SerializeField]
-    private string[] modeDescriptions;
+    private string[] modeDescriptions = {"Each player has their own controller!\n\nThe ideal Friender Bender experience!", "Each player passes around the same controller!\n\nPlay Party mode if you can!"};
     [SerializeField]
     private Text modeDescriptionText;
 
@@ -94,6 +98,7 @@ public class uiManager : MonoBehaviour
 
     private void Start() {
         SetAudio();
+        mainImage.sprite = mainImageArray[DataManager.RandomVal(0, mainImageArray.Length - 1)];
     }
 
     private void SetAudio() {
