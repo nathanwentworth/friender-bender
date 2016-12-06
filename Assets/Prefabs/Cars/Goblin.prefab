@@ -480,7 +480,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010791721470}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 209.47607, y: -1.3136835, z: -94.82173}
+  m_LocalPosition: {x: -144.02988, y: -5.9070296, z: 112.767654}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children:
@@ -1045,7 +1045,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 243000013329193636, guid: f6e83001269ba1b429419d724cd8e114,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: fa043d3601f6f9e4f85c2b1fa856131d, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dd24d6250afee434db5352e8a165d070, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -1328,7 +1328,7 @@ WheelCollider:
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.25
+    m_ExtremumSlip: 0.3
     m_ExtremumValue: 2.2
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 1.5
@@ -1357,7 +1357,7 @@ WheelCollider:
     m_AsymptoteValue: 2
     m_Stiffness: 1
   m_SidewaysFriction:
-    m_ExtremumSlip: 0.25
+    m_ExtremumSlip: 0.3
     m_ExtremumValue: 2.2
     m_AsymptoteSlip: 0.8
     m_AsymptoteValue: 1.5
