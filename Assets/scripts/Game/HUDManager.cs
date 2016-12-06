@@ -123,11 +123,18 @@ public class HUDManager : MonoBehaviour
             StartCoroutine(DisplayOverlayText("ahh!"));
         }
 
-        if (overlayTimer < 0) {
+        if (!playerSwitch.playerWin && overlayTimer < 0) {
             overlayPanel.SetActive(false);
             overlayTimer = 0;
         } else {
             overlayTimer -= Time.deltaTime;
+        }
+
+        if (!playerSwitch.playerWin && notifTimer < 0) {
+            notificationText.gameObject.SetActive(false);
+            notifTimer = 0;
+        } else {
+            notifTimer -= Time.deltaTime;
         }
 
         InputDevice Controller = null;
@@ -232,20 +239,16 @@ public class HUDManager : MonoBehaviour
 
 
     public IEnumerator DisplayNotificationText(string text) {
+        notificationText.gameObject.SetActive(true);
         notificationText.text = text;
-        // float t = notifTimer + 1.5f;
-        // while (t > 0) {
-        //     t = t - Time.deltaTime;
-        //     yield return null;
-        // }
-        // notificationText.text = "";
+        notifTimer = 1f;
         yield return null;
     }
 
     public IEnumerator DisplayOverlayText(string text) {
         overlayPanel.SetActive(true);
         overlayText.text = text;
-        overlayTimer += 1.5f;
+        overlayTimer = 1.5f;
         yield return null;
     }
 

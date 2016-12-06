@@ -2976,7 +2976,7 @@ GameObject:
   - 222: {fileID: 341652159}
   - 114: {fileID: 341652158}
   m_Layer: 5
-  m_Name: image-Goblin
+  m_Name: main-image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2997,9 +2997,9 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0.35, y: 0}
   m_AnchorMax: {x: 1, y: 0.8}
-  m_AnchoredPosition: {x: -60, y: 60}
-  m_SizeDelta: {x: -120, y: -120}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 59.999985}
+  m_SizeDelta: {x: 0, y: -119.99997}
+  m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &341652158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4246,7 +4246,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8c1c448403ead4ae79562eb79bde10ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a65ce7f5708264b3a869e27399f1e384, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -10012,7 +10012,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1006152397}
   toggleTransition: 1
   graphic: {fileID: 955981206}
@@ -13803,7 +13803,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8c1c448403ead4ae79562eb79bde10ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a65ce7f5708264b3a869e27399f1e384, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -17109,7 +17109,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8c1c448403ead4ae79562eb79bde10ec, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a65ce7f5708264b3a869e27399f1e384, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -17618,6 +17618,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf491345aa7be4886a93c3af31bb3e4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainImage: {fileID: 341652158}
+  mainImageArray:
+  - {fileID: 21300000, guid: a9dc37210115841d795cd5d3a49f749b, type: 3}
+  - {fileID: 21300000, guid: 1c4e2b150b3a343768574be82247ebd8, type: 3}
+  - {fileID: 21300000, guid: aeb92d465c9ba4c4ba8fc5f393da5668, type: 3}
+  - {fileID: 21300000, guid: 0cf70ea3290404e52982bd1a54a2a7b7, type: 3}
   canvasLoad: {fileID: 2041668752}
   loadingBar: {fileID: 2012344920}
   loadingText: {fileID: 1277880036}
@@ -17681,9 +17687,6 @@ MonoBehaviour:
   inactiveColor:
     serializedVersion: 2
     rgba: 4294967295
-  modeDescriptions:
-  - Each player gets their own controller
-  - Each player passes around the same controller
   modeDescriptionText: {fileID: 701631262}
   containers:
   - {fileID: 1270393008}

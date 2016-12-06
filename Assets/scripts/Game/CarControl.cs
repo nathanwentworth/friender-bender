@@ -118,7 +118,7 @@ public class CarControl : MonoBehaviour
         float motor = maxMotorTorque * (accelerationForce * 3f);
         float steering = maxSteeringAngle * x_Input.x / ((150f - (mph * 0.75f)) / 150f);
 
-        if (mph < 1 && !currentlyCheckingIfCarIsStopped && !playerSwitch.passingController && !playerSwitch.startingGame && !hudManager.Paused && !playerSwitch.playerWin) {
+        if (mph < 3 && !currentlyCheckingIfCarIsStopped && !playerSwitch.passingController && !playerSwitch.startingGame && !hudManager.Paused && !playerSwitch.playerWin) {
             StartCoroutine(CheckIfCarIsStopped());
         }
 
@@ -264,12 +264,14 @@ public class CarControl : MonoBehaviour
     }
 
     public void ResetCarPosition() {
+        int terrainLayer = 1 << 10;
+        terrainLayer = ~terrainLayer;
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;
         for (int i = 0; i < playerSwitch.spawnPoints.Length; i++) {
             float d = Vector3.Distance(playerSwitch.spawnPoints[i].transform.position, carPos.position);
-            if (d < minD) {
+            if (d < minD && !Physics.CheckSphere(playerSwitch.spawnPoints[i].transform.position, 4f, terrainLayer)) {
                 minD = d;
                 closestSpawn = playerSwitch.spawnPoints[i].transform;
             }
@@ -280,13 +282,9 @@ public class CarControl : MonoBehaviour
 
     private IEnumerator CheckIfCarIsStopped() {
         currentlyCheckingIfCarIsStopped = true;
-        Debug.Log("Checking to see if car is stopped");
         yield return new WaitForSeconds(1.5f);
-        if (mph < 1) {
-            Debug.Log("Car is stopped! Resetting position");
+        if (mph < 3) {
             ResetCarPosition();
-        } else {
-            Debug.Log("Car is not stopped, not resetting position");
         }
         currentlyCheckingIfCarIsStopped = false;
     }
