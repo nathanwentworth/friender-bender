@@ -206,6 +206,7 @@ public class PowerUps : MonoBehaviour
 
     private IEnumerator InvertSteering()
     {
+        StartCoroutine(audioManager.PowerupSounds("inverse"));
         carControl.turningMultiplier = -1;
         string text = "TURNING MIRRORED";
         StartCoroutine(hud.DisplayOverlayText(text));

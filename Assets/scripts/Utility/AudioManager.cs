@@ -8,11 +8,20 @@ public class AudioManager : MonoBehaviour
     private static System.Random rng = new System.Random();
     private int playlistIndex;
 
+    [HideInInspector]
+    public bool shield = false;
+    [HideInInspector]
+    public bool lastLife = false;
+
     [Header("Impact Audio Source on Car")]
     [SerializeField]
     private AudioSource impactSource;
     [SerializeField]
     private AudioSource powerupSource;
+    [SerializeField]
+    private AudioSource shieldSource;
+    [SerializeField]
+    private AudioSource LLSource;
 
     [Header("Low-Speed Impact Sounds")]
     [SerializeField]
@@ -37,6 +46,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     private AudioClip skipTurn;
     [SerializeField]
+    private AudioClip inverse;
+    [SerializeField]
     private AudioClip landMine;
     [SerializeField]
     private AudioClip landMineExplode;
@@ -49,28 +60,53 @@ public class AudioManager : MonoBehaviour
     private AudioSource music;
     private AudioClip[] playlist;
 
-    private void Awake() {
+    private void Awake()
+    {
         StartCoroutine(ShuffleMusic());
         playlistIndex = -1;
     }
 
-    private void Update() {
-        if (!music.isPlaying) {
-            if (playlistIndex == playlist.Length - 1) {
+    private void Update()
+    {
+        if (!music.isPlaying)
+        {
+            if (playlistIndex == playlist.Length - 1)
+            {
                 playlistIndex = 0;
-            } else {
+            }
+            else {
                 playlistIndex++;
             }
             music.clip = playlist[playlistIndex];
             music.Play();
         }
+
+        if (!shieldSource.isPlaying && shield)
+        {
+            shieldSource.Play();
+        }
+        else if (shieldSource.isPlaying && !shield)
+        {
+            shieldSource.Stop();
+        }
+
+        if (!LLSource.isPlaying && lastLife)
+        {
+            LLSource.Play();
+        }
+        else if(LLSource.isPlaying && !lastLife)
+        {
+            LLSource.Stop();
+        }
     }
 
-    private IEnumerator ShuffleMusic() {
+    private IEnumerator ShuffleMusic()
+    {
         playlist = DataManager.IsTrekkieTraxOn ? trekkieTrax : mainPlaylist;
 
         int n = playlist.Length;
-        while (n > 1) {
+        while (n > 1)
+        {
             n--;
             int k = rng.Next(n + 1);
             AudioClip value = playlist[k];
@@ -98,6 +134,9 @@ public class AudioManager : MonoBehaviour
     {
         switch (powerupName)
         {
+            case "inverse":
+                powerupSource.PlayOneShot(inverse);
+                break;
             case "speedBoost":
                 Debug.Log("Playing Speedboost");
                 powerupSource.PlayOneShot(speedBoost);
@@ -134,7 +173,8 @@ public class AudioManager : MonoBehaviour
         yield return null;
     }
 
-    public void SetMusicVolume(float volume) {
+    public void SetMusicVolume(float volume)
+    {
         music.volume = volume;
     }
 

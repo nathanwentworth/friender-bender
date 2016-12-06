@@ -69,6 +69,7 @@ public class CarControl : MonoBehaviour
     private void Update()
     {
         shieldEffect.SetActive(shield);
+        audioManager.shield = shield;
         if (Time.timeScale == 1) { playing = true; } else { playing = false; }
 
         if (playing)
@@ -77,9 +78,14 @@ public class CarControl : MonoBehaviour
             if (DataManager.CurrentGameMode == DataManager.GameMode.Party) { currentIndex = trueCurrentIndex; }
             else { currentIndex = 0; }
 
-            //CONTROLS
-            if (!playerSwitch.playerWin)
+            if (!playerSwitch.DEBUG_MODE)
             {
+                if (DataManager.PlayerList[trueCurrentIndex].Lives == 1) audioManager.lastLife = true;
+                else audioManager.lastLife = false;
+            }
+
+            //CONTROLS
+            if (!playerSwitch.playerWin) {
                 InputDevice controller = null;
                 if (playerSwitch.DEBUG_MODE) { controller = InputManager.ActiveDevice; }
                 else { controller = DataManager.PlayerList[currentIndex].Controller; }
