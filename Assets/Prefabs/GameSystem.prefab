@@ -57,6 +57,8 @@ MonoBehaviour:
   - {fileID: 1000010791721470, guid: cccabc30c95c523429bdb6408114171e, type: 2}
   - {fileID: 1000013267028416, guid: e9982fa238e07444185e9babc37a18c2, type: 2}
   - {fileID: 1000013356194364, guid: 9ab965adaa2897242986a1f51f917375, type: 2}
+  - {fileID: 1000010471186810, guid: 79ee56335104119459f7ddde57823bb6, type: 2}
+  - {fileID: 1000010614695070, guid: a1e19af4febfbd840b63dc6ef3500892, type: 2}
   debugCarIndex: 0
 --- !u!114 &114000010579291326
 MonoBehaviour:
@@ -77,7 +79,6 @@ MonoBehaviour:
   passingController: 0
   InControl: {fileID: 1000013346135206, guid: 39b51b3a815f7584fbf6d2c738f34c7f, type: 2}
   spawnPoints:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -119,5 +120,5 @@ MonoBehaviour:
   - {fileID: 1000012345704456, guid: 819265e7affcb184191c8ec1e5a16c01, type: 2}
   - {fileID: 1000012961113790, guid: 578b3730696c0fe4ca208ad54f54c694, type: 2}
   mineObject: {fileID: 1000013435768810, guid: 15da85a6525e7ca46b6fd3e4f407bb2d, type: 2}
-  StartingPowerUp: 0
+  StartingPowerUp: 10
   cameraNoise: {fileID: 0}

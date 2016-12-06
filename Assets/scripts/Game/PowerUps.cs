@@ -301,6 +301,11 @@ public class PowerUps : MonoBehaviour
         {
             player.CurrentPowerUp = PowerUpType.LandMine;
         }
+        else
+        {
+            Debug.LogError("Something went wrong with the drop table, defaulting to speedboost");
+            player.CurrentPowerUp = PowerUpType.SpeedBoost;
+        }
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(player.CurrentPowerUp));
         hud.BouncePowerup(player.PlayerNumber);
     }

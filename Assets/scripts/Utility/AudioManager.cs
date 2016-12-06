@@ -102,7 +102,8 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator ShuffleMusic()
     {
-        playlist = DataManager.IsTrekkieTraxOn ? trekkieTrax : mainPlaylist;
+        //playlist = DataManager.IsTrekkieTraxOn ? trekkieTrax : mainPlaylist;
+        playlist = trekkieTrax;
 
         int n = playlist.Length;
         while (n > 1)

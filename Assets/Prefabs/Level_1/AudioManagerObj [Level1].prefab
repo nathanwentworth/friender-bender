@@ -636,11 +636,12 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bc8cf4923b0b24728b968911a6b4a871, type: 3}
   - {fileID: 8300000, guid: b6f0b114225254e05bd193cc3cc8bff3, type: 3}
   - {fileID: 8300000, guid: e61e5c367b35e4a2594fdd1960cb041f, type: 3}
-  - {fileID: 8300000, guid: 93c3b0813ea4bba4f8200b8a9c197ba9, type: 3}
-  mainPlaylist:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: acdaf2e5889bec44b9c96604185f1952, type: 3}
+  - {fileID: 8300000, guid: da13a487435cf834792fb116e8e3aedd, type: 3}
+  - {fileID: 8300000, guid: bdf0a8bc86676134f90b502f931a39db, type: 3}
+  - {fileID: 8300000, guid: 6c6d4ad1ae8d2694386d48c2207c6826, type: 3}
+  - {fileID: 8300000, guid: 4176743930b475e478cdc6687bb61cce, type: 3}
+  mainPlaylist: []
   music: {fileID: 82000014166185520}
 --- !u!167 &167000012204838516
 AudioReverbZone:

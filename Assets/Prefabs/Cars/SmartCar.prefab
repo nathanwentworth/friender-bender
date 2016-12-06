@@ -600,7 +600,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010614695070}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -144.02988, y: -5.72, z: 108.34}
+  m_LocalPosition: {x: -82.318275, y: 10.612152, z: -46.96156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_Children:
@@ -974,8 +974,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.0676122, y: 0.87277627, z: 2.1182742}
-  m_Center: {x: 0.0014572126, y: 0.72499275, z: 0.008682253}
+  m_Size: {x: 1.0676122, y: 0.7815491, z: 1.9900281}
+  m_Center: {x: 0.0014572089, y: 0.77060604, z: 0.07256318}
 --- !u!65 &65000013635458924
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1380,7 +1380,7 @@ ParticleSystem:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012028745494}
-  serializedVersion: 4
+  serializedVersion: 2
   lengthInSec: 1.2
   startDelay:
     scalar: 0
@@ -1418,13 +1418,12 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
+  randomSeed: 1111302400
   looping: 0
   prewarm: 0
   playOnAwake: 0
   moveWithTransform: 1
-  autoRandomSeed: 0
   scalingMode: 1
-  randomSeed: 1111302400
   InitialModule:
     serializedVersion: 2
     enabled: 1
