@@ -116,13 +116,6 @@ public class HUDManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F)) {
-            StartCoroutine(DisplayOverlayText("cool"));
-        }
-        if (Input.GetKeyDown(KeyCode.G)) {
-            StartCoroutine(DisplayOverlayText("ahh!"));
-        }
-
         if (!playerSwitch.playerWin && overlayTimer < 0) {
             overlayPanel.SetActive(false);
             overlayTimer = 0;
@@ -173,8 +166,8 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void LoadScene(int scene) {
-        SceneManager.LoadScene(scene);
+    public void LoadScene() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void EnqueueAction(IEnumerator notif) {

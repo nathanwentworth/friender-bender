@@ -28,6 +28,7 @@ public class CarControl : MonoBehaviour
     private float brakingForce = 0;
     private Rigidbody rigid;
     private int mph;
+    private bool respawning;
 
     private Vector3 groundedVelocity;
 
@@ -49,6 +50,7 @@ public class CarControl : MonoBehaviour
     public AudioSource carEngine;
 
     private bool currentlyCheckingIfCarIsStopped;
+    private int terrainNum;
 
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class CarControl : MonoBehaviour
 
     private void Start()
     {
+        terrainNum = LayerMask.NameToLayer("Terrain");
         turningMultiplier = 1;
         shield = false;
         currentlyCheckingIfCarIsStopped = false;
@@ -123,14 +126,21 @@ public class CarControl : MonoBehaviour
         }
 
         //Changes the pitch of the engine audioSource
-        if (grounded) {
+        if (grounded && respawning) {
+            respawning = false;
+            rigid.constraints = RigidbodyConstraints.None;
             carEngine.pitch = ((mph * 0.01f) - 0.3f);
             groundedVelocity = rigid.velocity;        
-        } else {
+        }
+        else if (grounded && !respawning) {
+            carEngine.pitch = ((mph * 0.01f) - 0.3f);
+            groundedVelocity = rigid.velocity;
+        }
+        else if (!grounded && !respawning) {
             carEngine.pitch = ((mph * 0.01f));
             if (mph > 70)
             {
-                rigid.velocity = new Vector3(groundedVelocity.x, rigid.velocity.y, groundedVelocity.z);
+                rigid.velocity = new Vector3((groundedVelocity.x + rigid.velocity.x)/2, rigid.velocity.y, (groundedVelocity.z + rigid.velocity.z) / 2);
             }
         }
 
@@ -193,6 +203,10 @@ public class CarControl : MonoBehaviour
         {
             if(mph > 50 && (other.gameObject.GetComponent<Rigidbody>() == null || other.gameObject.GetComponent<Rigidbody>().mass > 800))
             {
+                if(other.gameObject.tag == "Ramp")
+                {
+                    return;
+                }
                 Debug.Log("Current Shield Status: " + shield);
                 if (!shield) {
                     int trueCurrentIndex = playerSwitch.currentIndex;
@@ -264,8 +278,10 @@ public class CarControl : MonoBehaviour
     }
 
     public void ResetCarPosition() {
-        int terrainLayer = 1 << 10;
+        respawning = true;
+        int terrainLayer = 1 << terrainNum;
         terrainLayer = ~terrainLayer;
+        Debug.Log(terrainLayer);
         float minD = 100000000;
         Transform closestSpawn = null;
         Transform carPos = transform;
@@ -278,6 +294,8 @@ public class CarControl : MonoBehaviour
         }
         transform.position = closestSpawn.transform.position;
         transform.rotation = closestSpawn.transform.rotation;
+        rigid.constraints = RigidbodyConstraints.FreezeRotation;
+        rigid.velocity = Vector3.zero;
     }
 
     private IEnumerator CheckIfCarIsStopped() {
