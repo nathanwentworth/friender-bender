@@ -56,11 +56,11 @@ _All music from the label Trekkie Trax are licensed under Creative Commons CC-BY
 
 _Music by Rough Cuts and James Burke used with express permission by the artists_
 
-[Rough Cuts - BBB](https://roughcuts.bandcamp.com/)
+[Rough Cuts - I've Been Worse](https://roughcuts.bandcamp.com/)
 
-[Rough Cuts - HAIRR](https://roughcuts.bandcamp.com/)
+[Rough Cuts - Hair](https://roughcuts.bandcamp.com/)
 
-[Rough Cuts - WEEKEND](https://roughcuts.bandcamp.com/)
+[Rough Cuts - Weekend Head](https://roughcuts.bandcamp.com/)
 
 [James Burke - Gotta Get Away](https://jamesburke.bandcamp.com/track/gotta-get-away)
 
