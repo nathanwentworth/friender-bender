@@ -7,17 +7,17 @@ Based on an idea from [Cool Games Inc. Episode 26, Sabotage Rally](https://sound
 **Expected Release Date:** December 2016
 
 ## Credits
-[Connor Botts](http://connor.games) - Production, Programming, Assembler
+[Connor Botts](http://connor.games) - Production, Programming, Assembly
 
-Joey Canney - 3D Modeling, Music
+Joey Canney - 3D Modeling
 
-[Adam Chop](http://adamchop.co.nf) - 3D Modeling, Level Designer, Assembler
+[Adam Chop](http://adamchop.co.nf) - 3D Modeling, Level Design, Assembly
 
-[Delton Hulbert](http://deltonhulbert.com) - 3D Modeling, Animation, UI Art, Music
+[Delton Hulbert](http://deltonhulbert.com) - 3D Modeling, Texturing
 
-[Dakota Lyons](https://twitter.com/DakotaDal) - 3D Modeling, Animation & Rigging
+[Dakota Lyons](https://twitter.com/DakotaDal) - 3D Modeling, Texturing
 
-[Ethan Thibault](http://ethanthibault.xyz) - Production, Sound Design & Music, Marketing
+[Ethan Thibault](http://ethanthibault.xyz) - Production, Sound Design, Marketing
 
 [Nathan Wentworth](https://nathanwentworth.co) - Programming, UI Design
 
