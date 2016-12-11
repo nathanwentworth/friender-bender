@@ -1,12 +1,19 @@
 # FRIENDER BENDER
 
-Friender Bender is a local multiplayer sabotage driving game, where up to 4 players take turns controlling 1 car for 15 seconds each, avoiding obstacles and navigating an increasingly crazy course. The player that crashes while driving is eliminated, until only one remains. While not driving, the other players can trigger weapons and distractions aimed at the player who *is* driving, such as dropping objects onto the track, making it harder to drive, and much much more.
+Friender Bender is a local-multiplayer sabotage driving game, where up to 4 players take turns controlling 1 car, avoiding obstacles and navigating 2 increasingly crazy courses.
 
-Based on an idea from [Cool Games Inc. Episode 26, Sabotage Rally](https://soundcloud.com/coolgamesinc/episode-26-sabotage-rally#t=32:24)
+If the player crashes while driving, they lose a life. If they lose all of their lives, they're eliminated. The last player left driving is the winner!
 
-**Expected Release Date:** December 2016
+Every player has randomized powerups, weapons, and distractions that they can use at any point to sabotage the driver, such as dropping objects onto the track, inverting steering, glitching out the screen, and many more!
+
+Based on [Sabotage Rally from episode 26](https://soundcloud.com/coolgamesinc/episode-26-sabotage-rally#t=32:24) of [Cool Games Inc.](http://www.polygon.com/coolgames-inc)
+
+**Release Date**: December 12th, 2016
 
 ## Credits
+
+**Team Mandatory Fun**
+
 [Connor Botts](http://connor.games) - Production, Programming, Assembly
 
 Joey Canney - 3D Modeling
@@ -23,11 +30,11 @@ Joey Canney - 3D Modeling
 
 Concept by [@SeshohoCian](https://twitter.com/SeshohoCian), [Nick Robinson](https://twitter.com/babylonian), [Griffin McElroy](https://twitter.com/griffinmcelroy)
 
-Special thanks to: Jeff Warmouth, Jess Ialacci
+Special thanks to: [@SeshohoCian](https://twitter.com/SeshohoCian), Nick Robinson, Griffin McElroy, Polygon / Cool Games, Inc., Jeff Warmouth, Jess Ialacci the Jansport Wrangler
 
-### MUSIC:
+### Music
 
-[**→→→ Listen on SoundCloud ←←←**](https://soundcloud.com/nathanwentworth/sets/friender-bender)
+_All music from the label Trekkie Trax are licensed under Creative Commons CC-BY-SA_
 
 [Batsu & in the blue shirt - With (Cola Splash Remix)](https://soundcloud.com/trekkie-trax/batsu-in-the-blue-shirt-with-cola-splash-remix?in=nathanwentworth/sets/friender-bender)
 
@@ -46,3 +53,15 @@ Special thanks to: Jeff Warmouth, Jess Ialacci
 [KAN TAKAHIKO - NRG](https://soundcloud.com/trekkie-trax/kan-takahiko-nrg?in=nathanwentworth/sets/friender-bender)
 
 [Cola Splash - Cola Splash](https://soundcloud.com/trekkie-trax/cola-splash-cola-splash?in=nathanwentworth/sets/friender-bender)
+
+_Music by Rough Cuts and James Burke used with express permission by the artists_
+
+[Rough Cuts - BBB](https://roughcuts.bandcamp.com/)
+
+[Rough Cuts - HAIRR](https://roughcuts.bandcamp.com/)
+
+[Rough Cuts - WEEKEND](https://roughcuts.bandcamp.com/)
+
+[James Burke - Gotta Get Away](https://jamesburke.bandcamp.com/track/gotta-get-away)
+
+[James Burke - I Should've Never Bothered](https://jamesburke.bandcamp.com/track/i-shouldve-never-bothered)
