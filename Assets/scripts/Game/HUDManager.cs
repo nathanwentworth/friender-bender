@@ -166,7 +166,11 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void LoadScene() {
+    public void LoadScene(int scene) {
+        SceneManager.LoadScene(scene);
+    }
+
+    public void RestartLevel() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
