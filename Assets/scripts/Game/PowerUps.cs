@@ -179,6 +179,9 @@ public class PowerUps : MonoBehaviour
         {
             Rigidbody rigid = car.GetComponent<Rigidbody>();
             rigid.AddForce(car.transform.forward * maxForce, ForceMode.Acceleration);
+            if (!car.GetComponent<CarControl>().grounded) {
+                DataManager.airBoost = true;
+            }
             yield return new WaitForSeconds(0.01f);
             i++;
         }

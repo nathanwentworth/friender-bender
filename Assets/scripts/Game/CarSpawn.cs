@@ -5,9 +5,8 @@ public class CarSpawn : MonoBehaviour {
 
     public GameObject[] cars;
     public int debugCarIndex;
-    //
-    void Awake()
-    {
+
+    private void Awake() {
         PlayerSwitching pSwitch = GameObject.Find("GameSystem").GetComponent<PlayerSwitching>();
         GameObject car = null;
         if (pSwitch.DEBUG_MODE)
@@ -16,6 +15,9 @@ public class CarSpawn : MonoBehaviour {
         }
         else {
             car = Instantiate(cars[DataManager.CarIndex]);
+            // if (DataManager.CarsSelected[selectedCar] = "f") {
+            //     DataManager.CarsSelected[selectedCar] = true;
+            // }
         }
         Transform sp = pSwitch.spawnPoints[DataManager.RandomVal(0, pSwitch.spawnPoints.Length - 1)].transform;
         car.transform.position = sp.position;

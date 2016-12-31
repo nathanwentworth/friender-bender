@@ -21,6 +21,21 @@ public static class DataManager
         partyDelay,
         powerupCooldownTime;
 
+    // achievements!!!!!!
+
+    public static bool lookAtCredits { private get; set; } // done
+    public static bool sorry { private get; set; } // done
+    public static bool everyCar { private get; set; }
+    public static bool jansportShrineDiscovered { private get; set; }
+    public static bool didntRefund { private get; set; }
+    public static bool devTagUsed { private get; set; } // done
+    public static bool largeObjectInAir { private get; set; } // done
+    public static bool airBoost { private get; set; } // done
+    public static bool allPowerupsAtOnce { private get; set; }
+    public static bool plexusParkFallTenTimes { private get; set; }
+
+    // ~~ achievements end ~~
+
     public enum GameMode
     {
         None,
@@ -32,6 +47,13 @@ public static class DataManager
     {
         get { return car; }
         set { car = value; }
+    }
+
+    private static string carsSelected = "fffff";
+
+    public static string CarsSelected { 
+        get{ return carsSelected; }
+        set{ carsSelected = value; }
     }
 
     public static Color32 ColorGreen = new Color32(105, 193, 165, 255);

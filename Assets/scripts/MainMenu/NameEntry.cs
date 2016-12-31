@@ -112,16 +112,15 @@ public class NameEntry : MonoBehaviour {
 
 	private void SaveName() {
 		DataManager.PlayerList[playerNumber].PlayerName = PlayerName;
-		// if (controller.Name == "ps4") {
-		// 	Color led = DataManager.Colors[playerNumber];
-	 //    DataManager.PlayerList[playerNumber].Controller.SetLightColor(led);			
-		// }
 		nameEntry.GetComponent<Text>().text = PlayerName;
 		nameEntry.GetComponent<Text>().color = playerColor;
 		Debug.Log("Name saved!");
 		readyText.SetActive(true);
 		nameSaved = true;
-        Debug.Log(controller.Name);
+		if (PlayerName == "NXC" || PlayerName == "CB~" || PlayerName == "DAL" || PlayerName == "NXC" || PlayerName == "NXC" || PlayerName == "NXC" || PlayerName == "NXC") {
+			DataManager.devTagUsed = true;
+		}
+    Debug.Log(controller.Name);
 	}
 
 	private IEnumerator InputSleep() {

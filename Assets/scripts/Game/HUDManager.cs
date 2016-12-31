@@ -69,6 +69,10 @@ public class HUDManager : MonoBehaviour
         UpdateLivesDisplay();
         PowerupSizeSet();
         Paused = false;
+
+        if (DataManager.CarIndex == 2 && DataManager.CurrentGameMode == DataManager.GameMode.HotPotato && DataManager.TotalPlayers == 2) {
+            DataManager.sorry = true;
+        }
     }
 
     private void OnDeviceDetached(InputDevice controller)

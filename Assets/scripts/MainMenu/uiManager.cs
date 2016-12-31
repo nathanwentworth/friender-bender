@@ -363,6 +363,9 @@ public class uiManager : MonoBehaviour
     public void DisplayCredits() {
         bool active = (creditsPanel.activeSelf) ? false : true;
         creditsPanel.SetActive(active);
+        if (active) {
+            StartCoroutine(ViewedCreditsForSeconds());
+        }
     }
 
     private IEnumerator PlayAudio(AudioClip sound) {
@@ -377,6 +380,13 @@ public class uiManager : MonoBehaviour
             if (timer >= 1) timer = 0;
             backgroundGradient.color = backgroundGradientColors.Evaluate (timer);
             yield return null;
+        }
+    }
+
+    private IEnumerator ViewedCreditsForSeconds() {
+        yield return new WaitForSeconds(5f);
+        if (creditsPanel.activeSelf) {
+            DataManager.lookAtCredits = true;
         }
     }
 

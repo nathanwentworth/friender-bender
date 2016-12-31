@@ -37,7 +37,7 @@ public class CarControl : MonoBehaviour
         get { return mph; }
     }
 
-    private bool grounded;
+    public bool grounded { get; private set; }
     //Making this public for Powerup Reference
     [HideInInspector]
     public int currentIndex = 0;
@@ -210,6 +210,11 @@ public class CarControl : MonoBehaviour
                 Debug.Log("Current Shield Status: " + shield);
                 if (!shield) {
                     int trueCurrentIndex = playerSwitch.currentIndex;
+
+                    if (other.gameObject.tag == "DroppedObject") {
+                        DataManager.largeObjectInAir = true;
+                    }
+
                     DataManager.PlayerList[trueCurrentIndex].Lives -= 1;
                     Debug.Log("Player " + DataManager.PlayerList[trueCurrentIndex].PlayerNumber.ToString() + " lost a life. They have " + DataManager.PlayerList[trueCurrentIndex].Lives + " lives remaining.");
                     // play high impact impact sound
