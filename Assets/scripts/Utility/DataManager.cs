@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using InControl;
+using Steamworks;
 
 public static class DataManager
 {
@@ -19,15 +20,16 @@ public static class DataManager
         turnTime,
         potatoDelay,
         partyDelay,
-        powerupCooldownTime;
+        powerupCooldownTime,
+        totalTimePlayed;
 
     // achievements!!!!!!
 
     public static bool lookAtCredits { private get; set; } // done
     public static bool sorry { private get; set; } // done
     public static bool everyCar { private get; set; }
-    public static bool jansportShrineDiscovered { private get; set; }
-    public static bool didntRefund { private get; set; }
+    public static bool jansportShrineDiscovered { private get; set; } // done
+    public static bool didntRefund { private get; set; } // done
     public static bool devTagUsed { private get; set; } // done
     public static bool largeObjectInAir { private get; set; } // done
     public static bool airBoost { private get; set; } // done
@@ -121,11 +123,19 @@ public static class DataManager
         set { powerupCooldownTime = value; }
     }
 
+    public static float TotalTimePlayed
+    {
+        get { return totalTimePlayed; }
+        set { totalTimePlayed = value; }
+    }
+
+
     public static void Save() {
         int trekkieInt = IsTrekkieTraxOn ? 1 : 0;
         int fullscreenInt = IsFullscreenOn ? 1 : 0;
         int uiInt = (UiVolume == 0) ? 1 : 0;
 
+        PlayerPrefs.SetFloat("CKYiscwBXR6VhzWh", totalTimePlayed);
         PlayerPrefs.SetFloat("Turn Time", turnTime);
         PlayerPrefs.SetFloat("Party Delay", partyDelay);
         PlayerPrefs.SetFloat("Potato Delay", potatoDelay);
@@ -158,6 +168,11 @@ public static class DataManager
     }
 
     public static void Load() {
+        if (PlayerPrefs.HasKey("CKYiscwBXR6VhzWh")) {
+            totalTimePlayed = PlayerPrefs.GetFloat("CKYiscwBXR6VhzWh");
+        } else {
+            totalTimePlayed = 0f;
+        }
         if (PlayerPrefs.HasKey("Turn Time")) {
             turnTime = PlayerPrefs.GetFloat("Turn Time");
         } else {

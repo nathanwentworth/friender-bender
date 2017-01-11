@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using InControl;
+using Steamworks;
 
 public class uiManager : MonoBehaviour
 {
@@ -96,6 +97,10 @@ public class uiManager : MonoBehaviour
     private void Start() {
         SetAudio();
         mainImage.sprite = mainImageArray[DataManager.RandomVal(0, mainImageArray.Length - 1)];
+        if(SteamManager.Initialized) {
+            string name = SteamFriends.GetPersonaName();
+            Debug.Log(name);
+        }
     }
 
     private void SetAudio() {

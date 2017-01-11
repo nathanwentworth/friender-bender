@@ -97,7 +97,7 @@ public class CarControl : MonoBehaviour
                 x_Input = new Vector2(controller.Direction.X, controller.Direction.Y);
                 //Hardcoded deadzone
                 if (x_Input.magnitude < controllerDeadzone) x_Input = Vector2.zero;
-                else x_Input = x_Input.normalized * turningMultiplier * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
+                else x_Input = x_Input * turningMultiplier * ((x_Input.magnitude - controllerDeadzone) / (1 - controllerDeadzone));
 
                 if (!grounded) {
                     Vector2 rotationalInput = new Vector2 (x_Input.y, x_Input.x); 
@@ -194,6 +194,8 @@ public class CarControl : MonoBehaviour
         if (other.gameObject.tag == "Respawn")
         {
             ResetCarPosition();
+        } else if (other.gameObject.tag == "JansportShrine") {
+            DataManager.jansportShrineDiscovered = true;
         }
     }
 

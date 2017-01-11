@@ -9,6 +9,8 @@ TagManager:
   - SpawnPoints
   - CameraNoise
   - Ramp
+  - DroppedObject
+  - JansportShrine
   layers:
   - Default
   - TransparentFX
