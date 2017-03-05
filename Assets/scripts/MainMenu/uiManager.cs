@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using InControl;
-using Steamworks;
 
 public class uiManager : MonoBehaviour
 {
@@ -97,10 +96,6 @@ public class uiManager : MonoBehaviour
     private void Start() {
         SetAudio();
         mainImage.sprite = mainImageArray[DataManager.RandomVal(0, mainImageArray.Length - 1)];
-        if(SteamManager.Initialized) {
-            string name = SteamFriends.GetPersonaName();
-            Debug.Log(name);
-        }
     }
 
     private void SetAudio() {
@@ -357,6 +352,36 @@ public class uiManager : MonoBehaviour
     public void SetCar(int selectedCar)
     {
         DataManager.CarIndex = selectedCar;
+        if (DataManager.CarsSelected[selectedCar] == System.Convert.ToChar("f")) {
+
+            string carsSelected = "";
+
+            for (int i = 0; i < DataManager.CarsSelected.Length; i++) {
+                if (i != selectedCar) {
+                    carsSelected += DataManager.CarsSelected[i];
+                } else {
+                    carsSelected += "t";
+                }
+            }
+
+            DataManager.CarsSelected = carsSelected;
+
+            int allCarsPlayed = 0;
+
+            for (int i = 0; i < DataManager.CarsSelected.Length; i++) {
+                if (DataManager.CarsSelected[i] == System.Convert.ToChar("f")) {
+                    break;
+                } else {
+                    allCarsPlayed++;
+                }
+            }
+
+            if (allCarsPlayed >= 5) {
+                DataManager.everyCar = true;
+            }
+
+            Debug.Log("DataManager.CarsSelected: " + DataManager.CarsSelected);
+        }
     }
 
     public void RandCar()

@@ -21,6 +21,8 @@ public class PowerUps : MonoBehaviour
         LandMine
     }
 
+    private bool firstPowerUpsGiven = false;
+
     public float powerupCooldownTime;
     [Header("SpeedBoost")]
     public int sb_force;
@@ -311,6 +313,8 @@ public class PowerUps : MonoBehaviour
         }
         hud.DisplayPowerups(player.PlayerNumber, GetPowerupName(player.CurrentPowerUp));
         hud.BouncePowerup(player.PlayerNumber);
+
+        firstPowerUpsGiven = true;
     }
 
     private bool IsNumBetweenValues(float value, float min, float max)
@@ -394,7 +398,27 @@ public class PowerUps : MonoBehaviour
             cooldownDisp = Mathf.Round(cooldownDisp * 10f) / 10f;
             hud.DisplayPowerups(player.PlayerNumber, cooldownDisp + "");
             cooldown -= Time.deltaTime;
-            yield return null;
+
+            if (firstPowerUpsGiven) {
+
+                int usedPowerup = 0;
+
+                foreach (PlayerData _player in DataManager.PlayerList)
+                {
+                    if (_player.CurrentPowerUp == PowerUpType.None)
+                    {
+                        usedPowerup++;
+                    }
+                }
+
+                if (usedPowerup >= DataManager.PlayerList.Count) {
+                    DataManager.allPowerupsAtOnce = true;
+                }
+
+            }
+
+
+            yield return new WaitForEndOfFrame();
         }
         // yield return new WaitForSeconds(powerupCooldownTime);
         RandomPowerup(player);

@@ -25,16 +25,16 @@ public static class DataManager
 
     // achievements!!!!!!
 
-    public static bool lookAtCredits { private get; set; } // done
-    public static bool sorry { private get; set; } // done
-    public static bool everyCar { private get; set; }
-    public static bool jansportShrineDiscovered { private get; set; } // done
-    public static bool didntRefund { private get; set; } // done
-    public static bool devTagUsed { private get; set; } // done
-    public static bool largeObjectInAir { private get; set; } // done
-    public static bool airBoost { private get; set; } // done
-    public static bool allPowerupsAtOnce { private get; set; }
-    public static bool plexusParkFallTenTimes { private get; set; }
+    public static bool lookAtCredits { get; set; } // done
+    public static bool sorry { get; set; } // done
+    public static bool everyCar { get; set; } // done
+    public static bool jansportShrineDiscovered { get; set; } // done
+    public static bool didntRefund { get; set; } // done
+    public static bool devTagUsed { get; set; } // done
+    public static bool largeObjectInAir { get; set; } // done
+    public static bool airBoost { get; set; } // done
+    public static bool allPowerupsAtOnce { get; set; }
+    public static bool plexusParkFallTenTimes { get; set; } // done
 
     // ~~ achievements end ~~
 
@@ -57,6 +57,8 @@ public static class DataManager
         get{ return carsSelected; }
         set{ carsSelected = value; }
     }
+
+    public static int PlexusParkFalls { get; set; }
 
     public static Color32 ColorGreen = new Color32(105, 193, 165, 255);
     public static Color32 ColorOrange = new Color32(246, 143, 104, 255);

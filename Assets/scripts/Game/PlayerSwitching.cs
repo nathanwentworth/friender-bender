@@ -6,10 +6,10 @@ public class PlayerSwitching : MonoBehaviour
 {
 
     private int
-        totalPlayers,
         remainingPlayers,
         skipTurn;
     public int
+        totalPlayers,
         currentIndex = 0,
         nextIndex;
     public float timer { get; set; }

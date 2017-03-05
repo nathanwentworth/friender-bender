@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using InControl;
@@ -191,8 +192,15 @@ public class CarControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Respawn")
-        {
+        if (other.gameObject.tag == "Respawn") {
+            Scene scene = SceneManager.GetActiveScene();
+            if (scene.name == "Level2") {
+                DataManager.PlexusParkFalls++;
+                if (DataManager.PlexusParkFalls >= 10) {
+                    DataManager.plexusParkFallTenTimes = true;
+                }
+            }
+
             ResetCarPosition();
         } else if (other.gameObject.tag == "JansportShrine") {
             DataManager.jansportShrineDiscovered = true;
