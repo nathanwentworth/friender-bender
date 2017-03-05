@@ -25,16 +25,16 @@ public static class DataManager
 
     // achievements!!!!!!
 
-    public static bool lookAtCredits { get; set; } // done
-    public static bool sorry { get; set; } // done
-    public static bool everyCar { get; set; } // done
-    public static bool jansportShrineDiscovered { get; set; } // done
+    public static bool lookAtCredits { get; set; } // works
+    public static bool sorry { get; set; } // works
+    public static bool everyCar { get; set; } // works
+    public static bool jansportShrineDiscovered { get; set; } // works
     public static bool didntRefund { get; set; } // done
     public static bool devTagUsed { get; set; } // done
     public static bool largeObjectInAir { get; set; } // done
-    public static bool airBoost { get; set; } // done
+    public static bool airBoost { get; set; } // work
     public static bool allPowerupsAtOnce { get; set; }
-    public static bool plexusParkFallTenTimes { get; set; } // done
+    public static bool plexusParkFallTenTimes { get; set; } // works
 
     // ~~ achievements end ~~
 
@@ -51,7 +51,7 @@ public static class DataManager
         set { car = value; }
     }
 
-    private static string carsSelected = "fffff";
+    private static string carsSelected = "ffffff";
 
     public static string CarsSelected { 
         get{ return carsSelected; }

@@ -90,7 +90,14 @@ public class TrackTimePlayed : MonoBehaviour {
     if(SteamManager.Initialized) {
       string name = SteamFriends.GetPersonaName();
       Debug.Log(name);
+
     }
+  }
+
+  private void OnEnable() {
+    m_UserStatsReceived = Callback<UserStatsReceived_t>.Create(OnUserStatsReceived);
+    m_UserStatsStored = Callback<UserStatsStored_t>.Create(OnUserStatsStored);
+    m_UserAchievementStored = Callback<UserAchievementStored_t>.Create(OnAchievementStored);
   }
 
   private void Update() {
@@ -117,19 +124,23 @@ public class TrackTimePlayed : MonoBehaviour {
       m_bRequestedStats = bSuccess;
     }
 
-    if (!m_bStatsValid)
+    if (!m_bStatsValid) {
       return;
+    }
 
 
     // check achievements here!!
 
     for (int i = 0; i < m_Achievements.Length; i++) {
+
+
       if (m_Achievements[i].m_bAchieved)
         continue;
 
       switch (m_Achievements[i].m_eAchievementID) {
         case Achievement.lookAtCredits:
           if (DataManager.lookAtCredits == true) {
+            Debug.Log("looked at credits");
             UnlockAchievement(m_Achievements[i]);
           }
           break;
@@ -220,6 +231,7 @@ public class TrackTimePlayed : MonoBehaviour {
   }
 
   private void OnUserStatsReceived(UserStatsReceived_t pCallback) {
+
     if (!SteamManager.Initialized)
       return;
 

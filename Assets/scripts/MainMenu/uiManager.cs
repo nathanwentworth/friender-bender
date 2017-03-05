@@ -376,7 +376,7 @@ public class uiManager : MonoBehaviour
                 }
             }
 
-            if (allCarsPlayed >= 5) {
+            if (allCarsPlayed >= 6) {
                 DataManager.everyCar = true;
             }
 
